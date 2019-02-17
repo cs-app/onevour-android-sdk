@@ -25,7 +25,7 @@ import java.net.URL;
 /**
  * @author zuliadin
  */
-public class HttpRequest {
+public class HttpRequest<T> {
 
     private static final String TAG = "CiseHTTP";
     private static final int MIN_TIMEOUT = 6000;
@@ -33,35 +33,33 @@ public class HttpRequest {
     private int timeout = 0;
     private String endpoin;
     private String json;
-    private Response.Listener listener;
+    private Response.Listener<T> listener;
 
-    public HttpRequest(String url, Response.Listener<?> listener) {
+    public HttpRequest(String url, Response.Listener<T> listener) {
         initialize(url, MIN_TIMEOUT, json, listener);
     }
 
-    public HttpRequest(String url, int timeout, Response.Listener<?> listener) {
+    public HttpRequest(String url, int timeout, Response.Listener<T> listener) {
         initialize(url, timeout, json, listener);
     }
 
-    protected HttpRequest(String url, String json, Response.Listener<?> listener) {
+    protected HttpRequest(String url, String json, Response.Listener<T> listener) {
         initialize(url, MIN_TIMEOUT, json, listener);
     }
 
-    protected HttpRequest(String url, int timeout, String json, Response.Listener<?> listener) {
+    protected HttpRequest(String url, int timeout, String json, Response.Listener<T> listener) {
         initialize(url, timeout, json, listener);
     }
 
-    private void initialize(String url, int timeout, String json, Response.Listener<?> listener) {
+    private void initialize(String url, int timeout, String json, Response.Listener<T> listener) {
         this.endpoin = url;
         this.timeout = timeout;
         this.json = json;
         this.listener = listener;
     }
 
-    @SuppressWarnings("unchecked")
     protected void request() {
-        Log.d(TAG, "\nurl : " + String.valueOf(endpoin)+"\nbody : " + String.valueOf(json));
-        Log.d(TAG, "Request : \n" + String.valueOf(json));
+        Log.d(TAG, "\nurl : " + String.valueOf(endpoin)+"\nbody : \n" + String.valueOf(json)+"\n");
         if (null == endpoin || "".equalsIgnoreCase(endpoin)) return;
         Handler handler = new Handler(Looper.getMainLooper());
         final StringBuffer response = new StringBuffer();
@@ -89,18 +87,18 @@ public class HttpRequest {
                     response.append(inputLine);
                 }
                 in.close();
-                Log.d(TAG, "Response : \n" + String.valueOf(response.toString()));
                 final Type responseType = getResponseType();
                 Log.d(TAG, "Response Type: \n" + String.valueOf(responseType));
+                Log.d(TAG, "Response : \n" + String.valueOf(response.toString()));
                 if (null == responseType) {
                     handler.post(() -> {
                         if (null != listener)
-                            listener.onSuccess(response.toString());
+                            listener.onSuccess((T) response.toString());
                     });
                 } else {
                     String responseResult = response.toString();
                     if (responseResult.length() > 1 && (responseResult.startsWith("{") && responseResult.endsWith("}") || responseResult.startsWith("[") && responseResult.endsWith("]"))) {
-                        final Object jsonResponse = GsonHelper.newInstance().getGson().fromJson(response.toString(), responseType);
+                        final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(response.toString(), responseType);
                         handler.post(() -> {
                             if (null != listener)
                                 listener.onSuccess(jsonResponse);

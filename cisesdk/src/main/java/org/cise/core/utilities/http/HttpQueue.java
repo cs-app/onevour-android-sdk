@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 public class HttpQueue {
 
     private static final String TAG = "HttpQueue";
-    private final int MAX_POOL = 3;
+    private final int MAX_POOL = 8;
     private static HttpQueue httpQueue;
     private ExecutorService executor = Executors.newFixedThreadPool(MAX_POOL);
 
@@ -28,7 +28,7 @@ public class HttpQueue {
         if (null == executor) executor = Executors.newFixedThreadPool(MAX_POOL);
     }
 
-    public static synchronized HttpQueue newInstance() {
+    public static HttpQueue newInstance() {
         if (null == httpQueue) httpQueue = new HttpQueue();
         return httpQueue;
     }
