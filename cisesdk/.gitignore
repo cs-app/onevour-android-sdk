@@ -1,15 +1,8 @@
 /build
-*.iml
-.gradle
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
-.DS_Store
 /captures
-.externalNativeBuild
-.apk
-*.apk
-app/release/free/release/app.aab
 /local.properties
 /build
 /captures
@@ -22,9 +15,9 @@ app/release/free/release/app.aab
 /logs
 /classes
 .DS_Store
+.gradle
 .idea
 .settings
-.gradle
 *.iml
 *.classpath
 *.project

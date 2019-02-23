@@ -1,12 +1,8 @@
 /build
-*.iml
-.gradle
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
-.DS_Store
 /captures
-.externalNativeBuild
 /local.properties
 /build
 /captures
@@ -19,11 +15,9 @@
 /logs
 /classes
 .DS_Store
+.gradle
 .idea
 .settings
-.gradle
-.apk
-.aab
 *.iml
 *.classpath
 *.project
@@ -33,4 +27,3 @@
 *.lic
 *.pdf
 *.aab
-*.apk
