@@ -1,8 +1,10 @@
 package org.cise.core.utilities.ui.adapter.recyclerview;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,25 +26,23 @@ import java.util.Map;
  * Arguments T is ViewHolder<br>
  */
 @SuppressWarnings("unchecked")
-public class GenericAdapter<T extends GenericHolder> extends RecyclerView.Adapter<T> implements GenericHolder.Listener {
+public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Adapter<T> implements GenericHolder.Listener {
 
     private static final String TAG = "GAdapter";
 
     private Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    private Class<T> persistentClass = (Class<T>) type;
-    private Class<?> clazz = (Class<?>) ((ParameterizedType) persistentClass.getGenericSuperclass()).getActualTypeArguments()[0];
 
     private Map<String, T> cached = new HashMap<>();
     private boolean isLoader;
     private int layoutId;
-    private List adapterList = buildListType(clazz);
+    private ArrayList<E> adapterList = new ArrayList<>();
 
     private final int VIEW_CONTENT = 0;
     private final int VIEW_LOADER = 1;
     private AdapterHolderLoader holderLoader;
     private int lastSelected = -1;
 
-    private GenericHolder.AdapterCallback adapterCallback;
+    private GenericHolder.AdapterListener adapterListener;
 
     protected GenericAdapter() {
 
@@ -52,29 +52,24 @@ public class GenericAdapter<T extends GenericHolder> extends RecyclerView.Adapte
         this.layoutId = layoutId;
     }
 
-    protected GenericAdapter(int layoutId, List adapterList) {
+    protected GenericAdapter(int layoutId, ArrayList<E> adapterList) {
         this.layoutId = layoutId;
         this.adapterList = adapterList;
     }
 
-    public GenericAdapter(int layoutId, List adapterList, GenericHolder.AdapterCallback adapterCallback) {
+    public GenericAdapter(int layoutId, ArrayList adapterList, GenericHolder.AdapterListener adapterListener) {
         this.layoutId = layoutId;
         this.adapterList = adapterList;
-        this.adapterCallback = adapterCallback;
+        this.adapterListener = adapterListener;
     }
 
-    public GenericAdapter(int layoutId, GenericHolder.AdapterCallback adapterCallback) {
+    public GenericAdapter(int layoutId, GenericHolder.AdapterListener adapterListener) {
         this.layoutId = layoutId;
-        this.adapterCallback = adapterCallback;
+        this.adapterListener = adapterListener;
     }
 
-    public void setAdapterCallback(GenericHolder.AdapterCallback adapterCallback) {
-        this.adapterCallback = adapterCallback;
-    }
-
-    private <S> List<S> buildListType(Class<S> type) {
-        List<S> list = new ArrayList<>();
-        return list;
+    public void setAdapterListener(GenericHolder.AdapterListener adapterListener) {
+        this.adapterListener = adapterListener;
     }
 
     public void setLoader(boolean loader) {
@@ -89,17 +84,13 @@ public class GenericAdapter<T extends GenericHolder> extends RecyclerView.Adapte
         }
     }
 
-    public void addMore(Object o) {
+    public void addMore(E o) {
         int size = this.adapterList.size();
         this.adapterList.add(o);
-//        if (newSize > 1) {
-//            notifyItemRangeInserted(newSize - 2, newSize - 1);
-//        } else {
-//        }
-        notifyDataSetChanged();
+        notifyItemRangeInserted(size - 1, size);
     }
 
-    public void addMore(final List adapterList) {
+    public void addMore(final List<E> adapterList) {
         int newSize = adapterList.size();
         int start = this.adapterList.size();
         if (isLoader) {
@@ -177,7 +168,7 @@ public class GenericAdapter<T extends GenericHolder> extends RecyclerView.Adapte
     public void onBindViewHolder(@NonNull GenericHolder holder, int position) {
         Object o = adapterList.get(position);
         holder.setListener(this);
-        holder.setAdapterCallback(adapterCallback);
+        holder.setAdapterListener(adapterListener);
         holder.onBindViewHolder(o);
         holder.onBindViewHolder(o, position);
         holder.onBindViewHolder(adapterList, position);
@@ -209,22 +200,26 @@ public class GenericAdapter<T extends GenericHolder> extends RecyclerView.Adapte
         }
     }
 
-    public List<?> getAdapterList() {
+    public List<E> getAdapterList() {
         return adapterList;
     }
 
-    public void setAdapterList(List adapterList) {
-        this.adapterList = adapterList;
+    /**
+     * reset adapter and add new all
+     */
+    public void setAdapterList(List<E> adapterList) {
+        this.adapterList.clear();
+        this.adapterList.addAll(adapterList);
         notifyDataSetChanged();
     }
 
 
-    public <S> void updateItem(int index, S value) {
+    public void updateItem(int index, E value) {
         adapterList.set(index, value);
         notifyItemChanged(index);
     }
 
-    public <S> void updateItemLastSelect(S value) {
+    public void updateItemLastSelect(E value) {
         adapterList.set(lastSelected, value);
         notifyItemChanged(lastSelected);
     }

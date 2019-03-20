@@ -48,7 +48,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         initialize(editText, false, null, 0, Integer.MAX_VALUE);
     }
 
-    public NumberInput(final EditText editTextView, final boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
+    public NumberInput(final EditText editText, final boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
         initialize(editText, isDecimal, numberFormat, min, max);
     }
 
@@ -109,7 +109,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         numPoint.setOnClickListener(this);
         del.setOnClickListener(this);
         editTextId = this.editText.getId();
-        editText.setOnTouchListener(this);
+        // editText.setOnTouchListener(this);
         alertBuilder.setView(dialogView);
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

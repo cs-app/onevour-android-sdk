@@ -3,7 +3,7 @@ package org.cise.core.utilities.icons;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.widget.ImageView;
 
 /**

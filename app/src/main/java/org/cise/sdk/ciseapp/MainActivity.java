@@ -1,8 +1,8 @@
 package org.cise.sdk.ciseapp;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 
 import org.cise.core.utilities.dummy.DummyHelper;
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         UIHelper.initRecyclerView(rvSample, adapter);
+
         adapter.addMore(DummyHelper.initListString());
         User user = new User("uadmin1", "sphere154");
         APIHitter.post("http://rundiri.com/sphere_warehouse/index.php/sync/api_login", user,

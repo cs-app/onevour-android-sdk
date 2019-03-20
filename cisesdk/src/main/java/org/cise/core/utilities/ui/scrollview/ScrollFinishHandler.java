@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class ScrollFinishHandler implements View.OnTouchListener {
+
     private static final int SCROLL_TASK_INTERVAL = 100;
 
     @Override

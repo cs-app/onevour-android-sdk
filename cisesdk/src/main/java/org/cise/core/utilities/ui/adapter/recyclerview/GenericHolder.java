@@ -1,7 +1,7 @@
 package org.cise.core.utilities.ui.adapter.recyclerview;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
@@ -17,7 +17,7 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
     protected Context context;
     private int overrideCount = 0;
     private Listener listener;
-    private AdapterCallback adapterCallback;
+    private AdapterListener adapterListener;
 
 
     public GenericHolder(View view) {
@@ -29,12 +29,12 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
         this.listener = listener;
     }
 
-    public void setAdapterCallback(AdapterCallback adapterCallback) {
-        this.adapterCallback = adapterCallback;
+    public void setAdapterListener(AdapterListener adapterListener) {
+        this.adapterListener = adapterListener;
     }
 
-    protected AdapterCallback getAdapterCallback() {
-        return adapterCallback;
+    protected AdapterListener getAdapterListener() {
+        return adapterListener;
     }
 
     public void setSelectedPosition(int selectedPosition) {
@@ -70,7 +70,7 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
         void onSelectedHolder(int index);
     }
 
-    protected interface AdapterCallback {
+    protected interface AdapterListener {
 
     }
 
