@@ -35,7 +35,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
     private TextView result;
     private StringBuilder resValueTmp;
     private int editTextId = 0;
-    private double  maxDbl;
+    private double maxDbl;
     private int maxInt;
     private boolean isDecimal = false, isPoint = false, isAfterPoint = false;
     private NumberFormat numberFormat;
@@ -58,7 +58,8 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         editText.setTextIsSelectable(true);
         editText.setCursorVisible(false);
         editText.setFocusable(false);
-        if (editText.getText().toString().isEmpty()) editText.setText("0");
+        String tmpValue = editText.getText().toString();
+        if (tmpValue.isEmpty() || !isNumeric(tmpValue)) editText.setText("0");
         this.isDecimal = isDecimal;
         this.numberFormat = numberFormat;
         if (this.numberFormat != null) {
@@ -109,43 +110,49 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         numPoint.setOnClickListener(this);
         del.setOnClickListener(this);
         editTextId = this.editText.getId();
-        // editText.setOnTouchListener(this);
+        editText.setOnTouchListener(this::onTouch);
         alertBuilder.setView(dialogView);
-        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "listener is avaiable : " + listener);
-                if (null != numberFormat) {
-                    if (isDecimal) {
-                        editText.setText(result.getText());
-                        if (listener != null) {
-                            listener.onValueChange(editText.getText().toString());
-                        }
-                    } else {
-                        try {
-                            editText.setText(numberFormat.format(numberFormat.parse(resValueTmp.toString()).intValue()));
-                            if (listener != null) {
-                                listener.onValueChange(editText.getText().toString());
-                            }
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                } else {
-                    editText.setText(resValueTmp);
+        alertBuilder.setPositiveButton("OK", (dialog, which) -> {
+            Log.d(TAG, "listener is avaiable : " + listener);
+            if (null != numberFormat) {
+                if (isDecimal) {
+                    editText.setText(result.getText());
                     if (listener != null) {
                         listener.onValueChange(editText.getText().toString());
                     }
+                } else {
+                    try {
+                        editText.setText(numberFormat.format(numberFormat.parse(resValueTmp.toString()).intValue()));
+                        if (listener != null) {
+                            listener.onValueChange(editText.getText().toString());
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                editText.setText(resValueTmp);
+                if (listener != null) {
+                    listener.onValueChange(editText.getText().toString());
                 }
             }
         });
-        alertBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
+        alertBuilder.setNegativeButton("CANCEL", (dialog, which) -> {
         });
         alertDialog = alertBuilder.create();
         result.setText(resValueTmp.toString());
+    }
+
+    private boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
+
+    public void disableTouch() {
+        editText.setOnTouchListener(null);
+    }
+
+    public void enableTouch() {
+        editText.setOnTouchListener(this::onTouch);
     }
 
     public void setTitle(String left, String right) {
@@ -168,9 +175,6 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
             } else {
                 Log.w("NumperInput", "context hide softkeyboard is null");
             }
-            /*
-            DialogHelper.hideSoftKeyboard(context);
-            */
             alertDialog.show();
         } else {
             try {
@@ -391,7 +395,8 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
             result.setText(resValueTmp.toString());
             if (null != context) {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(imm!=null)imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             } else {
                 Log.w("NumperInput", "context hide softkeyboard is null");
             }
