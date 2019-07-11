@@ -11,6 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class UIActionHelper {
 
+    /**
+     * start activity
+     * */
     public static void startActivity(Context context, Intent intent) {
         if (context != null) context.startActivity(intent);
     }

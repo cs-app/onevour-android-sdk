@@ -35,8 +35,8 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
     private TextView result;
     private StringBuilder resValueTmp;
     private int editTextId = 0;
-    private double maxDbl;
-    private int maxInt;
+    private double minDbl,maxDbl;
+    private int minInt, maxInt;
     private boolean isDecimal = false, isPoint = false, isAfterPoint = false;
     private NumberFormat numberFormat;
     private String defaultCommaSymbol = ".";
@@ -59,7 +59,13 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         editText.setCursorVisible(false);
         editText.setFocusable(false);
         String tmpValue = editText.getText().toString();
-        if (tmpValue.isEmpty() || !isNumeric(tmpValue)) editText.setText("0");
+        if (tmpValue.isEmpty()) {//|| !isNumeric(tmpValue)
+            if (isDecimal) {
+                editText.setText("0.00");
+            } else {
+                editText.setText("0");
+            }
+        }
         this.isDecimal = isDecimal;
         this.numberFormat = numberFormat;
         if (this.numberFormat != null) {
@@ -70,13 +76,13 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
             }
         }
         if (isDecimal) {
-//            minDbl = min;
+            minDbl = min;
             maxDbl = max;
-            resValueTmp = new StringBuilder(String.valueOf(min));
+            resValueTmp = new StringBuilder(String.valueOf(minDbl));
         } else {
-//            minInt = (int) min;
+            minInt = (int) min;
             maxInt = (int) max;
-            resValueTmp = new StringBuilder(String.valueOf(((int) min)));
+            resValueTmp = new StringBuilder(String.valueOf(minInt));
         }
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.input_number_dialog, null, false);
@@ -289,11 +295,11 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                 isAfterPoint = false;
                 isPoint = false;
                 int length = sbBfPoint.length();
-                if (length > 0) sbBfPoint.delete(length - 1, length);
-//                for (int i = length; i > 0; i--) {
-//                    sbBfPoint.delete(i - 1, i);
-//                    break;
-//                }
+//                if (length > 0) sbBfPoint.delete(length - 1, length);
+                for (int i = length; i > 0; i--) {
+                    sbBfPoint.delete(i - 1, i);
+                    break;
+                }
                 length = sbBfPoint.length();
                 if (length == 0) {
                     sbBfPoint.append("0");
@@ -307,11 +313,11 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
             BigInteger value = getAvailableIntValue();
             StringBuilder sbBfPoint = new StringBuilder(value.toString());
             int length = sbBfPoint.length();
-            if (length > 0) sbBfPoint.delete(length - 1, length);
-//            for (int i = length; i > 0; i--) {
-//                sbBfPoint.delete(i - 1, i);
-//                break;
-//            }
+//            if (length > 0) sbBfPoint.delete(length - 1, length);
+            for (int i = length; i > 0; i--) {
+                sbBfPoint.delete(i - 1, i);
+                break;
+            }
             length = sbBfPoint.length();
             if (length == 0) {
                 sbBfPoint.append("0");

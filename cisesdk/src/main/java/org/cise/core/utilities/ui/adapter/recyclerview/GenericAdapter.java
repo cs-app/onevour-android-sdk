@@ -125,6 +125,7 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         }
     }
 
+
     private T holderGenerator(Type type, View convertView) {
         T viewHolder = null;
         try {
@@ -172,6 +173,7 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         holder.onBindViewHolder(o);
         holder.onBindViewHolder(o, position);
         holder.onBindViewHolder(adapterList, position);
+        holder.onBindViewHolder(o, position, 0 == position, position == getItemCount() - 1);
         updateHolderReload(holder);
     }
 

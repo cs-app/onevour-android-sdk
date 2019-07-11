@@ -60,6 +60,11 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
         info();
     }
 
+    protected void onBindViewHolder(T o, int position, boolean isFirst, boolean isLast) {
+        overrideCount++;
+        info();
+    }
+
     private void info() {
         if (overrideCount == 3) {
             Log.w(TAG, "override at least 1 onBindViewHolder");

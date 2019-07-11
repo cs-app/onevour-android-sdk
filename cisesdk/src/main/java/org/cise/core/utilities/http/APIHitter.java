@@ -1,5 +1,6 @@
 package org.cise.core.utilities.http;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.cise.core.utilities.json.gson.GsonHelper;
@@ -16,32 +17,35 @@ public class APIHitter {
         return HttpQueue.newInstance();
     }
 
-    public static <T> void get(String url, Response.Listener<T> listener) {
-        queue().add(new HttpRequest(url, listener));
+    @SuppressWarnings("unchecked")
+    public static <T> void get(Context context,String url, Response.Listener<T> listener) {
+        queue().add(new HttpRequest(context,url, listener));
     }
 
-    public static <T> void post(String url, T json) {
-        post(url, json, null);
+    public static <T> void post(Context context,String url, T json) {
+        post(context, url, json, null);
     }
 
-    public static <T,E> void post(String url, T json, Response.Listener<E> listener) {
+    @SuppressWarnings("unchecked")
+    public static <T,E> void post(Context context,String url, T json, Response.Listener<E> listener) {
         if (json instanceof String) {
-            queue().add(new HttpRequest(url, (String) json, listener));
+            queue().add(new HttpRequest(context, url, (String) json, listener));
         } else {
             String body = GsonHelper.newInstance().getGson().toJson(json);
-            queue().add(new HttpRequest(url, body, listener));
+            queue().add(new HttpRequest(context, url, body, listener));
         }
     }
 
-    public static <T,E> void post(String url, int timeout, T json, Response.Listener<E> listener) {
+    @SuppressWarnings("unchecked")
+    public static <T,E> void post(Context context,String url, int timeout, T json, Response.Listener<E> listener) {
         if (json instanceof String) {
-            queue().add(new HttpRequest(url, timeout, (String) json, listener));
+            queue().add(new HttpRequest(context,url, timeout, (String) json, listener));
         } else {
-            queue().add(new HttpRequest(url, timeout, GsonHelper.newInstance().getGson().toJson(json), listener));
+            queue().add(new HttpRequest(context, url, timeout, GsonHelper.newInstance().getGson().toJson(json), listener));
         }
     }
 
-    public static void post(HttpMultipart request, Response.Listener listener) {
+    public static <T> void post(HttpMultipart request, Response.Listener<T> listener) {
         queue().add(request, listener);
     }
 

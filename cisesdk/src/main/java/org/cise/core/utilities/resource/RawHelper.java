@@ -1,10 +1,12 @@
 package org.cise.core.utilities.resource;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -40,4 +42,14 @@ public class RawHelper {
 
         return writer.toString();
     }
+
+    public static String bitmapToBase64(Bitmap bitmap) {
+        if (bitmap != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        } else return "";
+    }
+
 }

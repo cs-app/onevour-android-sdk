@@ -5,6 +5,7 @@
  */
 package org.cise.core.utilities.http;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -13,6 +14,7 @@ import org.cise.core.utilities.json.gson.GsonHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.ParameterizedType;
@@ -33,25 +35,28 @@ public class HttpRequest<T> {
     private int timeout = 0;
     private String endpoin;
     private String json;
+    private Context context;
+
     private Response.Listener<T> listener;
 
-    public HttpRequest(String url, Response.Listener<T> listener) {
-        initialize(url, MIN_TIMEOUT, json, listener);
+    public HttpRequest(Context context, String url, Response.Listener<T> listener) {
+        initialize(context, url, MIN_TIMEOUT, json, listener);
     }
 
-    public HttpRequest(String url, int timeout, Response.Listener<T> listener) {
-        initialize(url, timeout, json, listener);
+    public HttpRequest(Context context, String url, int timeout, Response.Listener<T> listener) {
+        initialize(context, url, timeout, json, listener);
     }
 
-    protected HttpRequest(String url, String json, Response.Listener<T> listener) {
-        initialize(url, MIN_TIMEOUT, json, listener);
+    protected HttpRequest(Context context, String url, String json, Response.Listener<T> listener) {
+        initialize(context, url, MIN_TIMEOUT, json, listener);
     }
 
-    protected HttpRequest(String url, int timeout, String json, Response.Listener<T> listener) {
-        initialize(url, timeout, json, listener);
+    protected HttpRequest(Context context,String url, int timeout, String json, Response.Listener<T> listener) {
+        initialize(context,url, timeout, json, listener);
     }
 
-    private void initialize(String url, int timeout, String json, Response.Listener<T> listener) {
+    private void initialize(Context context, String url, int timeout, String json, Response.Listener<T> listener) {
+        this.context = context;
         this.endpoin = url;
         this.timeout = timeout;
         this.json = json;
@@ -59,7 +64,7 @@ public class HttpRequest<T> {
     }
 
     protected void request() {
-        Log.d(TAG, "\nurl : " + String.valueOf(endpoin)+"\nbody : \n" + String.valueOf(json)+"\n");
+        Log.d(TAG, "\nurl : " + endpoin + "\nbody : \n" + json + "\n");
         if (null == endpoin || "".equalsIgnoreCase(endpoin)) return;
         Handler handler = new Handler(Looper.getMainLooper());
         final StringBuffer response = new StringBuffer();
@@ -70,8 +75,13 @@ public class HttpRequest<T> {
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setReadTimeout(READ_TIMEOUT);
             conn.setConnectTimeout(timeout < MIN_TIMEOUT ? MIN_TIMEOUT : timeout);
-            conn.setRequestMethod(null != json ? "POST" : "GET");
-            conn.setDoOutput(true);
+            if (null == json) {
+                conn.setRequestMethod("GET");
+                conn.setDoOutput(false); // true is force to post
+            } else {
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+            }
             conn.setRequestProperty("connection", "close");
             if (null != json) {
                 OutputStream os = conn.getOutputStream();
@@ -80,11 +90,21 @@ public class HttpRequest<T> {
                 os.close();
             }
             final int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            if (responseCode >= 200 && responseCode <= 299) {
+                InputStream inputStream = conn.getInputStream();
+                int size = conn.getContentLength();
+                BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+                int readBytes = 0;
+                Log.d(TAG, "progress size =" + (size));
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
+                    if (size != -1) {
+                        readBytes += inputLine.getBytes("ISO-8859-2").length + 2;
+                        Log.d(TAG, "progress =" + (size - readBytes));
+                    } else {
+                        Log.d(TAG, "content length not available");
+                    }
                 }
                 in.close();
                 final Type responseType = getResponseType();
@@ -92,7 +112,7 @@ public class HttpRequest<T> {
                 Log.d(TAG, "Response : \n" + String.valueOf(response.toString()));
                 if (null == responseType) {
                     handler.post(() -> {
-                        if (null != listener)
+                        if (null != listener && null != context)
                             listener.onSuccess((T) response.toString());
                     });
                 } else {
@@ -100,12 +120,12 @@ public class HttpRequest<T> {
                     if (responseResult.length() > 1 && (responseResult.startsWith("{") && responseResult.endsWith("}") || responseResult.startsWith("[") && responseResult.endsWith("]"))) {
                         final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(response.toString(), responseType);
                         handler.post(() -> {
-                            if (null != listener)
+                            if (null != listener && null != context)
                                 listener.onSuccess(jsonResponse);
                         });
                     } else {
                         handler.post(() -> {
-                            if (null != listener) {
+                            if (null != listener && null != context) {
                                 Error error = new Error(responseCode);
                                 error.error("Cannot convert response");
                                 listener.onError(error);
@@ -115,13 +135,13 @@ public class HttpRequest<T> {
                 }
             } else {
                 handler.post(() -> {
-                    if (null != listener)
+                    if (null != listener && null != context)
                         listener.onError(new Error(responseCode));
                 });
             }
         } catch (final MalformedURLException ex) {
             handler.post(() -> {
-                if (null != listener) listener.onError(new Error(ex));
+                if (null != listener && null != context) listener.onError(new Error(ex));
             });
             StringBuilder sb = new StringBuilder();
             sb.append("end poin : ");
@@ -137,7 +157,7 @@ public class HttpRequest<T> {
             }
         } catch (final SocketTimeoutException ex) {
             handler.post(() -> {
-                if (null != listener)
+                if (null != listener && null != context)
                     listener.onError(new Error(ex, "Socket timeout after " + READ_TIMEOUT + " ms"));
             });
             StringBuilder sb = new StringBuilder();
@@ -154,7 +174,7 @@ public class HttpRequest<T> {
             }
         } catch (final IOException ex) {
             handler.post(() -> {
-                if (null != listener) listener.onError(new Error(ex));
+                if (null != listener && null != context) listener.onError(new Error(ex));
             });
             StringBuilder sb = new StringBuilder();
             sb.append("end poin : ");
@@ -170,7 +190,7 @@ public class HttpRequest<T> {
             }
         } catch (final Exception ex) {
             handler.post(() -> {
-                if (null != listener) listener.onError(new Error(ex));
+                if (null != listener && null != context) listener.onError(new Error(ex));
             });
             StringBuilder sb = new StringBuilder();
             sb.append("end poin : ");
@@ -196,7 +216,7 @@ public class HttpRequest<T> {
      */
     private Type getResponseType() {
         Type responseType = null;
-        if (null != listener) {
+        if (null != listener && null != context) {
             Type[] types = listener.getClass().getGenericInterfaces();
             for (Type type : types) {
                 if (type instanceof ParameterizedType) {

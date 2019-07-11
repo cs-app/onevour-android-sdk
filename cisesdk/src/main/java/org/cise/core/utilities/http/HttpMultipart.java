@@ -4,6 +4,7 @@ package org.cise.core.utilities.http;
  * Created by user on 06/06/2017.
  */
 
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
@@ -41,6 +42,8 @@ public class HttpMultipart {
     private PrintWriter writer;
     private static final int MIN_TIMEOUT = 6000;
     private int timeout = 0;
+    private int responseCode = 0;
+    private Context context;
 
     private Map<String, String> formHeader = new HashMap<>();
     private Map<String, String> formField = new HashMap<>();
@@ -54,33 +57,35 @@ public class HttpMultipart {
      *      * @throws IOException
      *      
      */
-    public HttpMultipart(String requestURL) throws IOException {
+    public HttpMultipart(Context context,String requestURL) throws IOException {
         // creates a unique boundary based on time stamp
         boundary = "===" + System.currentTimeMillis() + "===";
-        initializeHttp(requestURL, 0);
+        initializeHttp(context, requestURL, 0);
     }
 
-    public HttpMultipart(String requestURL, int timeout) throws IOException {
+    public HttpMultipart(Context context,String requestURL, int timeout) throws IOException {
         // creates a unique boundary based on time stamp
         boundary = "===" + System.currentTimeMillis() + "===";
-        initializeHttp(requestURL, timeout);
+        initializeHttp(context, requestURL, timeout);
     }
 
-    public HttpMultipart(String requestURL, String charset) throws IOException {
+    public HttpMultipart(Context context,String requestURL, String charset) throws IOException {
         this.charset = charset;
         // creates a unique boundary based on time stamp
         boundary = "===" + System.currentTimeMillis() + "===";
-        initializeHttp(requestURL, 0);
+        initializeHttp(context, requestURL, 0);
     }
 
-    public HttpMultipart(String requestURL, String charset, int timeout) throws IOException {
+    public HttpMultipart(Context context,String requestURL, String charset, int timeout) throws IOException {
         this.charset = charset;
         // creates a unique boundary based on time stamp
         boundary = "===" + System.currentTimeMillis() + "===";
-        initializeHttp(requestURL, timeout);
+        initializeHttp(context, requestURL, timeout);
     }
 
-    private void initializeHttp(String requestURL, int timeout) throws IOException {
+    private void initializeHttp(Context context, String requestURL, int timeout) throws IOException {
+        Log.d(TAG, "upload url : "+requestURL);
+        this.context = context;
         URL url = new URL(requestURL);
         httpConn = (HttpURLConnection) url.openConnection();
         httpConn.setUseCaches(false);
@@ -89,11 +94,7 @@ public class HttpMultipart {
         httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
         httpConn.setRequestProperty("User-Agent", "Cise-Agent");
         httpConn.setConnectTimeout(timeout < MIN_TIMEOUT ? MIN_TIMEOUT : timeout);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
-            System.setProperty("http.keepAlive", "false");
-        } else {
-            httpConn.setRequestProperty("connection", "close");
-        }
+        httpConn.setRequestProperty("connection", "close");
     }
 
 
@@ -221,6 +222,7 @@ public class HttpMultipart {
         writer.close();
         // checks server's status code first
         int status = httpConn.getResponseCode();
+        responseCode = status;
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpConn.getInputStream()));
             String line = null;
@@ -230,8 +232,12 @@ public class HttpMultipart {
             reader.close();
             httpConn.disconnect();
         } else {
-            throw new IOException("Server returned non-OK status: " + status);
+            throw new IOException("Server returned " + status);
         }
         return response;
+    }
+
+    public int getResponseCode() {
+        return responseCode;
     }
 }
