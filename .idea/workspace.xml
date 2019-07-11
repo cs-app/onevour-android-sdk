@@ -14,30 +14,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f977525c-6bc3-4670-bf1a-e8af2323f9a3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIActionHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIActionHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/APIHitter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/APIHitter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/HttpMultipart.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/HttpMultipart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/HttpQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/HttpQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/HttpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/http/HttpRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonDateDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonDateDeserializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/resource/RawHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/resource/RawHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/res/drawable/ic_action_arrow_back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/res/layout/button_loader.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/res/layout/button_loader.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/res/layout/loader.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/res/layout/loader.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -152,6 +133,7 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cisesdk/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
               <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="12" selection-end-column="35" />
@@ -162,8 +144,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="57" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
+            <state>
+              <caret column="10" selection-start-column="10" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -197,7 +188,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -220,6 +211,7 @@
       <find>gra</find>
       <find>grad</find>
       <find>jar</find>
+      <find>glide</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -236,7 +228,6 @@
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/gps/GPSHelper.java" />
         <option value="$PROJECT_DIR$/app/src/androidTest/java/org/cise/sdk/ciseapp/ExampleInstrumentedTest.java" />
         <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/cisesdk/.gitignore" />
         <option value="$PROJECT_DIR$/app/.gitignore" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/NameAdapter.java" />
@@ -252,6 +243,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/MainActivity.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
       </list>
     </option>
   </component>
@@ -264,6 +256,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -286,8 +280,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -470,16 +462,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Resources Explorer" />
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.32956383" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.32956383" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
+      <window_info id="Resources Explorer" order="8" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.690411" />
       <window_info anchor="bottom" id="Logcat" order="1" weight="0.66164386" />
       <window_info anchor="bottom" id="TODO" order="2" />
@@ -646,13 +639,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/ResponseGeneric.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -693,17 +679,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cisesdk/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="12" selection-end-column="35" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="57" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -713,10 +692,6 @@
           <caret line="101" column="38" selection-start-line="101" selection-start-column="38" selection-end-line="101" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6297#6298#0" expanded="true" />
-            <element signature="e#6346#6347#0" expanded="true" />
-            <element signature="e#6379#6380#0" expanded="true" />
-            <element signature="e#6437#6438#0" expanded="true" />
             <element signature="method#inputValue#0;class#NumberInput#0" />
             <element signature="method#delete#0;class#NumberInput#0" />
             <element signature="method#getAvailableIntValue#0;class#NumberInput#0" />
@@ -745,6 +720,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
