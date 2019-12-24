@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.sql.Timestamp;
 
 /**
- * Created by user on 03/08/2017.
+ * Created by Zuliadin on 03/08/2017.
  */
 
 public class GsonTimestampDeserializer implements JsonDeserializer<Timestamp> {

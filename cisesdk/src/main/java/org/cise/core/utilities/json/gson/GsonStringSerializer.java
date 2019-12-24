@@ -8,7 +8,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 
 /**
- * Created by user on 29/01/2017.
+ * Created by Zuliadin on 29/01/2017.
  */
 
 public class GsonStringSerializer implements JsonSerializer<String> {

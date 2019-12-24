@@ -7,13 +7,14 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 /**
- * Created by user on 05/09/2016.
+ * Created by Zuliadin on 05/09/2016.
  */
 public class TextViewFilter {
 
     public static class ValueNumber implements TextWatcher {
 
         private EditText editText;
+
         private boolean firstZero = true;
 
         public ValueNumber(EditText editText) {

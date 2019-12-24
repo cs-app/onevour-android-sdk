@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.cise.core.R;
+import org.cise.core.utilities.commons.ExceptionUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -22,64 +23,64 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by user on 20/11/2017.
+ * Created by Zuliadin on 20/11/2017.
  * Arguments T is ViewHolder<br>
  */
 @SuppressWarnings("unchecked")
-public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Adapter<T> implements GenericHolder.Listener {
+public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Adapter<T> implements GenericHolder.Listener<T> {
 
     private static final String TAG = "GAdapter";
 
     private Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
     private Map<String, T> cached = new HashMap<>();
-    private boolean isLoader;
-    private int layoutId;
+
     private ArrayList<E> adapterList = new ArrayList<>();
 
     private final int VIEW_CONTENT = 0;
+
     private final int VIEW_LOADER = 1;
+
     private AdapterHolderLoader holderLoader;
+
     private int lastSelected = -1;
 
-    private GenericHolder.AdapterListener adapterListener;
+    private boolean isLoader;
 
-    protected GenericAdapter() {
+    private int layoutId;
 
-    }
+    private AdapterListener<E> adapterListener;
+
+    private GenericHolder.Listener<E> holderListener;
 
     protected GenericAdapter(int layoutId) {
         this.layoutId = layoutId;
     }
 
-    protected GenericAdapter(int layoutId, ArrayList<E> adapterList) {
+
+    public GenericAdapter(int layoutId, ArrayList adapterList) {
         this.layoutId = layoutId;
         this.adapterList = adapterList;
     }
 
-    public GenericAdapter(int layoutId, ArrayList adapterList, GenericHolder.AdapterListener adapterListener) {
-        this.layoutId = layoutId;
-        this.adapterList = adapterList;
+    public void setAdapterListener(AdapterListener<E> adapterListener) {
         this.adapterListener = adapterListener;
     }
 
-    public GenericAdapter(int layoutId, GenericHolder.AdapterListener adapterListener) {
-        this.layoutId = layoutId;
-        this.adapterListener = adapterListener;
+    public void setHolderListener(GenericHolder.Listener<E> holderListener) {
+        this.holderListener = holderListener;
     }
 
-    public void setAdapterListener(GenericHolder.AdapterListener adapterListener) {
-        this.adapterListener = adapterListener;
-    }
-
-    public void setLoader(boolean loader) {
+    private void setLoader(boolean loader) {
         isLoader = loader;
+        int size = this.adapterList.size();
         if (isLoader) {
             this.adapterList.add(null);
+            notifyItemInserted(size);
         } else {
-            int size = this.adapterList.size();
-            if (size > 0) {
-                if (this.adapterList.get(size - 1) == null) this.adapterList.remove(size - 1);
+            if (size > 0 && this.adapterList.get(size - 1) == null) {
+                this.adapterList.remove(size - 1);
+                notifyItemRemoved(this.adapterList.size());
             }
         }
     }
@@ -87,35 +88,32 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
     public void addMore(E o) {
         int size = this.adapterList.size();
         this.adapterList.add(o);
-        notifyItemRangeInserted(size - 1, size);
+        notifyItemRangeInserted(size, size + 1);
     }
 
     public void addMore(final List<E> adapterList) {
-        int newSize = adapterList.size();
-        int start = this.adapterList.size();
-        if (isLoader) {
-            this.adapterList.remove(start - 1);
-            start--;
-        }
-        this.adapterList.addAll(adapterList);
-        notifyItemRangeInserted(start, newSize);
+        addMore(adapterList, true);
     }
 
-    public void loaderFinish() {
-        final int newSize = adapterList.size();
-        setLoader(false);
-        notifyItemRemoved(newSize - 1);
+    public void addMore(final List<E> adapterList, boolean isRemoveLoader) {
+        if (isRemoveLoader) removeLoader();
+        int start = this.adapterList.size();
+        this.adapterList.addAll(adapterList);
+        int newSize = adapterList.size();
+        notifyItemRangeInserted(start, newSize);
     }
 
     @Override
     public int getItemViewType(int position) {
+        Log.d(TAG, "item view type: " + position);
         return adapterList.get(position) != null ? VIEW_CONTENT : VIEW_LOADER;
     }
 
+
+    @NonNull
     @Override
     public T onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        Log.d(TAG, "viewType : " + viewType);
         if (VIEW_CONTENT == viewType) {
             View convertView = LayoutInflater.from(context).inflate(this.layoutId, parent, false);
             return holderGenerator(type, convertView);
@@ -125,7 +123,6 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         }
     }
 
-
     private T holderGenerator(Type type, View convertView) {
         T viewHolder = null;
         try {
@@ -134,32 +131,20 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
                 viewHolder = (T) constructor.newInstance(convertView);
                 cached.put("VH" + type.hashCode(), viewHolder);
             } else {
-                viewHolder = (T) cached.get("VH" + type.hashCode());//.newInstance(convertView);
+                viewHolder = (T) cached.get("VH" + type.hashCode());
             }
         } catch (InstantiationException e) {
-            Log.e(TAG, String.valueOf("Incompatible holder"));
-            Log.e(TAG, String.valueOf(e.getMessage()));
-            for (StackTraceElement s : e.getStackTrace()) {
-                Log.e(TAG, String.valueOf(s));
-            }
+            Log.e(TAG, "Incompatible holder");
+            Log.e(TAG, ExceptionUtils.message(e));
         } catch (IllegalAccessException e) {
-            Log.e(TAG, String.valueOf(e.getMessage()));
-            for (StackTraceElement s : e.getStackTrace()) {
-                Log.e(TAG, String.valueOf(s));
-            }
+            Log.e(TAG, ExceptionUtils.message(e));
         } catch (InvocationTargetException e) {
-            Log.e(TAG, String.valueOf(e.getMessage()));
-            for (StackTraceElement s : e.getStackTrace()) {
-                Log.e(TAG, String.valueOf(s));
-            }
+            Log.e(TAG, ExceptionUtils.message(e));
         } catch (NoSuchMethodException e) {
-            Log.e(TAG, String.valueOf(e.getMessage()));
-            for (StackTraceElement s : e.getStackTrace()) {
-                Log.e(TAG, String.valueOf(s));
-            }
+            Log.e(TAG, ExceptionUtils.message(e));
         } finally {
             if (null != viewHolder) {
-                Log.d(TAG, "Class : " + String.valueOf(viewHolder.getClass()));
+                Log.d(TAG, "Class : " + viewHolder.getClass());
             }
         }
         return viewHolder;
@@ -167,17 +152,21 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
 
     @Override
     public void onBindViewHolder(@NonNull GenericHolder holder, int position) {
-        Object o = adapterList.get(position);
-        holder.setListener(this);
-        holder.setAdapterListener(adapterListener);
+        E o = adapterList.get(position);
+        if (holderListener != null) {
+            holder.setListener(holderListener);
+        } else {
+            holder.setListener(this);
+        }
         holder.onBindViewHolder(o);
         holder.onBindViewHolder(o, position);
         holder.onBindViewHolder(adapterList, position);
-        holder.onBindViewHolder(o, position, 0 == position, position == getItemCount() - 1);
-        updateHolderReload(holder);
+        holder.onBindViewHolder(o, position, 0 == position && !isLoader, position == getItemCount() - 1 && !isLoader);
+        holderReload(holder);
+        Log.d(TAG, "bind position " + position);
     }
 
-    private void updateHolderReload(final GenericHolder holder) {
+    private void holderReload(final GenericHolder holder) {
         if (holder instanceof AdapterHolderLoader) {
             holderLoader = (AdapterHolderLoader) holder;
         }
@@ -199,6 +188,18 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
                 holderLoader.info.setVisibility(View.VISIBLE);
                 holderLoader.progressBar.setVisibility(View.GONE);
             }
+            holderLoader.setListener(() -> {
+                if (adapterListener != null) {
+                    int size = adapterList.size();
+                    int index = size - 1;
+                    E o = adapterList.get(index);
+                    if (o == null) {
+                        index = size - 2;
+                        o = adapterList.get(index);
+                    }
+                    adapterListener.onLoadRetry(index, o);
+                }
+            });
         }
     }
 
@@ -206,12 +207,17 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         return adapterList;
     }
 
+    public void setValue(List<E> values) {
+        setValue(values, true);
+    }
+
     /**
      * reset adapter and add new all
      */
-    public void setAdapterList(List<E> adapterList) {
+    public void setValue(List<E> values, boolean isRemoveLoader) {
+        if (isRemoveLoader) removeLoader();
         this.adapterList.clear();
-        this.adapterList.addAll(adapterList);
+        this.adapterList.addAll(values);
         notifyDataSetChanged();
     }
 
@@ -226,16 +232,41 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         notifyItemChanged(lastSelected);
     }
 
-    @Override
-    public void onSelectedHolder(int index) {
-        lastSelected = index;
-    }
-
-
-    public void clearAdapterList() {
+    public void clear() {
         if (this.adapterList != null) {
             this.adapterList.clear();
             notifyDataSetChanged();
         }
+    }
+
+    public E getItem(int totalItemCount) {
+        int size = adapterList.size();
+        if (totalItemCount < size) {
+            return adapterList.get(totalItemCount);
+        }
+        return null;
+    }
+
+    @Override
+    public void onSelectedHolder(int index, T o) {
+        lastSelected = index;
+    }
+
+    public interface AdapterListener<E> {
+
+        void onLoadRetry(int index, E o);
+
+    }
+
+    public void showLoader() {
+        setLoader(true);
+    }
+
+    public void removeLoader() {
+        setLoader(false);
+    }
+
+    public boolean isLoader() {
+        return isLoader;
     }
 }

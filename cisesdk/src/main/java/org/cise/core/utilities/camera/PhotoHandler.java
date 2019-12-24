@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by user on 26/07/2017.
+ * Created by Zuliadin on 26/07/2017.
  */
 
 public class PhotoHandler implements Serializable, Parcelable {

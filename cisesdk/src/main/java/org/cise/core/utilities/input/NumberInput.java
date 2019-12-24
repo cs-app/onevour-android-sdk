@@ -2,7 +2,6 @@ package org.cise.core.utilities.input;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cise.core.R;
+import org.cise.core.utilities.commons.ExceptionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -29,20 +29,34 @@ import java.text.ParseException;
 public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
     private static final String TAG = "NID";
+
     private Context context;
+
     private AlertDialog alertDialog;
+
     private EditText editText;
+
     private TextView result;
+
     private StringBuilder resValueTmp;
+
     private int editTextId = 0;
-    private double minDbl,maxDbl;
+
+    private double minDbl, maxDbl;
+
     private int minInt, maxInt;
+
     private boolean isDecimal = false, isPoint = false, isAfterPoint = false;
+
     private NumberFormat numberFormat;
+
     private String defaultCommaSymbol = ".";
+
     private LinearLayout titleContent;
+
     private TextView titleLeft, titleRight;
-    private listener listener;
+
+    private Listener listener;
 
     public NumberInput(final EditText editText) {
         initialize(editText, false, null, 0, Integer.MAX_VALUE);
@@ -59,7 +73,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         editText.setCursorVisible(false);
         editText.setFocusable(false);
         String tmpValue = editText.getText().toString();
-        if (tmpValue.isEmpty()) {//|| !isNumeric(tmpValue)
+        if (tmpValue.isEmpty()) {
             if (isDecimal) {
                 editText.setText("0.00");
             } else {
@@ -119,28 +133,29 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         editText.setOnTouchListener(this::onTouch);
         alertBuilder.setView(dialogView);
         alertBuilder.setPositiveButton("OK", (dialog, which) -> {
-            Log.d(TAG, "listener is avaiable : " + listener);
-            if (null != numberFormat) {
-                if (isDecimal) {
-                    editText.setText(result.getText());
-                    if (listener != null) {
-                        listener.onValueChange(editText.getText().toString());
+            try {
+                Log.d(TAG, "Listener is available : " + listener);
+                if (null != listener) listener.onSubmitValue();
+                if (null != numberFormat) {
+                    if (isDecimal) {
+                        editText.setText(result.getText());
+                    } else {
+
+                        editText.setText(numberFormat.format(numberFormat.parse(resValueTmp.toString()).intValue()));
+
                     }
                 } else {
-                    try {
-                        editText.setText(numberFormat.format(numberFormat.parse(resValueTmp.toString()).intValue()));
-                        if (listener != null) {
-                            listener.onValueChange(editText.getText().toString());
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    editText.setText(resValueTmp);
+                }
+                if (null != listener) {
+                    if (isDecimal) {
+                        listener.doubleValue(numberFormat.parse(resValueTmp.toString()).doubleValue());
+                    } else {
+                        listener.intValue(numberFormat.parse(resValueTmp.toString()).intValue());
                     }
                 }
-            } else {
-                editText.setText(resValueTmp);
-                if (listener != null) {
-                    listener.onValueChange(editText.getText().toString());
-                }
+            } catch (ParseException e) {
+                Log.e(TAG, ExceptionUtils.message(e));
             }
         });
         alertBuilder.setNegativeButton("CANCEL", (dialog, which) -> {
@@ -223,7 +238,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                     delete();
                 }
             } catch (ParseException e) {
-                e.printStackTrace();
+                Log.e(TAG, ExceptionUtils.message(e));
             }
         }
     }
@@ -448,18 +463,23 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                     delete();
                 }
             } catch (ParseException e) {
-                e.printStackTrace();
+                Log.e(TAG, ExceptionUtils.message(e));
             }
         }
         return false;
     }
 
-    public void setListener(NumberInput.listener listener) {
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
 
-    public interface listener {
+    public interface Listener {
 
-        void onValueChange(String value);
+        void onSubmitValue();
+
+        void doubleValue(double v);
+
+        void intValue(int i);
+
     }
 }

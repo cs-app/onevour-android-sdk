@@ -37,25 +37,25 @@ public class HttpRequest<T> {
     private String json;
     private Context context;
 
-    private Response.Listener<T> listener;
+    private HttpResponse.Listener<T> listener;
 
-    public HttpRequest(Context context, String url, Response.Listener<T> listener) {
+    public HttpRequest(Context context, String url, HttpResponse.Listener<T> listener) {
         initialize(context, url, MIN_TIMEOUT, json, listener);
     }
 
-    public HttpRequest(Context context, String url, int timeout, Response.Listener<T> listener) {
+    public HttpRequest(Context context, String url, int timeout, HttpResponse.Listener<T> listener) {
         initialize(context, url, timeout, json, listener);
     }
 
-    protected HttpRequest(Context context, String url, String json, Response.Listener<T> listener) {
+    protected HttpRequest(Context context, String url, String json, HttpResponse.Listener<T> listener) {
         initialize(context, url, MIN_TIMEOUT, json, listener);
     }
 
-    protected HttpRequest(Context context,String url, int timeout, String json, Response.Listener<T> listener) {
+    protected HttpRequest(Context context,String url, int timeout, String json, HttpResponse.Listener<T> listener) {
         initialize(context,url, timeout, json, listener);
     }
 
-    private void initialize(Context context, String url, int timeout, String json, Response.Listener<T> listener) {
+    private void initialize(Context context, String url, int timeout, String json, HttpResponse.Listener<T> listener) {
         this.context = context;
         this.endpoin = url;
         this.timeout = timeout;
@@ -108,8 +108,8 @@ public class HttpRequest<T> {
                 }
                 in.close();
                 final Type responseType = getResponseType();
-                Log.d(TAG, "Response Type: \n" + String.valueOf(responseType));
-                Log.d(TAG, "Response : \n" + String.valueOf(response.toString()));
+                Log.d(TAG, "HttpResponse Type: \n" + String.valueOf(responseType));
+                Log.d(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
                 if (null == responseType) {
                     handler.post(() -> {
                         if (null != listener && null != context)
@@ -126,9 +126,9 @@ public class HttpRequest<T> {
                     } else {
                         handler.post(() -> {
                             if (null != listener && null != context) {
-                                Error error = new Error(responseCode);
-                                error.error("Cannot convert response");
-                                listener.onError(error);
+                                HttpError httpError = new HttpError(responseCode);
+                                httpError.error("Cannot convert response");
+                                listener.onError(httpError);
                             }
                         });
                     }
@@ -136,12 +136,12 @@ public class HttpRequest<T> {
             } else {
                 handler.post(() -> {
                     if (null != listener && null != context)
-                        listener.onError(new Error(responseCode));
+                        listener.onError(new HttpError(responseCode));
                 });
             }
         } catch (final MalformedURLException ex) {
             handler.post(() -> {
-                if (null != listener && null != context) listener.onError(new Error(ex));
+                if (null != listener && null != context) listener.onError(new HttpError(ex));
             });
             StringBuilder sb = new StringBuilder();
             sb.append("end poin : ");
@@ -149,7 +149,7 @@ public class HttpRequest<T> {
             sb.append("\n");
             sb.append(ex.getMessage());
             sb.append("\n");
-            Log.e(TAG, "Response : \n" + String.valueOf(response.toString()));
+            Log.e(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
             for (StackTraceElement e : ex.getStackTrace()) {
                 sb.append("\n");
                 sb.append(e);
@@ -158,7 +158,7 @@ public class HttpRequest<T> {
         } catch (final SocketTimeoutException ex) {
             handler.post(() -> {
                 if (null != listener && null != context)
-                    listener.onError(new Error(ex, "Socket timeout after " + READ_TIMEOUT + " ms"));
+                    listener.onError(new HttpError(ex, "Socket timeout after " + READ_TIMEOUT + " ms"));
             });
             StringBuilder sb = new StringBuilder();
             sb.append("end poin : ");
@@ -166,7 +166,7 @@ public class HttpRequest<T> {
             sb.append("\n");
             sb.append(ex.getMessage());
             sb.append("\n");
-            Log.e(TAG, "Response : \n" + String.valueOf(response.toString()));
+            Log.e(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
             for (StackTraceElement e : ex.getStackTrace()) {
                 sb.append("\n");
                 sb.append(e);
@@ -174,7 +174,7 @@ public class HttpRequest<T> {
             }
         } catch (final IOException ex) {
             handler.post(() -> {
-                if (null != listener && null != context) listener.onError(new Error(ex));
+                if (null != listener && null != context) listener.onError(new HttpError(ex));
             });
             StringBuilder sb = new StringBuilder();
             sb.append("end poin : ");
@@ -182,7 +182,7 @@ public class HttpRequest<T> {
             sb.append("\n");
             sb.append(ex.getMessage());
             sb.append("\n");
-            Log.e(TAG, "Response : \n" + String.valueOf(response.toString()));
+            Log.e(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
             for (StackTraceElement e : ex.getStackTrace()) {
                 sb.append("\n");
                 sb.append(e);
@@ -190,7 +190,7 @@ public class HttpRequest<T> {
             }
         } catch (final Exception ex) {
             handler.post(() -> {
-                if (null != listener && null != context) listener.onError(new Error(ex));
+                if (null != listener && null != context) listener.onError(new HttpError(ex));
             });
             StringBuilder sb = new StringBuilder();
             sb.append("end poin : ");
@@ -198,7 +198,7 @@ public class HttpRequest<T> {
             sb.append("\n");
             sb.append(ex.getMessage());
             sb.append("\n");
-            Log.e(TAG, "Response : \n" + String.valueOf(response.toString()));
+            Log.e(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
             for (StackTraceElement e : ex.getStackTrace()) {
                 sb.append("\n");
                 sb.append(e);

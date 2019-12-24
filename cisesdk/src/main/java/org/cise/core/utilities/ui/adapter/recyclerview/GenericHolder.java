@@ -1,24 +1,27 @@
 package org.cise.core.utilities.ui.adapter.recyclerview;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 
 import java.util.List;
 
 /**
- * Created by user on 23/11/2017.
+ * Created by Zuliadin on 23/11/2017.
  */
 
 public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
 
     private static final String TAG = "GAdapterHolder";
-    protected Context context;
-    private int overrideCount = 0;
-    private Listener listener;
-    private AdapterListener adapterListener;
 
+    protected Context context;
+
+    private int overrideCount = 0;
+
+    private Listener<T> listener;
 
     public GenericHolder(View view) {
         super(view);
@@ -27,18 +30,6 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
 
     public void setListener(Listener listener) {
         this.listener = listener;
-    }
-
-    public void setAdapterListener(AdapterListener adapterListener) {
-        this.adapterListener = adapterListener;
-    }
-
-    protected AdapterListener getAdapterListener() {
-        return adapterListener;
-    }
-
-    public void setSelectedPosition(int selectedPosition) {
-        if (listener != null) listener.onSelectedHolder(selectedPosition);
     }
 
     protected Context getContext() {
@@ -71,13 +62,16 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
         }
     }
 
-    protected interface Listener {
-        void onSelectedHolder(int index);
+    public Listener<T> getListener() {
+        return listener;
     }
 
-    protected interface AdapterListener {
+    protected interface Listener<T> {
+
+        void onSelectedHolder(int index, T o);
 
     }
+
 
 
 }

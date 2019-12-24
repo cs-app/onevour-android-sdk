@@ -15,7 +15,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * Created by user on 26/01/2017.
+ * Created by Zuliadin on 26/01/2017.
  */
 
 public class GsonDateDeserializer implements JsonDeserializer<Date> {

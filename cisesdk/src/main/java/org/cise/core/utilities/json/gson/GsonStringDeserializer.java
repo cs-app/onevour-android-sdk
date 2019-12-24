@@ -8,7 +8,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 
 /**
- * Created by user on 26/01/2017.
+ * Created by Zuliadin on 26/01/2017.
  */
 
 public class GsonStringDeserializer implements JsonDeserializer<String> {

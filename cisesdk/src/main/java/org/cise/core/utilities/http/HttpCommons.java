@@ -1,7 +1,7 @@
 package org.cise.core.utilities.http;
 
 /**
- * Created by user on 10/06/2017.
+ * Created by Zuliadin on 10/06/2017.
  */
 
 public class HttpCommons {
@@ -17,12 +17,12 @@ public class HttpCommons {
             } else if (message.contains("Unable to resolve host")) {
                 return "Komunikasi ke server gagal.";
             } else if(message.isEmpty()){
-                return "Unknown error message, lakukan sinkronisasi ulang!";
+                return "Unknown httpError message, lakukan sinkronisasi ulang!";
             } else {
                 return message;
             }
         } else {
-            return "Unknown error message, lakukan sinkronisasi ulang!";
+            return "Unknown httpError message, lakukan sinkronisasi ulang!";
         }
     }
 

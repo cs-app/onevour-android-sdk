@@ -7,7 +7,7 @@ import android.os.Build;
 import java.util.Locale;
 
 /**
- * Created by user on 24/06/2017.
+ * Created by Zuliadin on 24/06/2017.
  */
 
 public class LanguageHelper {

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -32,24 +33,52 @@ import com.bumptech.glide.request.target.Target;
 
 import org.cise.core.R;
 import org.cise.core.utilities.ui.adapter.layout.AutoFitGridLayoutManager;
+import org.cise.core.utilities.ui.adapter.recyclerview.GenericAdapter;
+import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
- * Created by user on 24/11/2017.
+ * Created by Zuliadin on 24/11/2017.
  */
 
 public class UIHelper {
 
     private static final String TAG = "UIHelper";
 
+    private static final int sizePage = 20;
+
     public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        initRecyclerView(recyclerView, adapter, null, null, sizePage, false);
+    }
+
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener) {
+        initRecyclerView(recyclerView, adapter, adapterListener, null, sizePage, false);
+    }
+
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.RecyclerViewPaginationListener listener, boolean isLoadFirst) {
+        initRecyclerView(recyclerView, adapter, adapterListener, listener, sizePage, isLoadFirst);
+    }
+
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.RecyclerViewPaginationListener scrollListener, int sizePage, boolean isLoadFirst) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerView.getContext());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+        if (adapter instanceof GenericAdapter) {
+            GenericAdapter genericAdapter = ((GenericAdapter) adapter);
+            if (isLoadFirst) genericAdapter.showLoader();
+            if (null != adapterListener) {
+                genericAdapter.setAdapterListener(adapterListener);
+            }
+            if (null != scrollListener) {
+                recyclerView.addOnScrollListener(new RecyclerViewScrollListener(genericAdapter, layoutManager, sizePage, scrollListener));
+            }
+
+        }
     }
 
     public static void initHorizontalRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
@@ -120,71 +149,6 @@ public class UIHelper {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
             p.setMargins(pxL, pxT, pxR, pxB);
             view.requestLayout();
-        }
-    }
-
-    public static void loadImageWithGlide(Context context, ImageView imageView, String url, int imageDrawable) {
-        if (context != null && imageView != null && url != null && url.startsWith("http")) {
-            Log.d(TAG, url);
-            if (url.contains(" ")) {
-                StringBuilder sb = new StringBuilder();
-                String[] segmentUrl = url.split("/");
-                for(String s:segmentUrl){
-                    if (s.contains(" ")) {
-                        sb.append(Uri.encode(s));
-                    } else {
-                        sb.append(s);
-                    }
-                    sb.append("/");
-                }
-                url = sb.toString().substring(0, sb.toString().toCharArray().length-1);
-            }
-            Log.d(TAG, url);
-            final Uri imageUri = Uri.parse(url);
-            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
-            circularProgressDrawable.setStrokeWidth(5f);
-            circularProgressDrawable.setCenterRadius(30f);
-            circularProgressDrawable.start();
-            Glide.with(context)
-                    .load(imageUri)
-                    .listener(new RequestListener() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                            Log.e(TAG, String.valueOf(e.getMessage()));
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .apply(RequestOptions.fitCenterTransform()
-                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                            .fitCenter()
-                            .error(imageDrawable)
-                            .placeholder(circularProgressDrawable))
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(imageView);
-
-        }
-    }
-
-    public static void loadCircularImageWithGlide(Context context, ImageView imageView, String url, int imageDrawable) {
-        if (context != null && imageView != null) {
-            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
-            circularProgressDrawable.setStrokeWidth(5f);
-            circularProgressDrawable.setCenterRadius(30f);
-            circularProgressDrawable.start();
-            Glide.with(context)
-                    .load(url)
-                    .apply(RequestOptions.circleCropTransform()
-                            .circleCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                            .error(imageDrawable)
-                            .placeholder(circularProgressDrawable))
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(imageView);
         }
     }
 
