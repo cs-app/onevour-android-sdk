@@ -31,17 +31,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/key_result"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:text="0.00"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30dp" />
@@ -58,18 +59,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/key_num_1"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="1"
@@ -78,10 +78,9 @@
 
         <TextView
             android:id="@+id/key_num_2"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="2"
@@ -90,8 +89,9 @@
 
         <TextView
             android:id="@+id/key_num_3"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="3"
@@ -100,18 +100,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/key_num_4"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="4"
@@ -120,10 +119,9 @@
 
         <TextView
             android:id="@+id/key_num_5"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="5"
@@ -132,8 +130,9 @@
 
         <TextView
             android:id="@+id/key_num_6"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="6"
@@ -142,18 +141,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/key_num_7"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="7"
@@ -162,10 +160,9 @@
 
         <TextView
             android:id="@+id/key_num_8"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="8"
@@ -174,8 +171,9 @@
 
         <TextView
             android:id="@+id/key_num_9"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="9"
@@ -184,19 +182,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/key_num_point"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="."
@@ -205,10 +201,9 @@
 
         <TextView
             android:id="@+id/key_num_0"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
             android:gravity="center_vertical|center_horizontal"
             android:text="0"
@@ -216,11 +211,11 @@
             android:textSize="30dp" />
 
         <TextView
-            android:id="@+id/key_option"
-            android:layout_width="@dimen/pad_size"
-            android:layout_height="@dimen/pad_size"
+            android:id="@+id/textView53"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/input_number_btn_dialog"
-            android:gravity="center_vertical|center_horizontal"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30dp" />
     </LinearLayout>

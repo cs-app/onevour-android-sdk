@@ -8,10 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.cise.core.utilities.helper.UIHelper;
 import org.cise.sdk.ciseapp.R;
+import org.cise.sdk.ciseapp.modules.form.controllers.FormSimpleActivity;
+import org.cise.sdk.ciseapp.modules.formscroll.controllers.FormScrollActivity;
+import org.cise.sdk.ciseapp.modules.fragmentbottom.controllers.FragmentBottomActivity;
+import org.cise.sdk.ciseapp.modules.fragment.controllers.FragmentActivity;
+import org.cise.sdk.ciseapp.modules.fragmentbottomnavigation.controllers.FragmentBottomNavigationActivity;
 import org.cise.sdk.ciseapp.modules.main.components.SampleAdapter;
 import org.cise.sdk.ciseapp.modules.main.components.SampleHolder;
 import org.cise.sdk.ciseapp.modules.main.models.Sample;
-import org.cise.sdk.ciseapp.modules.sample.controllers.MasterSampleActivity;
+import org.cise.sdk.ciseapp.modules.adapter.controllers.AdapterSampleActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements SampleHolder.Listener {
 
-    // implements RecyclerViewScrollListener.RecyclerViewPaginationListener<String>, GenericAdapter.AdapterListener<String>
+    // implements RecyclerViewScrollListener.PaginationListener<String>, GenericAdapter.AdapterListener<String>
 
     private String TAG = "MA-APP";
 
@@ -42,7 +47,12 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
 
     private void init() {
         List<Sample> samples = new ArrayList<>();
-        samples.add(new Sample("Adapter", MasterSampleActivity.class));
+        samples.add(new Sample("Adapter", AdapterSampleActivity.class));
+        samples.add(new Sample("Fragment BackStack", FragmentActivity.class));
+        samples.add(new Sample("Fragment Bottom", FragmentBottomActivity.class));
+        samples.add(new Sample("Fragment Bottom Navigation", FragmentBottomNavigationActivity.class));
+        samples.add(new Sample("Form Simple", FormSimpleActivity.class));
+        samples.add(new Sample("Form Scroll", FormScrollActivity.class));
         adapter.setValue(samples);
     }
 
@@ -50,9 +60,6 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
     public void onSelectedHolder(int index, Sample o) {
         startActivity(new Intent(this, o.getClazz()));
     }
-
-
-
 
     /*
 

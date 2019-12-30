@@ -3,42 +3,22 @@ package org.cise.core.utilities.helper;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
-import android.net.Uri;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
-
-import org.cise.core.R;
 import org.cise.core.utilities.ui.adapter.layout.AutoFitGridLayoutManager;
 import org.cise.core.utilities.ui.adapter.recyclerview.GenericAdapter;
 import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 /**
  * Created by Zuliadin on 24/11/2017.
@@ -58,11 +38,11 @@ public class UIHelper {
         initRecyclerView(recyclerView, adapter, adapterListener, null, sizePage, false);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.RecyclerViewPaginationListener listener, boolean isLoadFirst) {
-        initRecyclerView(recyclerView, adapter, adapterListener, listener, sizePage, isLoadFirst);
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, boolean isLoadFirst) {
+        initRecyclerView(recyclerView, adapter, adapterListener, scrollListener, sizePage, isLoadFirst);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.RecyclerViewPaginationListener scrollListener, int sizePage, boolean isLoadFirst) {
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, int sizePage, boolean isLoadFirst) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

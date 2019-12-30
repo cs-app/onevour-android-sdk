@@ -15,7 +15,7 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
 
     private static final String TAG = "RV-SCROLL";
 
-    private RecyclerViewPaginationListener listener;
+    private PaginationListener listener;
 
     public static final int PAGE_START = 1;
 
@@ -27,15 +27,17 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     /**
      * Set scrolling threshold here (for now i'm assuming 10 item in one page)
      */
-    private int size = 10;
+    private int size = 15;
 
     /**
      * Supporting only LinearLayoutManager for now.
      */
-    public RecyclerViewScrollListener(@NonNull GenericAdapter adapter, @NonNull LinearLayoutManager layoutManager, int size, RecyclerViewPaginationListener listener) {
+    public RecyclerViewScrollListener(@NonNull GenericAdapter adapter, @NonNull LinearLayoutManager layoutManager, int size, PaginationListener listener) {
         this.adapter = adapter;
         this.layoutManager = layoutManager;
-        this.size = size;
+        if (size > this.size) {
+            this.size = size;
+        }
         this.listener = listener;
         if (size == 0) {
             throw new InvalidParameterException("size cannot must greater than 0");
@@ -48,11 +50,13 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
         int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-        Log.d(TAG, visibleItemCount + "|" + totalItemCount + "|" + firstVisibleItemPosition + "|" + adapter.isLoader());
         if (null != listener && !adapter.isLoader()) {
             if (visibleItemCount + firstVisibleItemPosition == totalItemCount) {
-                recyclerView.post(() -> adapter.showLoader());
-
+                recyclerView.post(() -> {
+                    if (adapter.getAdapterList().size() >= size) {
+                        adapter.showLoader();
+                    }
+                });
                 Log.d(TAG, "show loader");
             }
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= size) {
@@ -60,9 +64,10 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
                 listener.loadMoreItems(adapter.getItem(totalItemCount - 1));
             }
         }
+        Log.d(TAG, visibleItemCount + "|" + totalItemCount + "|" + firstVisibleItemPosition + "|" + adapter.isLoader());
     }
 
-    public interface RecyclerViewPaginationListener<E> {
+    public interface PaginationListener<E> {
 
         void loadMoreItems(E e);
 

@@ -58,20 +58,29 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
     private Listener listener;
 
+    private boolean isScroll = false;
+
+    public NumberInput() {
+    }
+
     public NumberInput(final EditText editText) {
-        initialize(editText, false, null, 0, Integer.MAX_VALUE);
+        setup(editText);
     }
 
-    public NumberInput(final EditText editText, final boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
-        initialize(editText, isDecimal, numberFormat, min, max);
+    public NumberInput(final EditText editText, boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
+        setup(editText, isDecimal, numberFormat, min, max);
     }
 
-    private void initialize(final EditText editTextView, final boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
-        context = editTextView.getRootView().getContext();
-        editText = editTextView;
-        editText.setTextIsSelectable(true);
-        editText.setCursorVisible(false);
-        editText.setFocusable(false);
+    public void setup(final EditText editText) {
+        setup(editText, false, null, 0, Integer.MAX_VALUE);
+    }
+
+    public void setup(final EditText editText, final boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
+        this.context = editText.getRootView().getContext();
+        this.editText = editText;
+        this.editText.setTextIsSelectable(true);
+        this.editText.setCursorVisible(false);
+        this.editText.setFocusable(false);
         String tmpValue = editText.getText().toString();
         if (tmpValue.isEmpty()) {
             if (isDecimal) {
@@ -116,6 +125,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         TextView num8 = dialogView.findViewById(R.id.key_num_8);
         TextView num9 = dialogView.findViewById(R.id.key_num_9);
         TextView numPoint = dialogView.findViewById(R.id.key_num_point);
+        TextView numOption = dialogView.findViewById(R.id.key_option);
         ImageButton del = dialogView.findViewById(R.id.key_del);
         num0.setOnClickListener(this);
         num1.setOnClickListener(this);
@@ -129,6 +139,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         num9.setOnClickListener(this);
         numPoint.setOnClickListener(this);
         del.setOnClickListener(this);
+        numOption.setVisibility(View.INVISIBLE);
         editTextId = this.editText.getId();
         editText.setOnTouchListener(this::onTouch);
         alertBuilder.setView(dialogView);
@@ -164,6 +175,10 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         result.setText(resValueTmp.toString());
     }
 
+    public void setScrollFlag(boolean scroll) {
+        isScroll = scroll;
+    }
+
     private boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
@@ -185,6 +200,10 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
     @Override
     public void onClick(View v) {
         Log.i("NumberInput", "ON CLICK ID  :" + v.getId());
+        if (isScroll) {
+            Log.d(TAG, "root is scrolling");
+            return;
+        }
         if (v.getId() == editTextId) {
             resValueTmp.delete(0, resValueTmp.length());
             resValueTmp.append(editText.getText().toString());
@@ -419,9 +438,12 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                 if (imm != null)
                     imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             } else {
-                Log.w("NumperInput", "context hide softkeyboard is null");
+                Log.w(TAG, "context hide softkeyboard is null");
             }
-            alertDialog.show();
+            Log.d(TAG, "Action touch event : " + motionEvent.getAction());
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                alertDialog.show();
+            }
         } else {
             try {
                 int i = v.getId();

@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.sample.controllers.MasterSampleActivity"></activity>
+        <activity android:name=".modules.formscroll.controllers.FormScrollActivity"></activity>
+        <activity android:name=".modules.form.controllers.FormSimpleActivity" />
+        <activity android:name=".modules.fragmentbottomnavigation.controllers.FragmentBottomNavigationActivity" />
+        <activity android:name=".modules.fragmentbottom.controllers.FragmentBottomActivity" />
+        <activity android:name=".modules.fragment.controllers.FragmentActivity" />
+        <activity android:name=".modules.adapter.controllers.AdapterSampleActivity" />
         <activity android:name=".modules.main.controllers.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
