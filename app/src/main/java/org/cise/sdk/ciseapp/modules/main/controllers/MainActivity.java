@@ -26,8 +26,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements SampleHolder.Listener {
 
-    // implements RecyclerViewScrollListener.PaginationListener<String>, GenericAdapter.AdapterListener<String>
-
     private String TAG = "MA-APP";
 
     @BindView(R.id.rv_sample)
@@ -61,42 +59,5 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
         startActivity(new Intent(this, o.getClazz()));
     }
 
-    /*
 
-    public void requestNextPage(boolean resultSuccess) {
-        if (Looper.myLooper() == null) Looper.prepare();
-        new Handler().postDelayed(() -> {
-            List<String> ist = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                ist.add("next : " + i);
-            }
-            if (resultSuccess) {
-                //adapter.addMore(ist);
-            } else {
-                adapter.setError("Error");
-            }
-        }, 3000);
-
-    }
-
-    private void sleep(int milis) {
-        try {
-            Thread.sleep(milis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void loadMoreItems(String o) {
-        requestNextPage(false);
-        Log.d(TAG, "load more from last value: " + o);
-    }
-
-    @Override
-    public void onLoadRetry(int index, String o) {
-        requestNextPage(true);
-        Log.d(TAG, "retry load data from last : " + o + " from index: " + index);
-    }
-     */
 }

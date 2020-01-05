@@ -22,7 +22,7 @@ public class GsonHelper {
         gsonBuilder.registerTypeAdapter(String.class, new GsonStringSerializer());
 //        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateDeserializer());
 //        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateSerializer());
-        gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+//        gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
         gson = gsonBuilder.create();
     }
 
