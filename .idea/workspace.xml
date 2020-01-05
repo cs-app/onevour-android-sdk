@@ -17,10 +17,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f977525c-6bc3-4670-bf1a-e8af2323f9a3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -107,11 +103,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
-              <caret line="25" column="36" lean-forward="true" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
+              <caret line="25" column="64" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
               <folding>
                 <element signature="e#1075#1076#0" expanded="true" />
                 <element signature="e#1102#1103#0" expanded="true" />
@@ -120,7 +116,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
@@ -235,8 +231,8 @@
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/gps/GeoHelper.java" />
         <option value="$PROJECT_DIR$/cisesdk/.gitignore" />
         <option value="$PROJECT_DIR$/app/.gitignore" />
-        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java" />
+        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java" />
       </list>
     </option>
   </component>
@@ -1043,23 +1039,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="25" column="36" lean-forward="true" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
-          <folding>
-            <element signature="e#1075#1076#0" expanded="true" />
-            <element signature="e#1102#1103#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="26" column="86" selection-start-line="26" selection-start-column="86" selection-end-line="26" selection-end-column="86" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="25" column="64" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+          <folding>
+            <element signature="e#1075#1076#0" expanded="true" />
+            <element signature="e#1102#1103#0" expanded="true" />
           </folding>
         </state>
       </provider>

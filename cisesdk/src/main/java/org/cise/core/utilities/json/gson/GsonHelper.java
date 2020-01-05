@@ -23,6 +23,7 @@ public class GsonHelper {
 //        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateDeserializer());
 //        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateSerializer());
 //        gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         gson = gsonBuilder.create();
     }
 
