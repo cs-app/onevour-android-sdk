@@ -198,6 +198,70 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
     }
 
     @Override
+    public boolean onTouch(View v, MotionEvent motionEvent) {
+        if (v.getId() == editTextId) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                resValueTmp.delete(0, resValueTmp.length());
+                resValueTmp.append(editText.getText().toString());
+                result.setText(resValueTmp.toString());
+                if (null != context) {
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null)
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                } else {
+                    Log.w(TAG, "context hide softkeyboard is null");
+                }
+                Log.d(TAG, "Action touch event : " + motionEvent.getAction());
+                alertDialog.show();
+            }
+        } else {
+            try {
+                int i = v.getId();
+                if (i == R.id.key_num_0) {
+                    inputValue("0");
+
+                } else if (i == R.id.key_num_1) {
+                    inputValue("1");
+
+                } else if (i == R.id.key_num_2) {
+                    inputValue("2");
+
+                } else if (i == R.id.key_num_3) {
+                    inputValue("3");
+
+                } else if (i == R.id.key_num_4) {
+                    inputValue("4");
+
+                } else if (i == R.id.key_num_5) {
+                    inputValue("5");
+
+                } else if (i == R.id.key_num_6) {
+                    inputValue("6");
+
+                } else if (i == R.id.key_num_7) {
+                    inputValue("7");
+
+                } else if (i == R.id.key_num_8) {
+                    inputValue("8");
+
+                } else if (i == R.id.key_num_9) {
+                    inputValue("9");
+
+                } else if (i == R.id.key_num_point) {
+                    if (isDecimal) {
+                        inputValue(defaultCommaSymbol);
+                    }
+                } else if (i == R.id.key_del) {
+                    delete();
+                }
+            } catch (ParseException e) {
+                Log.e(TAG, ExceptionUtils.message(e));
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void onClick(View v) {
         Log.i("NumberInput", "ON CLICK ID  :" + v.getId());
         if (isScroll) {
@@ -427,69 +491,6 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent motionEvent) {
-        if (v.getId() == editTextId) {
-            resValueTmp.delete(0, resValueTmp.length());
-            resValueTmp.append(editText.getText().toString());
-            result.setText(resValueTmp.toString());
-            if (null != context) {
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null)
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            } else {
-                Log.w(TAG, "context hide softkeyboard is null");
-            }
-            Log.d(TAG, "Action touch event : " + motionEvent.getAction());
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                alertDialog.show();
-            }
-        } else {
-            try {
-                int i = v.getId();
-                if (i == R.id.key_num_0) {
-                    inputValue("0");
-
-                } else if (i == R.id.key_num_1) {
-                    inputValue("1");
-
-                } else if (i == R.id.key_num_2) {
-                    inputValue("2");
-
-                } else if (i == R.id.key_num_3) {
-                    inputValue("3");
-
-                } else if (i == R.id.key_num_4) {
-                    inputValue("4");
-
-                } else if (i == R.id.key_num_5) {
-                    inputValue("5");
-
-                } else if (i == R.id.key_num_6) {
-                    inputValue("6");
-
-                } else if (i == R.id.key_num_7) {
-                    inputValue("7");
-
-                } else if (i == R.id.key_num_8) {
-                    inputValue("8");
-
-                } else if (i == R.id.key_num_9) {
-                    inputValue("9");
-
-                } else if (i == R.id.key_num_point) {
-                    if (isDecimal) {
-                        inputValue(defaultCommaSymbol);
-                    }
-                } else if (i == R.id.key_del) {
-                    delete();
-                }
-            } catch (ParseException e) {
-                Log.e(TAG, ExceptionUtils.message(e));
-            }
-        }
-        return false;
-    }
 
     public void setListener(Listener listener) {
         this.listener = listener;

@@ -17,61 +17,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f977525c-6bc3-4670-bf1a-e8af2323f9a3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/models/SampleData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/components/AdapterSampleData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/components/HolderSampleData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/controllers/AdapterSampleActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/form/controllers/FormSimpleActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/FragmentActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageOneFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageThreeFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageTwoFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/BottomFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/BottomLoaderFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/FragmentBottomActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottomnavigation/controllers/FragmentBottomNavigationActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_android_24dp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_form_scroll.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_form_simple.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_fragment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_fragment_bottom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_fragment_bottom_navigation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/adapter_sample_data.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom_loader.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_three.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/navigation_menu.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/fragment/FragmentBottomNavigationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/fragment/FragmentNavigation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/scroll/ListenScrollChangesHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/scroll/OnScrollChangeListenerAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/scroll/OnScrollChangeListenerCompat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/res/drawable/input_number_btn_dialog_basic.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/res/drawable/input_number_btn_dialog_basic_press.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/res/drawable/txt_btn_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog_no_theme.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/res/values/input_number.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_1_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_1_1_0_alpha02_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_0_0_beta01_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_common_2_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_collection_collection_1_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_concurrent_concurrent_futures_1_0_0_alpha02_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_1_0_alpha05_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_fragment_fragment_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_common_2_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_0_0_beta01_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_1_0_alpha03_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_alpha02_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_guava_listenablefuture_1_0_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/sample/controllers/MasterSampleActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/formscroll/controllers/FormScrollActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_master_sample.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_master_sample.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/FragmentHelper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/gps/GeoHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/gps/GeoHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/RecyclerViewScrollListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/RecyclerViewScrollListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/res/drawable/input_number_btn_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/res/drawable/input_number_btn_dialog.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -83,7 +53,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_17" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_24" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -158,14 +128,96 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="148">
+            <state relative-caret-position="2955">
               <caret line="197" column="47" selection-start-line="197" selection-start-column="47" selection-end-line="197" selection-end-column="47" />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottomnavigation/controllers/FragmentBottomNavigationActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="30" column="61" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1140">
+              <caret line="98" column="30" selection-start-line="98" selection-start-column="30" selection-end-line="98" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2625">
+              <caret line="204" column="51" selection-start-line="204" selection-start-column="51" selection-end-line="204" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#625#626#0" expanded="true" />
+                <element signature="e#672#673#0" expanded="true" />
+                <element signature="method#percent#0;class#NFormat#0" />
+                <element signature="method#percentFormat#0;class#NFormat#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/gps/GeoHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="145">
+              <caret line="19" column="9" lean-forward="true" selection-end-line="28" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cisesdk/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -216,6 +268,7 @@
       <find>editText</find>
       <find>editText.setOn</find>
       <find>isScroll</find>
+      <find>onT</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -228,10 +281,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_master_sample.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/sample/components/AdapterSampleData.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/sample/models/SampleData.java" />
-        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/sample/components/HolderSampleData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/sample/controllers/AdapterSampleActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragments/FragmentActivity.java" />
@@ -269,16 +318,20 @@
         <option value="$PROJECT_DIR$/cisesdk/src/main/res/values/input_number_size.xml" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/res/drawable/input_number_btn_dialog.xml" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/res/drawable/input_number_btn_dialog_basic_press.xml" />
-        <option value="$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/formscroll/FormScrollActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_form_scroll.xml" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/scroll/OnScrollChangeListenerCompat.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/scroll/ListenScrollChangesHelper.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/scroll/OnScrollChangeListenerAdapter.java" />
-        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/formscroll/controllers/FormScrollActivity.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/res/values/input_number.xml" />
+        <option value="$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml" />
+        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" />
+        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java" />
+        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/gps/GeoHelper.java" />
+        <option value="$PROJECT_DIR$/cisesdk/.gitignore" />
+        <option value="$PROJECT_DIR$/app/.gitignore" />
       </list>
     </option>
   </component>
@@ -287,10 +340,11 @@
     <option name="height" value="800" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -313,101 +367,12 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
             <path>
               <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="cisesdk" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="cisesdk" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="cisesdk" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="utilities" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="cisesdk" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="utilities" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
-              <item name="cisesdk" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="utilities" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="scroll" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -624,9 +589,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2374798" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.28836834" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -635,13 +601,13 @@
       <window_info id="Capture Tool" order="7" />
       <window_info id="Resources Explorer" order="8" weight="0.32956383" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.690411" />
-      <window_info anchor="bottom" id="Logcat" order="1" weight="0.56027395" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.4983845" weight="0.5589041" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39041096" />
-      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49919224" visible="true" weight="0.46164384" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="5" sideWeight="0.50080776" side_tool="true" visible="true" weight="0.46164384" />
+      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49919224" visible="true" weight="0.45479453" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50080776" side_tool="true" weight="0.32876712" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.32876712" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49919224" weight="0.32876712" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.3219178" />
       <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -691,44 +657,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageTwoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="35" column="75" selection-start-line="35" selection-start-column="75" selection-end-line="35" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageOneFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="36" column="54" lean-forward="true" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="17" selection-end-column="52" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_page_three.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
@@ -758,20 +686,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/navigation_menu.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="48" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_fragment_bottom_navigation.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="60" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="60" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.fragment/fragment/1.1.0/b9ebb04df2cb0cad4419af3c658690bc82aa5706/fragment-1.1.0-sources.jar!/androidx/fragment/app/Fragment.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -784,13 +712,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="11" column="31" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottomnavigation/controllers/FragmentBottomNavigationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
         </state>
       </provider>
     </entry>
@@ -812,16 +733,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_fragment_bottom.xml">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/captures/org.cise.sdk.ciseapp_2019.12.30_14.24.li">
       <provider selected="true" editor-type-id="capture-editor" />
@@ -925,12 +846,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom_loader.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/java/text/DecimalFormat.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -984,31 +905,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="54" column="64" selection-start-line="54" selection-start-column="64" selection-end-line="54" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_form_simple.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="520">
           <caret line="60" column="59" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="60" selection-end-column="59" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_form_scroll.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="-282">
           <caret line="308" column="60" selection-start-line="308" selection-start-column="60" selection-end-line="308" selection-end-column="60" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1058,15 +969,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java">
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2955">
+          <caret line="197" column="47" selection-start-line="197" selection-start-column="47" selection-end-line="197" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottomnavigation/controllers/FragmentBottomNavigationActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="110" column="81" selection-start-line="110" selection-start-column="81" selection-end-line="110" selection-end-column="81" />
+        <state relative-caret-position="75">
+          <caret line="30" column="61" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1140">
+          <caret line="98" column="30" selection-start-line="98" selection-start-column="30" selection-end-line="98" selection-end-column="30" />
           <folding>
-            <element signature="e#1527#1528#0" expanded="true" />
-            <element signature="e#1558#1559#0" expanded="true" />
-            <element signature="e#6576#6577#0" expanded="true" />
-            <element signature="e#6609#6610#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1078,13 +1001,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="197" column="47" selection-start-line="197" selection-start-column="47" selection-end-line="197" selection-end-column="47" />
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2625">
+          <caret line="204" column="51" selection-start-line="204" selection-start-column="51" selection-end-line="204" selection-end-column="51" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#625#626#0" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="method#percent#0;class#NFormat#0" />
+            <element signature="method#percentFormat#0;class#NFormat#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/gps/GeoHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="19" column="9" lean-forward="true" selection-end-line="28" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cisesdk/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

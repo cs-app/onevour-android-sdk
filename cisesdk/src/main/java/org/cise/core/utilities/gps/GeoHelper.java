@@ -30,11 +30,11 @@ public class GeoHelper {
         StringBuilder sb = new StringBuilder();
         if (1000.0 < distanceInKM) {
             double inKM = distanceInKM / 1000.0;
-            sb.append(NFormat.NF_GENERAL_COMMA.format(inKM));
+            sb.append(NFormat.currencyFormat(inKM));
             sb.append(" ");
             sb.append("Km");
         } else {
-            sb.append(NFormat.getDecimalFormatSymbol().format(distanceInKM));
+            sb.append(NFormat.currencyFormat(distanceInKM));
             sb.append(" ");
             sb.append("m");
         }

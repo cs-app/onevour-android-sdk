@@ -44,11 +44,11 @@
             android:paddingLeft="16dp"
             android:text="0.00"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="30dp" />
+            android:textSize="24dp" />
 
         <ImageButton
             android:id="@+id/key_del"
-            android:layout_width="75dp"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="16dp"
@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="3dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
@@ -145,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="3dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
@@ -187,7 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="3dp"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
