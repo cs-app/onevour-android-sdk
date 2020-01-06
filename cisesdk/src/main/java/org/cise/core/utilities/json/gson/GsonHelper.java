@@ -17,14 +17,27 @@ public class GsonHelper {
     public static Gson gson;
 
     private GsonHelper() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(String.class, new GsonStringDeserializer());
-        gsonBuilder.registerTypeAdapter(String.class, new GsonStringSerializer());
+        gson = builder(null).create();
+        //
 //        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateDeserializer());
 //        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateSerializer());
 //        gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
-        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        gson = gsonBuilder.create();
+    }
+
+    private GsonBuilder builder(String patternDate) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(String.class, new GsonStringDeserializer());
+        gsonBuilder.registerTypeAdapter(String.class, new GsonStringSerializer());
+        if (patternDate == null) {
+            gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        } else {
+            gsonBuilder.setDateFormat(patternDate);
+        }
+        return gsonBuilder;
+    }
+
+    public void initialize(String patternDate) {
+        gson = builder(patternDate).create();
     }
 
     public static GsonHelper newInstance() {
