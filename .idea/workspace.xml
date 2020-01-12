@@ -11,16 +11,23 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="NID: " />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f977525c-6bc3-4670-bf1a-e8af2323f9a3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/controllers/AdapterSampleActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/controllers/AdapterSampleActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageOneFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageOneFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageTwoFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageTwoFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,16 +114,51 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/FragmentActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="38" column="11" lean-forward="true" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
-              <folding>
-                <element signature="e#1206#1207#0" expanded="true" />
-                <element signature="e#1237#1238#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="92">
+              <caret line="17" column="39" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="39" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/fragment/FragmentNavigation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-767">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageOneFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="48" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageTwoFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="23" column="44" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
+          <provider editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
+          <provider editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -173,9 +215,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/sample/controllers/AdapterSampleActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragments/FragmentActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_fragment.xml" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/FragmentHelper.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/NavFragmentUtils.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/FragmentNavUtils.java" />
@@ -185,8 +224,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragments/controllers/PageOneFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragments/controllers/PageThreeFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragments/controllers/PageTwoFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_three.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/FragmentBottomActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
@@ -198,9 +235,7 @@
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/fragment/FragmentBottomNavigationManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_fragment_bottom.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/FragmentBottomActivity.java" />
-        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/RecyclerViewScrollListener.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/controllers/AdapterSampleActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/BottomLoaderFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom_loader.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_form_simple.xml" />
@@ -224,6 +259,13 @@
         <option value="$PROJECT_DIR$/app/.gitignore" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/main/controllers/MainActivity.java" />
         <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/controllers/AdapterSampleActivity.java" />
+        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" />
+        <option value="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageOneFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageTwoFragment.java" />
       </list>
     </option>
   </component>
@@ -236,7 +278,53 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="fragment" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cise-sdk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="ciseapp" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="fragment" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -304,8 +392,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -520,7 +607,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.28836834" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.21082391" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -535,9 +622,9 @@
       <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49919224" weight="0.22328767" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50080776" side_tool="true" weight="0.32876712" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49919224" visible="true" weight="0.32876712" />
-      <window_info anchor="bottom" id="Find" order="8" weight="0.3219178" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49919224" weight="0.32876712" />
+      <window_info anchor="bottom" id="Find" order="8" visible="true" weight="0.3219178" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" weight="0.32956383" />
@@ -585,64 +672,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/captures/org.cise.sdk.ciseapp_2019.12.30_14.24.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/FragmentBottomActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="34" column="65" lean-forward="true" selection-start-line="34" selection-start-column="65" selection-end-line="34" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/org.cise.sdk.ciseapp_2019.12.30_14.41.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/models/SampleData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="175" selection-start-line="175" selection-end-line="175" />
-          <folding>
-            <element signature="method#onCreateViewHolder#0;class#GenericAdapter#0" />
-            <element signature="method#holderGenerator#0;class#GenericAdapter#0" />
-            <element signature="method#onBindViewHolder#0;class#GenericAdapter#0" />
-            <element signature="e#5481#5482#0" expanded="true" />
-            <element signature="e#5523#5524#0" expanded="true" />
-            <element signature="class#AdapterListener#0;class#GenericAdapter#0" />
-            <element signature="e#8305#8306#0" expanded="true" />
-            <element signature="e#8336#8337#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/helper/UIHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
-          <folding>
-            <element signature="method#hideSoftInput#0;class#UIHelper#0" />
-            <element signature="method#setMargins#0;class#UIHelper#0" />
-            <element signature="method#setMarginsInDP#0;class#UIHelper#0" />
-            <element signature="method#widthScreen#0;class#UIHelper#0" />
-            <element signature="method#heightScreen#0;class#UIHelper#0" />
-            <element signature="method#snapScroll#0;class#UIHelper#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/org.cise.sdk.ciseapp_2019.12.30_15.42.li">
-      <provider selected="true" editor-type-id="capture-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/captures/org.cise.sdk.ciseapp_2019.12.30_15.42-1.li">
       <provider selected="true" editor-type-id="capture-editor" />
     </entry>
@@ -680,12 +709,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom_loader.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/java/text/DecimalFormat.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -740,20 +769,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_form_simple.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="520">
           <caret line="60" column="59" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="60" selection-end-column="59" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_form_scroll.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="-282">
           <caret line="308" column="60" selection-start-line="308" selection-start-column="60" selection-end-line="308" selection-end-column="60" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -804,12 +833,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cisesdk/src/main/res/layout/input_number_dialog.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="2955">
           <caret line="197" column="47" selection-start-line="197" selection-start-column="47" selection-end-line="197" selection-end-column="47" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottomnavigation/controllers/FragmentBottomNavigationActivity.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -886,20 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/fragment/FragmentNavigation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/controllers/AdapterSampleActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="32" column="15" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/components/AdapterSampleData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -971,14 +986,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/adapter/controllers/AdapterSampleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="47" column="15" selection-start-line="47" selection-start-column="15" selection-end-line="47" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="120" column="22" lean-forward="true" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+          <folding>
+            <element signature="method#onCreateViewHolder#0;class#GenericAdapter#0" />
+            <element signature="method#holderGenerator#0;class#GenericAdapter#0" />
+            <element signature="class#AdapterListener#0;class#GenericAdapter#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="73" column="4" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
+          <folding>
+            <element signature="e#1534#1535#0" expanded="true" />
+            <element signature="e#1579#1580#0" expanded="true" />
+            <element signature="e#1610#1611#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/json/gson/GsonHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="38" column="11" lean-forward="true" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
-          <folding>
-            <element signature="e#1206#1207#0" expanded="true" />
-            <element signature="e#1237#1238#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="215">
+          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_page_one.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/fragment/FragmentNavigation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-767">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_page_two.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageOneFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="48" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/PageTwoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="23" column="44" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragment/controllers/FragmentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="17" column="39" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="39" />
         </state>
       </provider>
     </entry>

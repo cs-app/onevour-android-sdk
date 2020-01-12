@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import org.cise.core.utilities.helper.UIHelper;
+import org.cise.core.utilities.json.gson.GsonHelper;
 import org.cise.core.utilities.ui.adapter.recyclerview.GenericAdapter;
 import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
 import org.cise.sdk.ciseapp.R;

@@ -10,7 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.fragment.FragmentNavigation;
 import org.cise.sdk.ciseapp.R;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +22,6 @@ import org.cise.sdk.ciseapp.R;
 public class PageTwoFragment extends Fragment {
 
     private static PageTwoFragment fragment;
-
 
     public PageTwoFragment() {
         // Required empty public constructor
@@ -31,11 +34,17 @@ public class PageTwoFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_page_two, container, false);
+        View view = inflater.inflate(R.layout.fragment_page_two, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @OnClick(R.id.btn_next)
+    public void nextPage() {
+        FragmentNavigation.addBackStack(getActivity(), R.id.container, PageThreeFragment.newInstance(), "C");
     }
 
 }

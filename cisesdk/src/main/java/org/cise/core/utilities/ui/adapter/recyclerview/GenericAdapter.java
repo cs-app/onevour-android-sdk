@@ -118,6 +118,7 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         } else {
             holder.setListener(this);
         }
+        holder.setPosition(position);
         holder.onBindViewHolder(o);
         holder.onBindViewHolder(o, position);
         holder.onBindViewHolder(adapterList, position);

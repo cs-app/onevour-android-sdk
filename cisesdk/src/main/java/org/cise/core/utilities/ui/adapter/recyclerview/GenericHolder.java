@@ -21,6 +21,8 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
 
     private int overrideCount = 0;
 
+    private int position;
+
     private Listener<T> listener;
 
     public GenericHolder(View view) {
@@ -66,12 +68,19 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
         return listener;
     }
 
+    protected void setPosition(int position) {
+        this.position = position;
+    }
+
+    public int getCurrentPosition() {
+        return position;
+    }
+
     protected interface Listener<T> {
 
         void onSelectedHolder(int index, T o);
 
     }
-
 
 
 }
