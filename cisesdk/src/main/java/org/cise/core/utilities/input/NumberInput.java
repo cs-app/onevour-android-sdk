@@ -84,7 +84,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         String tmpValue = editText.getText().toString();
         if (tmpValue.isEmpty()) {
             if (isDecimal) {
-                editText.setText("0.00");
+                editText.setText(numberFormat.format(0.00));
             } else {
                 editText.setText("0");
             }
@@ -162,7 +162,11 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                     if (isDecimal) {
                         listener.doubleValue(numberFormat.parse(resValueTmp.toString()).doubleValue());
                     } else {
-                        listener.intValue(numberFormat.parse(resValueTmp.toString()).intValue());
+                        if (null != numberFormat) {
+                            listener.intValue(numberFormat.parse(resValueTmp.toString()).intValue());
+                        } else {
+                            listener.intValue(Integer.parseInt(resValueTmp.toString()));
+                        }
                     }
                 }
             } catch (ParseException e) {

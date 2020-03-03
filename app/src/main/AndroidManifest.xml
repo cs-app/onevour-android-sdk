@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.formscroll.controllers.FormScrollActivity"></activity>
+        <activity android:name=".modules.rxjava.controllers.RXActivity"></activity>
+        <activity android:name=".modules.formscroll.controllers.FormScrollActivity" />
         <activity android:name=".modules.form.controllers.FormSimpleActivity" />
         <activity android:name=".modules.fragmentbottomnavigation.controllers.FragmentBottomNavigationActivity" />
         <activity android:name=".modules.fragmentbottom.controllers.FragmentBottomActivity" />

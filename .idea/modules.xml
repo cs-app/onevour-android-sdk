@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cise-sdk.iml" filepath="$PROJECT_DIR$/cise-sdk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cisesdk/cisesdk.iml" filepath="$PROJECT_DIR$/cisesdk/cisesdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="cise-sdk/app" />
+      <module fileurl="file://$PROJECT_DIR$/cise-sdk.iml" filepath="$PROJECT_DIR$/cise-sdk.iml" group="cise-sdk" />
+      <module fileurl="file://$PROJECT_DIR$/cisesdk/cisesdk.iml" filepath="$PROJECT_DIR$/cisesdk/cisesdk.iml" group="cise-sdk/cisesdk" />
     </modules>
   </component>
 </project>

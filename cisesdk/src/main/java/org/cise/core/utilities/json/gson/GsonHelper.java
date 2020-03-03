@@ -33,6 +33,7 @@ public class GsonHelper {
         } else {
             gsonBuilder.setDateFormat(patternDate);
         }
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         return gsonBuilder;
     }
 

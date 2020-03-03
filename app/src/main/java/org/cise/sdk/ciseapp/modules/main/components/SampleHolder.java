@@ -17,12 +17,13 @@ public class SampleHolder extends GenericHolder<Sample> implements View.OnClickL
 
     Sample o;
 
-    @BindView(R.id.name)
+//    @BindView(R.id.name) // cause use rx binding
     TextView name;
 
     public SampleHolder(View view) {
         super(view);
-        ButterKnife.bind(this, view);
+//        ButterKnife.bind(this, view);
+        name = view.findViewById(R.id.name);
         view.setOnClickListener(this);
     }
 

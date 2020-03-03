@@ -17,6 +17,7 @@ import org.cise.sdk.ciseapp.modules.main.components.SampleAdapter;
 import org.cise.sdk.ciseapp.modules.main.components.SampleHolder;
 import org.cise.sdk.ciseapp.modules.main.models.Sample;
 import org.cise.sdk.ciseapp.modules.adapter.controllers.AdapterSampleActivity;
+import org.cise.sdk.ciseapp.modules.rxjava.controllers.RXActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
         samples.add(new Sample("Fragment Bottom Navigation", FragmentBottomNavigationActivity.class));
         samples.add(new Sample("Form Simple", FormSimpleActivity.class));
         samples.add(new Sample("Form Scroll", FormScrollActivity.class));
+        samples.add(new Sample("RXJava", RXActivity.class));
         adapter.setValue(samples);
     }
 
