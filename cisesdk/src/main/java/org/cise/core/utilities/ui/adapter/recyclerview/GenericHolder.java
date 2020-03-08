@@ -76,7 +76,7 @@ public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
         return position;
     }
 
-    protected interface Listener<T> {
+    public interface Listener<T> {
 
         void onSelectedHolder(int index, T o);
 

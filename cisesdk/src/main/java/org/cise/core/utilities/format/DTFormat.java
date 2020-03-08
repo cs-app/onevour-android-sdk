@@ -24,11 +24,12 @@ public class DTFormat {
         return SDF_DATETIME_GENERAL.format(new Date());
     }
 
+    public static String nowReadable() {
+        return SDF_TIME_GENERAL.format(new Date());
+    }
+
     public static String nowUnique() {
         return SDF_DATETIME_GENERAL_ID.format(new Date());
     }
 
-    public static String nowReadable() {
-        return SDF_TIME_GENERAL.format(new Date());
-    }
 }
