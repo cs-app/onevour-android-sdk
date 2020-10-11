@@ -17,18 +17,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f977525c-6bc3-4670-bf1a-e8af2323f9a3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/AdapterGenericV2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/AdapterModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/HolderGenericV2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cisesdk/src/test/java/org/cise/core/ApiRequestTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_asynclayoutinflater_asynclayoutinflater_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_asynclayoutinflater_asynclayoutinflater_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cardview_cardview_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cardview_cardview_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_1_1_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_1_1_3_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_1_1_3_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_solver_1_1_3_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_customview_customview_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_customview_customview_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_documentfile_documentfile_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_documentfile_documentfile_1_0_0_aar.xml" afterDir="false" />
@@ -38,7 +35,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_v4_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_v4_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_2_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_loader_loader_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_loader_loader_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_media_media_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_media_media_1_0_0_aar.xml" afterDir="false" />
@@ -47,29 +44,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_slidingpanelayout_slidingpanelayout_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_slidingpanelayout_slidingpanelayout_1_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_swiperefreshlayout_swiperefreshlayout_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_swiperefreshlayout_swiperefreshlayout_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_espresso_espresso_core_3_1_0_alpha4_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_espresso_espresso_idling_resource_3_1_0_alpha4_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_monitor_1_1_0_alpha4_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_runner_1_1_0_alpha4_aar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_sf_kxml_kxml2_2_3_0_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/form/controllers/FormSimpleActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/form/controllers/FormSimpleActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/FragmentBottomActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/cise/sdk/ciseapp/modules/fragmentbottom/controllers/FragmentBottomActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/org/cise/sdk/ciseapp/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/org/cise/sdk/ciseapp/ExampleUnitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cise-sdk.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cisesdk/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/input/NumberInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/AdapterHolderLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/AdapterHolderLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/ui/adapter/recyclerview/GenericHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cisesdk/src/test/java/org/cise/core/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/cisesdk/src/test/java/org/cise/core/ExampleUnitTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,26 +395,30 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="477" y="252" key="#PSD" timestamp="1602422294340">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="477" y="252" key="#PSD/0.0.1920.1040@0.0.1920.1040" timestamp="1602422294340" />
     <state x="815" y="285" key="AndroidProcessChooserDialog" timestamp="1602419538657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="815" y="285" key="AndroidProcessChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602419538657" />
-    <state width="1877" height="431" key="GridCell.Tab.0.bottom" timestamp="1602420486225">
+    <state width="1877" height="405" key="GridCell.Tab.0.bottom" timestamp="1602421562409">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="431" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602420486225" />
-    <state width="1877" height="431" key="GridCell.Tab.0.center" timestamp="1602420486225">
+    <state width="1877" height="405" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1602421562409" />
+    <state width="1877" height="405" key="GridCell.Tab.0.center" timestamp="1602421562408">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="431" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602420486225" />
-    <state width="1877" height="431" key="GridCell.Tab.0.left" timestamp="1602420486224">
+    <state width="1877" height="405" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1602421562408" />
+    <state width="1877" height="405" key="GridCell.Tab.0.left" timestamp="1602421562408">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="431" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602420486224" />
-    <state width="1877" height="431" key="GridCell.Tab.0.right" timestamp="1602420486225">
+    <state width="1877" height="405" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1602421562408" />
+    <state width="1877" height="405" key="GridCell.Tab.0.right" timestamp="1602421562409">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="431" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602420486225" />
+    <state width="1877" height="405" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602421562409" />
     <state width="1877" height="431" key="GridCell.Tab.1.bottom" timestamp="1602420486225">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -449,14 +435,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="431" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1602420486225" />
+    <state x="461" y="162" key="SettingsEditor" timestamp="1602421880564">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1602421880564" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1602418666268">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602418666268" />
-    <state x="616" y="172" width="672" height="676" key="search.everywhere.popup" timestamp="1602418688638">
+    <state x="616" y="172" width="672" height="676" key="search.everywhere.popup" timestamp="1602421598706">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="172" width="672" height="676" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602418688638" />
+    <state x="616" y="172" width="672" height="676" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602421598706" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -508,12 +498,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java</url>
-          <line>26</line>
+          <line>34</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/cisesdk/src/main/java/org/cise/core/utilities/format/NFormat.java</url>
-          <line>36</line>
+          <line>44</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">

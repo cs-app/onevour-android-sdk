@@ -17,10 +17,18 @@ public class NFormat {
         return DecimalFormat.getCurrencyInstance();
     }
 
+    /**
+     * remove currency symbol
+     */
     public static String currencyFormat(double value) {
         NumberFormat format = currency();
         String result = format.format(value);
         return result.replace(format.getCurrency().getSymbol(), "");
+    }
+
+    public static String currencyFormatWithSymbol(double value) {
+        NumberFormat format = currency();
+        return format.format(value);
     }
 
     public static double currencyParse(String value) {
