@@ -1,10 +1,14 @@
 package org.cise.sdk.ciseapp.modules.fragmentbottom.controllers;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.cise.core.utilities.http.ApiRequest;
+import org.cise.core.utilities.http.HttpError;
+import org.cise.core.utilities.http.HttpResponse;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.adapter.components.AdapterSampleData;
 
@@ -26,8 +30,19 @@ public class FragmentBottomActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_show)
     public void onBtnShowClicked() {
-        BottomFragment fragment = BottomFragment.newInstance();
-        fragment.show(getSupportFragmentManager(), BottomFragment.TAG);
+//        BottomFragment fragment = BottomFragment.newInstance();
+//        fragment.show(getSupportFragmentManager(), BottomFragment.TAG);
+        ApiRequest.post(this, "https://api.digitalrecordcard.com/index.php/api_v1/login", new String(""),new HttpResponse.Listener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                Log.d("API-TEST", response);
+            }
+
+            @Override
+            public void onError(HttpError httpError) {
+                Log.e("API-TEST", httpError.getMessage());
+            }
+        });
     }
 
     @OnClick(R.id.btn_show_async)

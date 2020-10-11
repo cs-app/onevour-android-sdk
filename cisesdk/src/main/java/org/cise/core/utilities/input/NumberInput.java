@@ -1,5 +1,6 @@
 package org.cise.core.utilities.input;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
@@ -12,8 +13,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import org.cise.core.R;
 import org.cise.core.utilities.commons.ExceptionUtils;
+import org.cise.core.utilities.commons.ValueUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -50,7 +54,9 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
     private NumberFormat numberFormat;
 
-    private String defaultCommaSymbol = ".";
+    private String decimalSeparator = ".";
+
+    private String decimalGroupSeparator = ",";
 
     private LinearLayout titleContent;
 
@@ -75,13 +81,17 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         setup(editText, false, null, 0, Integer.MAX_VALUE);
     }
 
-    public void setup(final EditText editText, final boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
+    @SuppressLint("ClickableViewAccessibility")
+    public void setup(@NonNull final EditText editText, final boolean isDecimal, final NumberFormat numberFormat, double min, double max) {
         this.context = editText.getRootView().getContext();
         this.editText = editText;
         this.editText.setTextIsSelectable(true);
         this.editText.setCursorVisible(false);
         this.editText.setFocusable(false);
         String tmpValue = editText.getText().toString();
+        this.isDecimal = isDecimal;
+        this.numberFormat = numberFormat;
+        // check decimal
         if (tmpValue.isEmpty()) {
             if (isDecimal) {
                 editText.setText(numberFormat.format(0.00));
@@ -89,14 +99,12 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                 editText.setText("0");
             }
         }
-        this.isDecimal = isDecimal;
-        this.numberFormat = numberFormat;
-        if (this.numberFormat != null) {
-            if (this.numberFormat instanceof DecimalFormat) {
-                DecimalFormatSymbols d = ((DecimalFormat) this.numberFormat).getDecimalFormatSymbols();
-                defaultCommaSymbol = String.valueOf(d.getDecimalSeparator());
-                Log.i(TAG, defaultCommaSymbol);
-            }
+        if (ValueUtils.nonNull(this.numberFormat) && this.numberFormat instanceof DecimalFormat) {
+            DecimalFormatSymbols d = ((DecimalFormat) this.numberFormat).getDecimalFormatSymbols();
+            decimalSeparator = String.valueOf(d.getDecimalSeparator());
+            decimalGroupSeparator = String.valueOf(d.getGroupingSeparator());
+            Log.i(TAG, "decimal separator" + decimalSeparator);
+            Log.i(TAG, "decimal group separator" + decimalGroupSeparator);
         }
         if (isDecimal) {
             minDbl = min;
@@ -127,6 +135,9 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         TextView numPoint = dialogView.findViewById(R.id.key_num_point);
         TextView numOption = dialogView.findViewById(R.id.key_option);
         ImageButton del = dialogView.findViewById(R.id.key_del);
+        if (isDecimal) {
+            numPoint.setText(decimalSeparator);
+        } else numPoint.setVisibility(View.INVISIBLE);
         num0.setOnClickListener(this);
         num1.setOnClickListener(this);
         num2.setOnClickListener(this);
@@ -146,23 +157,21 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         alertBuilder.setPositiveButton("OK", (dialog, which) -> {
             try {
                 Log.d(TAG, "Listener is available : " + listener);
-                if (null != listener) listener.onSubmitValue();
-                if (null != numberFormat) {
+                if (ValueUtils.nonNull(listener)) listener.onSubmitValue();
+                if (ValueUtils.nonNull(numberFormat)) {
                     if (isDecimal) {
                         editText.setText(result.getText());
                     } else {
-
                         editText.setText(numberFormat.format(numberFormat.parse(resValueTmp.toString()).intValue()));
-
                     }
                 } else {
                     editText.setText(resValueTmp);
                 }
-                if (null != listener) {
+                if (ValueUtils.nonNull(listener)) {
                     if (isDecimal) {
                         listener.doubleValue(numberFormat.parse(resValueTmp.toString()).doubleValue());
                     } else {
-                        if (null != numberFormat) {
+                        if (ValueUtils.nonNull(numberFormat)) {
                             listener.intValue(numberFormat.parse(resValueTmp.toString()).intValue());
                         } else {
                             listener.intValue(Integer.parseInt(resValueTmp.toString()));
@@ -208,12 +217,11 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                 resValueTmp.delete(0, resValueTmp.length());
                 resValueTmp.append(editText.getText().toString());
                 result.setText(resValueTmp.toString());
-                if (null != context) {
+                if (ValueUtils.nonNull(context)) {
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null)
+                    if (ValueUtils.nonNull(imm)) {
                         imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                } else {
-                    Log.w(TAG, "context hide softkeyboard is null");
+                    }
                 }
                 Log.d(TAG, "Action touch event : " + motionEvent.getAction());
                 alertDialog.show();
@@ -253,7 +261,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
                 } else if (i == R.id.key_num_point) {
                     if (isDecimal) {
-                        inputValue(defaultCommaSymbol);
+                        inputValue(decimalSeparator);
                     }
                 } else if (i == R.id.key_del) {
                     delete();
@@ -267,7 +275,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
     @Override
     public void onClick(View v) {
-        Log.i("NumberInput", "ON CLICK ID  :" + v.getId());
+        Log.i(TAG, "ON CLICK ID  :" + v.getId());
         if (isScroll) {
             Log.d(TAG, "root is scrolling");
             return;
@@ -276,12 +284,11 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
             resValueTmp.delete(0, resValueTmp.length());
             resValueTmp.append(editText.getText().toString());
             result.setText(resValueTmp.toString());
-            if (null != context) {
+            if (ValueUtils.nonNull(context)) {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null)
+                if (ValueUtils.nonNull(imm)) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            } else {
-                Log.w("NumperInput", "context hide softkeyboard is null");
+                }
             }
             alertDialog.show();
         } else {
@@ -319,7 +326,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
                 } else if (i == R.id.key_num_point) {
                     if (isDecimal) {
-                        inputValue(defaultCommaSymbol);
+                        inputValue(decimalSeparator);
                     }
                 } else if (i == R.id.key_del) {
                     delete();
@@ -332,7 +339,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
     private void inputValue(String valueChar) throws ParseException {
         if (isDecimal) {
-            if (valueChar.equalsIgnoreCase(defaultCommaSymbol)) {
+            if (valueChar.equalsIgnoreCase(decimalSeparator)) {
                 isPoint = true;
                 isAfterPoint = true;
             } else {
@@ -358,7 +365,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                         }
                         sbBfPoint.append(".");
                         sbBfPoint.append(sbAfPoint);
-                        Log.i("NumberInputValue", sbBfPoint.toString());
+                        Log.i(TAG, sbBfPoint.toString());
                     }
                 }
                 resValueTmp = new StringBuilder(sbBfPoint);
@@ -368,7 +375,7 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
             BigInteger value = getAvailableIntValue();
             StringBuilder sbBfPoint = new StringBuilder(value.toString());
             sbBfPoint.append(valueChar);
-            Log.i("NumberInputValue", "integer value : " + value + " | " + sbBfPoint);
+            Log.i(TAG, "integer value : " + value + " | " + sbBfPoint);
             resValueTmp = new StringBuilder(sbBfPoint);
             printValueToUI(value);
         }
@@ -397,7 +404,6 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
                 isAfterPoint = false;
                 isPoint = false;
                 int length = sbBfPoint.length();
-//                if (length > 0) sbBfPoint.delete(length - 1, length);
                 for (int i = length; i > 0; i--) {
                     sbBfPoint.delete(i - 1, i);
                     break;
@@ -415,7 +421,6 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
             BigInteger value = getAvailableIntValue();
             StringBuilder sbBfPoint = new StringBuilder(value.toString());
             int length = sbBfPoint.length();
-//            if (length > 0) sbBfPoint.delete(length - 1, length);
             for (int i = length; i > 0; i--) {
                 sbBfPoint.delete(i - 1, i);
                 break;
@@ -431,47 +436,49 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
 
     private BigInteger getAvailableIntValue() throws ParseException {
         long value = 0;
-        if (numberFormat != null) {
+        if (ValueUtils.nonNull(numberFormat)) {
             resValueTmp = new StringBuilder(result.getText().toString());
             value = numberFormat.parse(resValueTmp.toString()).intValue();
         } else {
             if (!resValueTmp.toString().trim().isEmpty()) {
-                value = Integer.valueOf(resValueTmp.toString().trim());
+                value = Integer.parseInt(resValueTmp.toString().trim());
             }
         }
         BigInteger bd = BigInteger.valueOf(value);
-        Log.i("NumberInputValue", "get value : " + bd);
+        Log.i(TAG, "get value : " + bd);
         return bd;
     }
 
-    private BigDecimal getAvailableValue() throws ParseException {
+    private BigDecimal getAvailableValue() {
         double value = 0.00;
-        if (numberFormat != null) {
-            resValueTmp = new StringBuilder(result.getText().toString()); //result.getText().toString()
-            value = numberFormat.parse(resValueTmp.toString()).doubleValue();
+        if (ValueUtils.nonNull(numberFormat)) {
+            String numberString = result.getText().toString();
+            resValueTmp = new StringBuilder(numberString);
+            value = currencyParse(resValueTmp.toString());
         } else {
-            if (!resValueTmp.toString().trim().isEmpty())
-                value = Double.valueOf(resValueTmp.toString());
+            if (!resValueTmp.toString().trim().isEmpty()) {
+                value = Double.parseDouble(resValueTmp.toString());
+            }
         }
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
-        Log.i("NumberInputValue", "get value : " + bd);
+        Log.i(TAG, "get value : " + bd);
         return bd;
     }
 
     private int getAfterComma(BigDecimal a) {
         String[] result = String.valueOf(a).split("[.]");
         if (result.length > 1) {
-            return Integer.valueOf(result[1]);
+            return Integer.parseInt(result[1]);
         } else {
             return 0;
         }
     }
 
     private void printValueToUI(BigDecimal value) {
-        if (Double.valueOf(resValueTmp.toString()) <= maxDbl) {
-            if (numberFormat != null) {
-                result.setText(numberFormat.format(Double.valueOf(resValueTmp.toString())));
+        if (Double.parseDouble(resValueTmp.toString()) <= maxDbl) {
+            if (ValueUtils.nonNull(numberFormat)) {
+                result.setText(currencyFormat(Double.parseDouble(resValueTmp.toString())));
             } else {
                 result.setText(String.valueOf(Double.valueOf(resValueTmp.toString())));
             }
@@ -482,9 +489,9 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
     }
 
     private void printValueToUI(BigInteger value) {
-        Log.i("NumberInput", "PRINT : " + resValueTmp);
-        if (Long.valueOf(resValueTmp.toString()) <= maxInt) {
-            if (numberFormat != null) {
+        Log.i(TAG, "PRINT : " + resValueTmp);
+        if (Long.parseLong(resValueTmp.toString()) <= maxInt) {
+            if (ValueUtils.nonNull(numberFormat)) {
                 result.setText(numberFormat.format(Integer.valueOf(resValueTmp.toString())));
             } else {
                 result.setText(String.valueOf(Integer.valueOf(resValueTmp.toString())));
@@ -495,6 +502,30 @@ public class NumberInput implements View.OnClickListener, View.OnTouchListener {
         }
     }
 
+    public String currencyFormat(double value) {
+        String result = numberFormat.format(value);
+        return result.replace(numberFormat.getCurrency().getSymbol(), "");
+    }
+
+    public double currencyParse(String value) {
+        DecimalFormat format = (DecimalFormat) numberFormat;
+        double result = 0;
+        try {
+            result = format.parse(value).doubleValue();
+            return result;
+        } catch (ParseException e) {
+            // ignore
+        }
+        try {
+            // remove currency symbol
+            String pattern = format.toPattern().replaceAll("\u00A4", "");
+            result = new DecimalFormat(pattern).parse(value).doubleValue();
+            return result;
+        } catch (ParseException e) {
+            // ignore
+        }
+        return result;
+    }
 
     public void setListener(Listener listener) {
         this.listener = listener;

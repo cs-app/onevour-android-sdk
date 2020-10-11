@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import org.cise.core.R;
 
+@Deprecated
 public class AdapterHolderLoader extends GenericHolder {
 
     private static final String TAG = "GAHLoader";

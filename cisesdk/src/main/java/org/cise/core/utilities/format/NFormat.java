@@ -10,23 +10,37 @@ import java.util.Locale;
  * Number Format<br/>
  * Currency<br/>
  * Percent<br/>
- * */
+ */
 public class NFormat {
 
     public static NumberFormat currency() {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
-        symbols.setCurrencySymbol("");
-        DecimalFormat nf = (DecimalFormat) DecimalFormat.getCurrencyInstance(Locale.getDefault());
-        nf.setDecimalFormatSymbols(symbols);
-        return nf;
+        return DecimalFormat.getCurrencyInstance();
     }
 
     public static String currencyFormat(double value) {
-        return currency().format(value);
+        NumberFormat format = currency();
+        String result = format.format(value);
+        return result.replace(format.getCurrency().getSymbol(), "");
     }
 
-    public static double currencyParse(String value) throws ParseException {
-        return currency().parse(value).doubleValue();
+    public static double currencyParse(String value) {
+        DecimalFormat format = (DecimalFormat) currency();
+        double result = 0;
+        try {
+            result = format.parse(value).doubleValue();
+            return result;
+        } catch (ParseException e) {
+            // ignore
+        }
+        try {
+            // remove currency symbol
+            String pattern = format.toPattern().replaceAll("\u00A4", "");
+            result = new DecimalFormat(pattern).parse(value).doubleValue();
+            return result;
+        } catch (ParseException e) {
+            // ignore
+        }
+        return result;
     }
 
     public static NumberFormat percent() {

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Zuliadin on 23/11/2017.
  */
-
+@Deprecated
 public abstract class GenericHolder<T> extends RecyclerView.ViewHolder {
 
     private static final String TAG = "GAdapterHolder";

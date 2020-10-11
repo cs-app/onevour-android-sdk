@@ -1,98 +1,112 @@
 package org.cise.core.utilities.ui.adapter.recyclerview;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.cise.core.R;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.cise.core.utilities.commons.ExceptionUtils;
 import org.cise.core.utilities.commons.ValueUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Zuliadin on 20/11/2017.
- * Arguments T is ViewHolder<br>
- */
-@Deprecated
-@SuppressWarnings("unchecked")
-public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Adapter<T> implements GenericHolder.Listener<T> {
+/***
+ * multiple holder<br/>
+ * harus ada parameter yang mapping<br/>
+ * List -> dan key holder nya<br/>
+ * */
+@SuppressWarnings({"rawtypes", "unchecked"})
+public abstract class AdapterGenericV2<E extends AdapterModel> extends RecyclerView.Adapter<HolderGenericV2<E>> implements HolderGenericV2.Listener {
 
     private static final String TAG = "GAdapter";
 
-    private Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
-    private Map<String, T> cached = new HashMap<>();
+    private Map<String, HolderGenericV2> cached = new HashMap<>();
 
     private ArrayList<E> adapterList = new ArrayList<>();
 
-    private final int VIEW_CONTENT = 0;
+    private final int VIEW_CONTENT = 1;
 
-    private final int VIEW_LOADER = 1;
-
-    private AdapterHolderLoader holderLoader;
-
-    private int lastSelected = -1;
+    private final int VIEW_LOADER = 0;
 
     private boolean isLoader;
 
-    private int layoutId;
+    private Map<Integer, Class> holders = new HashMap<>();
 
-    private AdapterListener<E> adapterListener;
+    private Map<Integer, Integer> layoutHolders = new HashMap<>();
 
-    private GenericHolder.Listener<E> holderListener;
+    private Map<Integer, Integer> typeHolders = new HashMap<>();
 
-    protected GenericAdapter(int layoutId) {
-        this.layoutId = layoutId;
+    private AdapterGenericV2.AdapterListener<E> adapterListener;
+
+    private List<HolderGenericV2.Listener> holderListener = new ArrayList<>();
+
+    protected AdapterGenericV2() {
+        registerHolder();
     }
 
-
-    public GenericAdapter(int layoutId, ArrayList adapterList) {
-        this.layoutId = layoutId;
+    public AdapterGenericV2(ArrayList adapterList) {
         this.adapterList = adapterList;
+        registerHolder();
+    }
+
+    protected abstract void registerHolder();
+
+    protected <VH extends HolderGenericV2> void register(int type, @LayoutRes int layoutId, Class<VH> holder) {
+        if (type <= 0) {
+            throw new IllegalArgumentException("please input type greater than 0");
+        }
+        if (ValueUtils.nonNull(holders.get(type))) {
+            throw new IllegalArgumentException("holder " + holder.getName() + " already register!");
+        }
+        holders.put(type, holder);
+        typeHolders.put(type, type);
+        layoutHolders.put(type, layoutId);
     }
 
     @Override
     public int getItemViewType(int position) {
         Log.d(TAG, "item view type: " + position);
-        return adapterList.get(position) != null ? VIEW_CONTENT : VIEW_LOADER;
+        AdapterModel value = adapterList.get(position);
+        if (ValueUtils.nonNull(value)) {
+            return value.getType();
+        }
+        return VIEW_LOADER;
+        // return adapterList.get(position) != null ? VIEW_CONTENT : VIEW_LOADER;
     }
 
     @NonNull
     @Override
-    public T onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HolderGenericV2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        if (VIEW_CONTENT == viewType) {
-            View convertView = LayoutInflater.from(context).inflate(this.layoutId, parent, false);
-            return holderGenerator(type, convertView);
-        } else {
-            View convertView = LayoutInflater.from(context).inflate(R.layout.adapter_loader, parent, false);
-            return (T) new AdapterHolderLoader(convertView);
+        Integer layoutId = layoutHolders.get(viewType);
+        Class holderClass = holders.get(viewType);
+        if (ValueUtils.nonNull(layoutId)) {
+            View convertView = LayoutInflater.from(context).inflate(layoutId.intValue(), parent, false);
+            return holderGenerator(holderClass, convertView);
         }
+        throw new NullPointerException("cannot find holder");
     }
 
-    private T holderGenerator(Type type, View convertView) {
-        T viewHolder = null;
+    private HolderGenericV2 holderGenerator(Type type, View convertView) {
+        HolderGenericV2 viewHolder = null;
         try {
-            if (null == cached.get(type.hashCode())) {
-                Constructor constructor = ((Class<GenericHolder>) type).getConstructor(View.class);
-                viewHolder = (T) constructor.newInstance(convertView);
+            if (ValueUtils.isNull(cached.get(type.hashCode()))) {
+                Constructor constructor = ((Class<HolderGenericV2>) type).getConstructor(View.class);
+                viewHolder = (HolderGenericV2) constructor.newInstance(convertView);
                 cached.put("VH" + type.hashCode(), viewHolder);
             } else {
-                viewHolder = (T) cached.get("VH" + type.hashCode());
+                viewHolder = cached.get("VH" + type.hashCode());
             }
         } catch (InstantiationException e) {
             Log.e(TAG, "Incompatible holder");
@@ -104,7 +118,7 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         } catch (NoSuchMethodException e) {
             Log.e(TAG, ExceptionUtils.message(e));
         } finally {
-            if (null != viewHolder) {
+            if (ValueUtils.nonNull(viewHolder)) {
                 Log.d(TAG, "Class : " + viewHolder.getClass());
             }
         }
@@ -112,19 +126,20 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GenericHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HolderGenericV2 holder, int position) {
         E o = adapterList.get(position);
-        if (holderListener != null) {
-            holder.setListener(holderListener);
-        } else {
-            holder.setListener(this);
+        int size = adapterList.size();
+        // add listener
+        for (HolderGenericV2.Listener listener : holderListener) {
+            holder.setListener(listener);
         }
         holder.setPosition(position);
         holder.onBindViewHolder(o);
         holder.onBindViewHolder(o, position);
+        holder.onBindViewHolder(o, position, size);
         holder.onBindViewHolder(adapterList, position);
+        holder.onBindViewHolder(adapterList, position, size);
         holder.onBindViewHolder(o, position, 0 == position && !isLoader, position == getItemCount() - 1 && !isLoader);
-        holderReload(holder);
         Log.d(TAG, "bind position " + position);
     }
 
@@ -133,12 +148,12 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         return adapterList.size();
     }
 
-    public void setAdapterListener(AdapterListener<E> adapterListener) {
+    public void setAdapterListener(AdapterGenericV2.AdapterListener<E> adapterListener) {
         this.adapterListener = adapterListener;
     }
 
-    public void setHolderListener(GenericHolder.Listener<E> holderListener) {
-        this.holderListener = holderListener;
+    public void setHolderListener(HolderGenericV2.Listener holderListener) {
+        this.holderListener.add(holderListener);
     }
 
     private void setLoader(boolean loader) {
@@ -182,36 +197,6 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         notifyItemRangeInserted(start, newSize);
     }
 
-    private void holderReload(final GenericHolder holder) {
-        if (holder instanceof AdapterHolderLoader) {
-            holderLoader = (AdapterHolderLoader) holder;
-        }
-    }
-
-    public void setError(String s) {
-        if (holderLoader != null) {
-            if (s == null) {
-                holderLoader.info.setText(null);
-                holderLoader.info.setVisibility(View.GONE);
-                holderLoader.progressBar.setVisibility(View.GONE);
-            } else {
-                holderLoader.info.setText(s);
-                holderLoader.info.setVisibility(View.VISIBLE);
-                holderLoader.progressBar.setVisibility(View.GONE);
-            }
-            holderLoader.setListener(() -> {
-                if (adapterListener != null) {
-                    int size = adapterList.size();
-                    if (size > 0) {
-                        int index = size - 1;
-                        E o = adapterList.get(index);
-                        adapterListener.onLoadRetry(index, o);
-                    }
-                }
-            });
-        }
-    }
-
     public List<E> getAdapterList() {
         return adapterList;
     }
@@ -230,15 +215,9 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
         notifyDataSetChanged();
     }
 
-
     public void updateItem(int index, E value) {
         adapterList.set(index, value);
         notifyItemChanged(index);
-    }
-
-    public void updateItemLastSelect(E value) {
-        adapterList.set(lastSelected, value);
-        notifyItemChanged(lastSelected);
     }
 
     public void clear() {
@@ -254,11 +233,6 @@ public class GenericAdapter<T extends GenericHolder, E> extends RecyclerView.Ada
             return adapterList.get(totalItemCount);
         }
         return null;
-    }
-
-    @Override
-    public void onSelectedHolder(int index, T o) {
-        lastSelected = index;
     }
 
     public interface AdapterListener<E> {

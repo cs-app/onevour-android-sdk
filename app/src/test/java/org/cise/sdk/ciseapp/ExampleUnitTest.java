@@ -1,6 +1,12 @@
 package org.cise.sdk.ciseapp;
 
+import android.util.Log;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.*;
 
@@ -9,9 +15,13 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
 public class ExampleUnitTest {
+
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
 }
