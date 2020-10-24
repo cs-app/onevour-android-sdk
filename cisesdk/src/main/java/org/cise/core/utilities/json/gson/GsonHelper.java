@@ -37,7 +37,7 @@ public class GsonHelper {
     }
 
     public static GsonHelper newInstance() {
-        if (ValueUtils.nonNull(gson, gsonHelper)) {
+        if (ValueUtils.isNull(gson, gsonHelper)) {
             gsonHelper = new GsonHelper();
         }
         return gsonHelper;
