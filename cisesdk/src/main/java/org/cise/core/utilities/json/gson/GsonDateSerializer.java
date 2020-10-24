@@ -1,11 +1,14 @@
 package org.cise.core.utilities.json.gson;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.JsonParseException;
+
+import org.cise.core.utilities.commons.ValueUtils;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,16 +16,37 @@ import java.util.Date;
  * Created by Zuliadin on 29/01/2017.
  */
 
-public class GsonDateSerializer implements JsonSerializer<Date> {
+public class GsonDateSerializer implements JsonDeserializer<Date> {
 
-    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        if (null != src) {
-            return new JsonPrimitive(sdf.format(src));
-        } else {
-            return new JsonPrimitive(src.toString());
+    final private SimpleDateFormat[] formats = {
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
+            new SimpleDateFormat("yyyy-MM-dd"),
+            new SimpleDateFormat("HH:mm:ss")
+    };
 
+    @Override
+    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        try {
+            String j = json.getAsJsonPrimitive().getAsString();
+            return parseDate(j);
+        } catch (ParseException e) {
+            throw new JsonParseException(e.getMessage(), e);
         }
+    }
+
+    private Date parseDate(String dateString) throws ParseException {
+        if (ValueUtils.isEmpty(dateString)) {
+            return null;
+        }
+        for (SimpleDateFormat dateFormat : formats) {
+            try {
+                return dateFormat.parse(dateString);
+            } catch (ParseException e) {
+                // ignore
+            }
+        }
+        return null;
     }
 
 }

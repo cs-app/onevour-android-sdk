@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
 
+import org.cise.core.utilities.commons.ValueUtils;
+
 import java.util.Date;
 
 /**
@@ -17,32 +19,25 @@ public class GsonHelper {
     public static Gson gson;
 
     private GsonHelper() {
-        gson = builder(null).create();
-        //
-//        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateDeserializer());
-//        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateSerializer());
-//        gsonBuilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+        gson = builder().create();
     }
 
-    private GsonBuilder builder(String patternDate) {
+    private GsonBuilder builder() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(String.class, new GsonStringDeserializer());
         gsonBuilder.registerTypeAdapter(String.class, new GsonStringSerializer());
-        if (patternDate == null) {
-            gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        } else {
-            gsonBuilder.setDateFormat(patternDate);
-        }
+        gsonBuilder.registerTypeAdapter(Date.class, new GsonDateSerializer());
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         return gsonBuilder;
     }
 
-    public void initialize(String patternDate) {
-        gson = builder(patternDate).create();
+    public void initialize(GsonBuilder gsonBuilder) {
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        gson = gsonBuilder.create();
     }
 
     public static GsonHelper newInstance() {
-        if (null == gsonHelper || null == gson) {
+        if (ValueUtils.nonNull(gson, gsonHelper)) {
             gsonHelper = new GsonHelper();
         }
         return gsonHelper;
