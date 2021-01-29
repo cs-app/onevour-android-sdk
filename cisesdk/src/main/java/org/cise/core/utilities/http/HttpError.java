@@ -19,7 +19,7 @@ public class HttpError {
     private Exception exception;
 
     public HttpError(int code) {
-        message = String.valueOf("HTTP httpError " + code + " " + HttpStatusCode.getMessage(code));
+        message = "HTTP " + code + " " + HttpStatusCode.getMessage(code);
     }
 
     public void error(String errorMessage) {

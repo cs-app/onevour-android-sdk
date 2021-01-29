@@ -14,7 +14,11 @@ import java.util.Locale;
 public class NFormat {
 
     public static NumberFormat currency() {
-        return DecimalFormat.getCurrencyInstance();
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.getDefault());
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        return nf;
+//        return DecimalFormat.getInstance();
     }
 
     /**
