@@ -30,9 +30,7 @@ public class FragmentBottomActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_show)
     public void onBtnShowClicked() {
-//        BottomFragment fragment = BottomFragment.newInstance();
-//        fragment.show(getSupportFragmentManager(), BottomFragment.TAG);
-        ApiRequest.post(this, "https://api.digitalrecordcard.com/index.php/api_v1/login", new String(""),new HttpResponse.Listener<String>() {
+        ApiRequest.post("https://api.digitalrecordcard.com/index.php/api_v1/login", new String(""), new HttpResponse.Listener<String>() {
             @Override
             public void onSuccess(String response) {
                 Log.d("API-TEST", response);

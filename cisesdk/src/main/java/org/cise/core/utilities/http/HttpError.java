@@ -31,6 +31,11 @@ public class HttpError {
         message = malformedURLException.getMessage();
     }
 
+    public HttpError(String endpoint, IOException iOException) {
+        exception = iOException;
+        message = endpoint + "\n" + iOException.getMessage();
+    }
+
     public HttpError(IOException iOException) {
         exception = iOException;
         message = iOException.getMessage();
