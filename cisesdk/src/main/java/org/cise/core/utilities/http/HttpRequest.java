@@ -199,14 +199,14 @@ public class HttpRequest<T> {
 
     private void handlerSuccess(T response) {
         if (null == listener) return;
-        new Handler(Looper.myLooper()).post(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             listener.onSuccess(response);
         });
     }
 
     private void handlerError(HttpError error) {
         if (null == listener) return;
-        new Handler(Looper.myLooper()).post(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             listener.onError(error);
         });
     }
