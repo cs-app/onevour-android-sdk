@@ -19,7 +19,7 @@ public class HttpError {
     private Exception exception;
 
     public HttpError(int code) {
-        message = String.valueOf("HTTP httpError " + code + " " + HttpStatusCode.getMessage(code));
+        message = "HTTP " + code + " " + HttpStatusCode.getMessage(code);
     }
 
     public void error(String errorMessage) {
@@ -29,6 +29,11 @@ public class HttpError {
     public HttpError(MalformedURLException malformedURLException) {
         exception = malformedURLException;
         message = malformedURLException.getMessage();
+    }
+
+    public HttpError(String endpoint, IOException iOException) {
+        exception = iOException;
+        message = endpoint + "\n" + iOException.getMessage();
     }
 
     public HttpError(IOException iOException) {

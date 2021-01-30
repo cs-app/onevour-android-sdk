@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.google.gson.JsonSyntaxException;
+
 import org.cise.core.utilities.json.gson.GsonHelper;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ import java.util.concurrent.Executors;
  */
 public class HttpQueue {
 
-    private static final String TAG = "HttpQueue";
+    private static final String TAG = "HTTP-Q";
     private final int MAX_POOL = 8;
     private static HttpQueue httpQueue;
     private ExecutorService executor = Executors.newFixedThreadPool(MAX_POOL);
@@ -45,11 +47,11 @@ public class HttpQueue {
     public <T> void add(final HttpMultipart multipart, final HttpResponse.Listener<T> listener) {
         if (null == executor) executor = Executors.newFixedThreadPool(MAX_POOL);
         executor.execute(() -> {
+            StringBuffer responseString = new StringBuffer("");
             Handler handler = new Handler(Looper.getMainLooper());
             try {
                 multipart.request();
                 List<String> response = multipart.finish();
-                final StringBuffer responseString = new StringBuffer("");
                 for (String s : response) {
                     responseString.append(s);
                 }
@@ -64,27 +66,25 @@ public class HttpQueue {
                     });
                 } else {
                     String responseResult = response.toString();
-                    Log.d(TAG, "Type : " + responseType);
-                    if (responseResult.length() > 1 && (responseResult.startsWith("{") && responseResult.endsWith("}") || responseResult.startsWith("[") && responseResult.endsWith("]"))) {
-                        String clearTextResponse = responseResult.substring(1, responseResult.toCharArray().length - 1);
-                        final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(clearTextResponse, responseType);
+                    try{
+                        final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(responseResult, responseType);
                         handler.post(() -> {
                             listener.onSuccess(jsonResponse);
                         });
-                    } else {
-                        handler.post(() -> {
-                            HttpError httpError = new HttpError(multipart.getResponseCode());
-                            httpError.error("Cannot convert response");
-                            listener.onError(httpError);
-                        });
+                        Log.d(TAG, "Type : " + responseType);
+                    } catch (JsonSyntaxException e){
+                        HttpError httpError = new HttpError(multipart.getResponseCode());
+                        httpError.error("Cannot convert response \n:"+responseResult);
+                        listener.onError(httpError);
                     }
                 }
             } catch (final IOException e) {
                 for (StackTraceElement s : e.getStackTrace()) {
                     Log.e(TAG, String.valueOf(s));
                 }
-                Log.e(TAG, "upload httpError " + e.getMessage());
-                handler.post(() -> listener.onError(new HttpError(e)));
+                Log.e(TAG, "upload http error " + e.getMessage());
+                HttpError httpError = new HttpError(e);
+                handler.post(() -> listener.onError(httpError));
             } finally {
                 Log.d(TAG, "process upload finish ");
             }

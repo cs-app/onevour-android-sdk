@@ -31,7 +31,9 @@ public class FormSimpleActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         inputNumber.setText(String.valueOf(0));
         inputDecimal.setText(NFormat.currencyFormat(0.00));
-        number.setup(inputNumber);
-        decimal.setup(inputDecimal, true, NFormat.currency(), 0, 10000000);
+        number.setup(inputNumber, 0, 100);
+        number.enableMaxValue();
+        decimal.setup(inputDecimal, NFormat.currency(), 0, 10000000.01);
+        decimal.enableMaxValue();
     }
 }
