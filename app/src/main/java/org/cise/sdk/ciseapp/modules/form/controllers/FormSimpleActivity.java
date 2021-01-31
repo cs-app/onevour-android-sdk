@@ -33,7 +33,7 @@ public class FormSimpleActivity extends AppCompatActivity {
         inputDecimal.setText(NFormat.currencyFormat(0.00));
         number.setup(inputNumber, 0, Integer.MAX_VALUE);
         number.enableMaxValue();
-        decimal.setup(inputDecimal, NFormat.currency(), 0, 100);
+        decimal.setup(inputDecimal, NFormat.currency(), 0, 100000000);
         decimal.enableMaxValue();
     }
 }
