@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import org.cise.sdk.ciseapp.R;
+
 public class CallApiActivity extends AppCompatActivity {
 
     @Override

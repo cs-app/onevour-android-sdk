@@ -1,20 +1,19 @@
 package org.cise.core.utilities.input;
 
-import android.util.Log;
-
 import org.cise.core.utilities.commons.ValueUtils;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.math.BigInteger;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InputInteger implements NumberInputAdapter {
 
     private static final String TAG = "NID-INT";
 
+    private AtomicInteger value = new AtomicInteger(0);
+
     private int decrease = 10;
 
-    private AtomicReference<Integer> value = new AtomicReference<>(0);
-
-    private int min = 0, max = Integer.MAX_VALUE;
+    private int min, max;
 
     public InputInteger(int min, int max) {
         this.min = min;
@@ -35,23 +34,14 @@ public class InputInteger implements NumberInputAdapter {
 
     @Override
     public void append(String valueChar) {
-        try {
-            StringBuilder sb = new StringBuilder();
-            sb.append(value.get().intValue());
-            sb.append(valueChar);
-            int resultVal = Integer.parseInt(sb.toString());
-            if (resultVal <= max) {
-                value.set(resultVal);
-            }
-        } catch (NumberFormatException e) {
-            // ignore max value
-            Log.e(TAG, "max value input " + e.getMessage());
-        }
+        BigInteger integer = BigInteger.valueOf(value.intValue()).multiply(BigInteger.valueOf(decrease)).add(new BigInteger(valueChar));
+        if (integer.compareTo(BigInteger.valueOf(max)) > 0) return;
+        value.set(integer.intValue());
     }
 
     @Override
     public void delete() {
-        int integer = value.get() / decrease;
+        int integer = (value.get() / decrease);
         int diff = value.get() % decrease;
         if (diff > 0) integer = (value.get() - diff) / decrease;
         value.set(integer);

@@ -4,6 +4,9 @@ import android.util.Log;
 
 import org.cise.core.utilities.commons.ValueUtils;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -16,28 +19,25 @@ public class InputDouble implements NumberInputAdapter {
 
     private int decrease = 10;
 
-    private AtomicReference<Double> value = new AtomicReference<Double>(0.00);
+    private AtomicReference<BigDecimal> value = new AtomicReference<>();
 
     private NumberFormat numberFormat;
 
-    // cusrsor position after comma
     private int cursor = 0;
 
     private boolean isAfterPoint = false;
-
-    private String groupSeparator = ",";
 
     private String decimalSeparator = ".";
 
     private double min = 0.00, max = Double.MAX_VALUE;
 
     public InputDouble(NumberFormat numberFormat, double min, double max) {
+        value.set(BigDecimal.valueOf(0.00));
         this.numberFormat = numberFormat;
         this.min = min;
         this.max = max;
         DecimalFormatSymbols d = ((DecimalFormat) numberFormat).getDecimalFormatSymbols();
         decimalSeparator = String.valueOf(d.getDecimalSeparator());
-        groupSeparator = String.valueOf(d.getGroupingSeparator());
     }
 
     @Override
@@ -48,8 +48,8 @@ public class InputDouble implements NumberInputAdapter {
     @Override
     public void setValue(String valueStr) throws ParseException {
         if (ValueUtils.isEmpty(valueStr)) {
-            value.set(0.00);
-        } else value.set(numberFormat.parse(valueStr.trim()).doubleValue());
+            value.set(BigDecimal.valueOf(0.00));
+        } else value.set(BigDecimal.valueOf(numberFormat.parse(valueStr.trim()).doubleValue()));
     }
 
     @Override
@@ -60,78 +60,55 @@ public class InputDouble implements NumberInputAdapter {
             cursor = 0;
             return;
         }
-        try {
-            String[] values = values();
-            String left = values[0];
-            String right = values[1];
-            StringBuilder sb = new StringBuilder();
-            if (isAfterPoint) {
-                sb.append(left);
-                sb.append('.');
-                sb.append(appendRightValue(right, valueChar));
-            } else {
-                sb.append(appendLeftValue(left, valueChar));
-                sb.append('.');
-                sb.append(right);
-            }
-            Log.d(TAG, "final string " + sb.toString());
-            double resultVal = Double.parseDouble(sb.toString());
-            if (resultVal <= max) {
-                value.set(resultVal);
-            }
-        } catch (NumberFormatException e) {
-            // ignore max value
-            Log.e(TAG, "max value input " + e.getMessage());
+        if (isAfterPoint) {
+            appendComma(valueChar);
+        } else {
+            BigDecimal decimal = value.get().multiply(BigDecimal.valueOf(decrease)).add(new BigDecimal(valueChar));
+            if (decimal.compareTo(BigDecimal.valueOf(max)) > 0) return;
+            value.set(decimal);
         }
-    }
-
-    private String[] values() {
-        String firstNumberAsString = numberFormat.format(value.get());
-        String[] values = firstNumberAsString.split("\\" + decimalSeparator);
-        values[0] = values[0].replaceAll("\\" + groupSeparator, "");
-        values[1] = values[1];
-        Log.d(TAG, firstNumberAsString + " | l : " + values[0] + " | r : " + values[1]);
-        return values;
-    }
-
-    private String appendLeftValue(String exist, String appender) {
-        if (ValueUtils.isEmpty(exist) || exist.equalsIgnoreCase("0")) {
-            return appender;
-        }
-        return exist + appender;
-    }
-
-    private String appendRightValue(String exist, String appender) {
-        if (ValueUtils.isEmpty(exist) || exist.equalsIgnoreCase("0")) {
-            return appender;
-        }
-        char[] values = exist.toCharArray();
-        values[cursor] = appender.charAt(0);
-        if (cursor < 1) cursor++;
-        return String.valueOf(values);
     }
 
     @Override
     public void delete() {
-        String[] values = values();
-        String leftValue = values[0];
-        String rightValue = values[1];
-        // check right > 0
-        int right = Integer.parseInt(rightValue);
-        StringBuilder sb = new StringBuilder();
-        if (right > 0) {
-            sb.append(leftValue);
-            sb.append('.');
-            sb.append(deleteAfterComma(right));
+        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
+        if (fractionalPart.compareTo(BigDecimal.valueOf(0.00)) > 0) {
+            deleteComma(fractionalPart);
         } else {
-            sb.append(deleteBeforeComma());
+            BigDecimal decimal = value.get().divide(BigDecimal.valueOf(decrease), 2, RoundingMode.CEILING);
+            BigDecimal diff = value.get().remainder(BigDecimal.valueOf(decrease));
+            if (diff.compareTo(BigDecimal.valueOf(0.00)) > 0) {
+                decimal = value.get().subtract(diff).divide(BigDecimal.valueOf(decrease), 2, RoundingMode.CEILING);
+            }
+            if (decimal.compareTo(BigDecimal.valueOf(max)) > 0) return;
+            value.set(decimal);
         }
-        value.set(Double.parseDouble(sb.toString()));
+    }
+
+    private void appendComma(String valueChar) {
+        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE, new MathContext(3));
+        String fractionalPartStr = fractionalPart.toString();
+        if (fractionalPartStr.length() == 3) fractionalPartStr = fractionalPartStr + "0";
+        char[] values = fractionalPartStr.toCharArray();
+        values[cursor + 2] = valueChar.charAt(0);
+        if (cursor == 0) cursor++;
+        BigDecimal decimal = value.get().subtract(fractionalPart).add(new BigDecimal(new String(values)));
+        if (decimal.compareTo(BigDecimal.valueOf(max)) > 0) return;
+        value.set(decimal);
+    }
+
+    private void deleteComma(BigDecimal fractionalPart) {
+        char[] values = fractionalPart.toString().toCharArray();
+        values[cursor + 2] = '0';
+        isAfterPoint = !(cursor == 0);
+        if (cursor == 1) cursor--;
+        BigDecimal decimal = value.get().subtract(fractionalPart).add(new BigDecimal(new String(values)));
+        value.set(decimal);
     }
 
     @Override
     public double getValueDouble() {
-        return value.get();
+        return value.get().doubleValue();
     }
 
     @Override
@@ -141,27 +118,6 @@ public class InputDouble implements NumberInputAdapter {
 
     @Override
     public void setMaxValue() {
-        value.set(max);
-    }
-
-    private double deleteBeforeComma() {
-        double integer = value.get() / decrease;
-        double diff = value.get() % decrease;
-        if (diff > 0) integer = (value.get() - diff) / decrease;
-        return integer;
-    }
-
-    private int deleteAfterComma(int exist) {
-        Log.d(TAG, "cursor position " + cursor);
-        if (cursor == 0) {
-            isAfterPoint = false;
-            return 0;
-        }
-        int integer = exist / decrease;
-        if (integer == 1) return 0;
-        int diff = exist % decrease;
-        if (diff > 0) integer = (exist - diff) / decrease;
-        if (cursor > 0) cursor--;
-        return integer;
+        value.set(BigDecimal.valueOf(max));
     }
 }
