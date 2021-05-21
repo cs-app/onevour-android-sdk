@@ -13,8 +13,6 @@ import java.lang.reflect.Type;
 
 public class GsonStringDeserializer implements JsonDeserializer<String> {
 
-    private static final String TAG = "StringGson";
-
     @Override
     public String deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
         if (element.isJsonObject() || element.isJsonArray()) {

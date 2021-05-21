@@ -4,12 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.cise.core.utilities.commons.ValueUtils;
-import org.cise.core.utilities.ui.adapter.recyclerview.GenericHolder;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.main.models.Sample;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SampleHolder extends GenericHolder<Sample> implements View.OnClickListener {
 

@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Zuliadin on 29/01/2017.
@@ -19,10 +20,10 @@ import java.util.Date;
 public class GsonDateSerializer implements JsonDeserializer<Date> {
 
     final private SimpleDateFormat[] formats = {
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-            new SimpleDateFormat("yyyy-MM-dd"),
-            new SimpleDateFormat("HH:mm:ss")
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault()),
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()),
+            new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()),
+            new SimpleDateFormat("HH:mm:ss", Locale.getDefault())
     };
 
     @Override

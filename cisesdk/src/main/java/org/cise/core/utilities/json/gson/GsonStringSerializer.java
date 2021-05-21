@@ -14,11 +14,8 @@ import java.lang.reflect.Type;
 public class GsonStringSerializer implements JsonSerializer<String> {
 
     public JsonElement serialize(String src, Type typeOfSrc, JsonSerializationContext context) {
-        if (null != src) {
-            return new JsonPrimitive(src.trim());
-        } else {
-            return new JsonPrimitive("");
-        }
+        if (null == src) return new JsonPrimitive("");
+        return new JsonPrimitive(src.trim());
     }
 
 }

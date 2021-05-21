@@ -9,8 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import org.cise.core.utilities.helper.UIHelper;
-import org.cise.core.utilities.json.gson.GsonHelper;
-import org.cise.core.utilities.ui.adapter.recyclerview.GenericAdapter;
+import org.cise.core.utilities.ui.adapter.recyclerview.AdapterGeneric;
 import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.adapter.components.AdapterSampleData;
@@ -23,8 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AdapterSampleActivity extends AppCompatActivity implements
-        GenericAdapter.AdapterListener<SampleData>, RecyclerViewScrollListener.PaginationListener<SampleData> {
+public class AdapterSampleActivity extends AppCompatActivity implements AdapterGeneric.AdapterListener<SampleData>, RecyclerViewScrollListener.PaginationListener<SampleData> {
 
     private String TAG = "MA-APP-AD";
 
@@ -38,13 +36,7 @@ public class AdapterSampleActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_sample);
         ButterKnife.bind(this);
-        UIHelper.initRecyclerView(recyclerView, adapter, this, this,  true);
-        adapter.setHolderListener(new HolderSampleData.Listener() {
-            @Override
-            public void onSelectedHolder(int index, SampleData o) {
-                Log.d(TAG, "holder click index : " + index);
-            }
-        });
+        UIHelper.initRecyclerView(recyclerView, adapter, this, this, true);
         init();
     }
 
@@ -53,9 +45,9 @@ public class AdapterSampleActivity extends AppCompatActivity implements
         for (int i = 0; i < 20; i++) {
             sampleDatas.add(new SampleData("Sample Data " + (i + 1)));
         }
-         adapter.setValue(sampleDatas);
+//        adapter.setValue(sampleDatas);
         new Handler().postDelayed(() -> {
-            adapter.setError("Error, tap for reload");
+//            adapter.setError("Error, tap for reload");
         }, 1000);
     }
 
@@ -67,9 +59,9 @@ public class AdapterSampleActivity extends AppCompatActivity implements
                 list.add(new SampleData("next : " + i));
             }
             if (resultSuccess) {
-                adapter.addMore(list);
+//                adapter.addMore(list);
             } else {
-                adapter.setError("Error, tap for reload");
+//                adapter.setError("Error, tap for reload");
             }
         }, 2000);
     }

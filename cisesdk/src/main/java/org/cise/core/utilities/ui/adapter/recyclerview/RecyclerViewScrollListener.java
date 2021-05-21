@@ -20,7 +20,7 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     public static final int PAGE_START = 1;
 
     @NonNull
-    private GenericAdapter adapter;
+    private AdapterGeneric adapter;
 
     @NonNull
     private LinearLayoutManager layoutManager;
@@ -32,7 +32,7 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     /**
      * Supporting only LinearLayoutManager for now.
      */
-    public RecyclerViewScrollListener(@NonNull GenericAdapter adapter, @NonNull LinearLayoutManager layoutManager, int size, PaginationListener listener) {
+    public RecyclerViewScrollListener(@NonNull AdapterGeneric adapter, @NonNull LinearLayoutManager layoutManager, int size, PaginationListener listener) {
         this.adapter = adapter;
         this.layoutManager = layoutManager;
         if (size > this.size) {

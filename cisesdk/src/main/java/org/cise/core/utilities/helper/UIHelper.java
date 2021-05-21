@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.cise.core.utilities.ui.adapter.layout.AutoFitGridLayoutManager;
-import org.cise.core.utilities.ui.adapter.recyclerview.GenericAdapter;
+import org.cise.core.utilities.ui.adapter.recyclerview.AdapterGeneric;
 import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
 
 /**
@@ -34,22 +34,22 @@ public class UIHelper {
         initRecyclerView(recyclerView, adapter, null, null, sizePage, false);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener) {
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, AdapterGeneric.AdapterListener adapterListener) {
         initRecyclerView(recyclerView, adapter, adapterListener, null, sizePage, false);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, boolean isLoadFirst) {
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, AdapterGeneric.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, boolean isLoadFirst) {
         initRecyclerView(recyclerView, adapter, adapterListener, scrollListener, sizePage, isLoadFirst);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, GenericAdapter.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, int sizePage, boolean isLoadFirst) {
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, AdapterGeneric.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, int sizePage, boolean isLoadFirst) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        if (adapter instanceof GenericAdapter) {
-            GenericAdapter genericAdapter = ((GenericAdapter) adapter);
+        if (adapter instanceof AdapterGeneric) {
+            AdapterGeneric genericAdapter = ((AdapterGeneric) adapter);
             if (isLoadFirst) genericAdapter.showLoader();
             if (null != adapterListener) {
                 genericAdapter.setAdapterListener(adapterListener);

@@ -1,31 +1,21 @@
 package org.cise.sdk.ciseapp.modules.fragmentbottom.controllers;
 
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.cise.core.utilities.helper.UIHelper;
-import org.cise.core.utilities.ui.adapter.recyclerview.GenericAdapter;
 import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.models.SampleData;
@@ -42,8 +32,7 @@ import butterknife.ButterKnife;
  * Use the {@link BottomLoaderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BottomLoaderFragment extends BottomSheetDialogFragment implements
-        GenericAdapter.AdapterListener<SampleData>, RecyclerViewScrollListener.PaginationListener<SampleData> {
+public class BottomLoaderFragment extends BottomSheetDialogFragment implements  RecyclerViewScrollListener.PaginationListener<SampleData> {
 
 
     public static final String TAG = "BLF";
@@ -102,7 +91,7 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements
         }
 //        adapter.setValue(sampleDatas);
         new Handler().postDelayed(() -> {
-            adapter.setError("Error, tap for reload");
+
         }, 1500);
     }
 
@@ -114,17 +103,12 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements
                 list.add(new SampleData("next : " + i));
             }
             if (resultSuccess) {
-                adapter.addMore(list);
+
                 rvSample.requestLayout();
             } else {
-                adapter.setError("Error, tap for reload");
+
             }
         }, 3000);
-    }
-
-    @Override
-    public void onLoadRetry(int index, SampleData o) {
-        requestNextPage(true);
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class HolderGenericV2<T> extends RecyclerView.ViewHolder {
+public class HolderGeneric<T> extends RecyclerView.ViewHolder {
 
     private static final String TAG = "GAdapterHolder";
 
@@ -28,12 +28,12 @@ public class HolderGenericV2<T> extends RecyclerView.ViewHolder {
 
     private Map<Class, Listener> cachedListener = new HashMap<>();
 
-    public HolderGenericV2(View view) {
+    public HolderGeneric(View view) {
         super(view);
         this.context = view.getContext();
     }
 
-    public void setListener(HolderGenericV2.Listener listener) {
+    public void setListener(HolderGeneric.Listener listener) {
         this.listener.add(listener);
     }
 
@@ -81,12 +81,12 @@ public class HolderGenericV2<T> extends RecyclerView.ViewHolder {
         return listener;
     }
 
-    public <E extends HolderGenericV2.Listener> E getListener(Class<E> clazz) {
-        HolderGenericV2.Listener listenerTMP = cachedListener.get(clazz);
+    public <E extends HolderGeneric.Listener> E getListener(Class<E> clazz) {
+        HolderGeneric.Listener listenerTMP = cachedListener.get(clazz);
         if (ValueUtils.nonNull(listenerTMP)) {
             return (E) listenerTMP;
         }
-        for (HolderGenericV2.Listener o : listener) {
+        for (HolderGeneric.Listener o : listener) {
             for (Class<?> impl : o.getClass().getInterfaces()) {
                 if (impl.equals(clazz)) {
                     cachedListener.put(clazz, o);

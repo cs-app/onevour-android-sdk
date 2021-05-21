@@ -39,14 +39,17 @@ public class HttpQueue {
         return httpQueue;
     }
 
+    @SuppressWarnings({"rawtypes"})
     public void add(HttpRequest httpRequest) {
         if (null == executor) executor = Executors.newFixedThreadPool(MAX_POOL);
         executor.execute(httpRequest::request);
     }
 
+    @SuppressWarnings({"unchecked"})
     public <T> void add(final HttpMultipart multipart, final HttpResponse.Listener<T> listener) {
         if (null == executor) executor = Executors.newFixedThreadPool(MAX_POOL);
         executor.execute(() -> {
+            if (null == listener) return;
             StringBuffer responseString = new StringBuffer("");
             Handler handler = new Handler(Looper.getMainLooper());
             try {
@@ -59,10 +62,7 @@ public class HttpQueue {
                 Log.d(TAG, responseString.toString());
                 if (null == responseType) {
                     handler.post(() -> {
-                        if (null != listener) {
-                            listener.onSuccess((T) response.toString());
-                        }
-
+                        listener.onSuccess((T) responseString.toString());
                     });
                 } else {
                     String responseResult = response.toString();
@@ -85,6 +85,10 @@ public class HttpQueue {
                 Log.e(TAG, "upload http error " + e.getMessage());
                 HttpError httpError = new HttpError(e);
                 handler.post(() -> listener.onError(httpError));
+            } catch (JsonSyntaxException e) {
+                HttpError httpError = new HttpError(multipart.getResponseCode());
+                httpError.error("Cannot convert response \n:" + responseString.toString());
+                listener.onError(httpError);
             } finally {
                 Log.d(TAG, "process upload finish ");
             }
