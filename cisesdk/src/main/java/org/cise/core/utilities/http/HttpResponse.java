@@ -6,13 +6,13 @@
 package org.cise.core.utilities.http;
 
 /**
- *
- * @author user
  * @param <T>
+ * @author Zuliadin
  */
 public class HttpResponse<T> {
 
     public final T result;
+
     public final HttpError httpError;
 
     private HttpResponse(T result) {

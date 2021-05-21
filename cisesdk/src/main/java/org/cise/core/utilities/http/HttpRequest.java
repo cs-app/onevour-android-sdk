@@ -5,17 +5,17 @@
  */
 package org.cise.core.utilities.http;
 
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.JsonParseException;
 
 import org.cise.core.utilities.json.gson.GsonHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.ParameterizedType;
@@ -24,13 +24,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * @author zuliadin
  */
 public class HttpRequest<T> {
 
-    private final String TAG = "HTTP-REQ";
+    private final String TAG = HttpRequest.class.getSimpleName();
 
     private final int MIN_TIMEOUT = 9000;
 
@@ -38,34 +41,237 @@ public class HttpRequest<T> {
 
     private String endpoint;
 
-    private String json;
+    private Map<String, String> header;
+
+    private String body;
 
     private HttpResponse.Listener<T> listener;
 
+    // GET
     public HttpRequest(String url, HttpResponse.Listener<T> listener) {
-        initialize(url, MIN_TIMEOUT, json, listener);
+        initialize(url, MIN_TIMEOUT, null, body, listener);
     }
 
+    // GET
     public HttpRequest(String url, int timeout, HttpResponse.Listener<T> listener) {
-        initialize(url, timeout, json, listener);
+        initialize(url, timeout, null, body, listener);
     }
 
-    protected HttpRequest(String url, String json, HttpResponse.Listener<T> listener) {
-        initialize(url, MIN_TIMEOUT, json, listener);
+    // GET
+    public HttpRequest(String url, Map<String, String> header, HttpResponse.Listener<T> listener) {
+        initialize(url, MIN_TIMEOUT, header, body, listener);
     }
 
-    protected HttpRequest(String url, int timeout, String json, HttpResponse.Listener<T> listener) {
-        initialize(url, timeout, json, listener);
+    // GET
+    public HttpRequest(String url, int timeout, Map<String, String> header, HttpResponse.Listener<T> listener) {
+        initialize(url, timeout, header, body, listener);
     }
 
-    private void initialize(String url, int timeout, String json, HttpResponse.Listener<T> listener) {
+    // POST
+    protected HttpRequest(String url, String body, HttpResponse.Listener<T> listener) {
+        initialize(url, MIN_TIMEOUT, null, body, listener);
+    }
+
+    // POST
+    protected HttpRequest(String url, int timeout, String body, HttpResponse.Listener<T> listener) {
+        initialize(url, timeout, null, body, listener);
+    }
+
+    // POST
+    protected HttpRequest(String url, Map<String, String> header, String body, HttpResponse.Listener<T> listener) {
+        initialize(url, MIN_TIMEOUT, header, body, listener);
+    }
+
+    // POST
+    protected HttpRequest(String url, int timeout, Map<String, String> header, String body, HttpResponse.Listener<T> listener) {
+        initialize(url, timeout, header, body, listener);
+    }
+
+    private void initialize(String url, int timeout, Map<String, String> header, String body, HttpResponse.Listener<T> listener) {
         this.endpoint = url;
         this.timeout = timeout;
-        this.json = json;
+        this.header = header;
+        this.body = body;
         this.listener = listener;
     }
 
     protected void request() {
+        if (null == endpoint || "".equalsIgnoreCase(endpoint)) return;
+        if (endpoint.startsWith("https")) {
+            requestHTTPS();
+        } else {
+            requestHTTP();
+        }
+    }
+
+    private void requestHTTP() {
+        final StringBuffer response = new StringBuffer();
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL(this.endpoint);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(Math.max(timeout * 4, MIN_TIMEOUT));
+            conn.setConnectTimeout(Math.max(timeout, MIN_TIMEOUT));
+            conn.setRequestMethod(method());
+            conn.setDoOutput(output());
+            enableJsonProperties(conn);
+            enableHeader(conn);
+            enableBody(conn);
+            final int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                buildResponse(conn, response);
+                successHandler(getResponseType(), response);
+            } else {
+                errorHandler(responseCode);
+            }
+        } catch (final JsonParseException ex) {
+            errorHandler(ex);
+        } catch (final MalformedURLException ex) {
+            errorHandler(ex);
+        } catch (final SocketTimeoutException ex) {
+            errorHandler(ex);
+        } catch (final IOException ex) {
+            errorHandler(ex);
+        } catch (final Exception ex) {
+            errorHandler(ex);
+        } finally {
+            if (null != conn) conn.disconnect();
+        }
+    }
+
+    private void requestHTTPS() {
+        final StringBuffer response = new StringBuffer();
+        HttpsURLConnection conn = null;
+        try {
+            URL url = new URL(this.endpoint);
+            conn = (HttpsURLConnection) url.openConnection();
+            conn.setReadTimeout(Math.max(timeout * 4, MIN_TIMEOUT));
+            conn.setConnectTimeout(Math.max(timeout, MIN_TIMEOUT));
+            conn.setRequestMethod(method());
+            conn.setDoOutput(output());
+            enableJsonProperties(conn);
+            enableHeader(conn);
+            enableSSLOnApiBeforeLollipop(conn);
+            enableBody(conn);
+            final int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // read response
+                buildResponse(conn, response);
+                successHandler(getResponseType(), response);
+            } else {
+                errorHandler(responseCode);
+            }
+        } catch (final JsonParseException ex) {
+            errorHandler(ex);
+        } catch (final MalformedURLException ex) {
+            errorHandler(ex);
+        } catch (final SocketTimeoutException ex) {
+            errorHandler(ex);
+        } catch (final IOException ex) {
+            errorHandler(ex);
+        } catch (final Exception ex) {
+            errorHandler(ex);
+        } finally {
+            if (null != conn) conn.disconnect();
+        }
+    }
+
+    private void enableJsonProperties(HttpURLConnection conn) {
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("connection", "close");
+    }
+
+    private void enableBody(HttpURLConnection conn) throws IOException {
+        if (null == body) return;
+        OutputStream os = conn.getOutputStream();
+        os.write(body.getBytes());
+        os.flush();
+        os.close();
+    }
+
+    private void buildResponse(HttpURLConnection conn, StringBuffer response) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+    }
+
+    private boolean output() {
+        return null != body;
+    }
+
+    private String method() {
+        if (null == body) return "GET";
+        return "POST";
+    }
+
+    private void enableHeader(HttpURLConnection conn) {
+        if (header == null) return;
+        for (Map.Entry<String, String> entry : header.entrySet()) {
+            conn.setRequestProperty(entry.getKey(), entry.getValue());
+        }
+    }
+
+    private void enableSSLOnApiBeforeLollipop(HttpsURLConnection conn) {
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if (sdk < Build.VERSION_CODES.LOLLIPOP) {
+            if (endpoint.startsWith("https")) {
+                try {
+                    TLSSocketFactory sc = new TLSSocketFactory();
+                    conn.setSSLSocketFactory(sc);
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void successHandler(Type responseType, StringBuffer response) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            if (null == listener) return;
+            if (null == responseType) {
+                listener.onSuccess((T) response.toString());
+            } else {
+                final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(response.toString().trim(), responseType);
+                listener.onSuccess(jsonResponse);
+            }
+        });
+    }
+
+    private void errorHandler(Exception error) {
+        if (null == listener) return;
+        new Handler(Looper.getMainLooper()).post(() -> listener.onError(new HttpError(error)));
+        Log.e(TAG, error.getMessage(), error);
+    }
+
+    private void errorHandler(int errorCode) {
+        if (null == listener) return;
+        new Handler(Looper.getMainLooper()).post(() -> listener.onError(new HttpError(errorCode)));
+        Log.e(TAG, "error hit api code " + errorCode + " " + method() + " " + endpoint);
+    }
+
+    /**
+     * get type from interface
+     */
+    private Type getResponseType() {
+        if (null == listener) return null;
+        Type[] types = listener.getClass().getGenericInterfaces();
+        for (Type type : types) {
+            if (type instanceof ParameterizedType) {
+                Type[] gTypes = ((ParameterizedType) type).getActualTypeArguments();
+                for (Type gType : gTypes) {
+                    return gType;
+                }
+            }
+        }
+        return null;
+    }
+
+    /*
+    protected void requestBAK() {
         Log.d(TAG, "\nurl : " + endpoint + "\nbody : \n" + json + "\n");
         if (null == endpoint || "".equalsIgnoreCase(endpoint)) return;
         StringBuffer response = new StringBuffer();
@@ -196,36 +402,5 @@ public class HttpRequest<T> {
             }
         }
     }
-
-    private void handlerSuccess(T response) {
-        if (null == listener) return;
-        new Handler(Looper.getMainLooper()).post(() -> {
-            listener.onSuccess(response);
-        });
-    }
-
-    private void handlerError(HttpError error) {
-        if (null == listener) return;
-        new Handler(Looper.getMainLooper()).post(() -> {
-            listener.onError(error);
-        });
-    }
-
-    /**
-     * get type from interface
-     */
-    private Type getResponseType() {
-        if (null == listener) return null;
-        Type[] types = listener.getClass().getGenericInterfaces();
-        for (Type type : types) {
-            if (type instanceof ParameterizedType) {
-                Type[] gTypes = ((ParameterizedType) type).getActualTypeArguments();
-                for (Type gType : gTypes) {
-                    return gType;
-                }
-            }
-        }
-        return null;
-    }
-
+    */
 }

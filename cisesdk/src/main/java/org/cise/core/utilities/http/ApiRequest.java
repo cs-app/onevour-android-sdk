@@ -10,7 +10,7 @@ import org.cise.core.utilities.json.gson.GsonHelper;
 
 public class ApiRequest {
 
-    private static final String TAG = "ApiRequest";
+    private static final String TAG = ApiRequest.class.getSimpleName();
 
     private static HttpQueue queue() {
         return HttpQueue.newInstance();

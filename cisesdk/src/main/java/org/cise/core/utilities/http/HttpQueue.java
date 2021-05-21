@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
  */
 public class HttpQueue {
 
-    private static final String TAG = "HTTP-Q";
+    private static final String TAG = HttpQueue.class.getSimpleName();
     private final int MAX_POOL = 8;
     private static HttpQueue httpQueue;
     private ExecutorService executor = Executors.newFixedThreadPool(MAX_POOL);
@@ -66,15 +66,15 @@ public class HttpQueue {
                     });
                 } else {
                     String responseResult = response.toString();
-                    try{
+                    try {
                         final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(responseResult, responseType);
                         handler.post(() -> {
                             listener.onSuccess(jsonResponse);
                         });
                         Log.d(TAG, "Type : " + responseType);
-                    } catch (JsonSyntaxException e){
+                    } catch (JsonSyntaxException e) {
                         HttpError httpError = new HttpError(multipart.getResponseCode());
-                        httpError.error("Cannot convert response \n:"+responseResult);
+                        httpError.error("Cannot convert response \n:" + responseResult);
                         listener.onError(httpError);
                     }
                 }
@@ -99,21 +99,17 @@ public class HttpQueue {
      * get type from interface
      */
     private <T> Type getResponseType(HttpResponse.Listener<T> listener) {
-        Type responseType = null;
-        if (null != listener) {
-            Type[] types = listener.getClass().getGenericInterfaces();
-            for (Type type : types) {
-                if (type instanceof ParameterizedType) {
-                    Type[] gTypes = ((ParameterizedType) type).getActualTypeArguments();
-                    for (Type gType : gTypes) {
-                        responseType = gType;
-                    }
+        if (null == listener) return null;
+        Type[] types = listener.getClass().getGenericInterfaces();
+        for (Type type : types) {
+            if (type instanceof ParameterizedType) {
+                Type[] gTypes = ((ParameterizedType) type).getActualTypeArguments();
+                for (Type gType : gTypes) {
+                    return gType;
                 }
             }
-            return responseType;
-        } else {
-            return null;
         }
+        return null;
     }
 
 }
