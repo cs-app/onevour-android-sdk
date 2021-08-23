@@ -17,6 +17,7 @@ import org.cise.sdk.ciseapp.modules.main.components.SampleAdapter;
 import org.cise.sdk.ciseapp.modules.main.components.SampleHolder;
 import org.cise.sdk.ciseapp.modules.main.models.Sample;
 import org.cise.sdk.ciseapp.modules.adapter.controllers.AdapterSampleActivity;
+import org.cise.sdk.ciseapp.modules.main.models.SampleMV;
 import org.cise.sdk.ciseapp.modules.mvvm.views.MVVMActivity;
 import org.cise.sdk.ciseapp.modules.rxjava.controllers.RXActivity;
 
@@ -46,15 +47,15 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
     }
 
     private void init() {
-        List<Sample> samples = new ArrayList<>();
-        samples.add(new Sample("Adapter", AdapterSampleActivity.class));
-        samples.add(new Sample("Fragment BackStack", FragmentActivity.class));
-        samples.add(new Sample("Fragment Bottom", FragmentBottomActivity.class));
-        samples.add(new Sample("Fragment Bottom Navigation", FragmentBottomNavigationActivity.class));
-        samples.add(new Sample("Form Simple", FormSimpleActivity.class));
-        samples.add(new Sample("Form Scroll", FormScrollActivity.class));
-        samples.add(new Sample("RXJava", RXActivity.class));
-        samples.add(new Sample("MVVM-Binding", MVVMActivity.class));
+        List<SampleMV> samples = new ArrayList<>();
+        samples.add(new SampleMV("Adapter", AdapterSampleActivity.class));
+        samples.add(new SampleMV("Fragment BackStack", FragmentActivity.class));
+        samples.add(new SampleMV("Fragment Bottom", FragmentBottomActivity.class));
+        samples.add(new SampleMV("Fragment Bottom Navigation", FragmentBottomNavigationActivity.class));
+        samples.add(new SampleMV("Form Simple", FormSimpleActivity.class));
+        samples.add(new SampleMV("Form Scroll", FormScrollActivity.class));
+        samples.add(new SampleMV("RXJava", RXActivity.class));
+        samples.add(new SampleMV("MVVM-Binding", MVVMActivity.class));
         adapter.setValue(samples);
     }
 

@@ -12,6 +12,6 @@ public class AdapterSampleData extends AdapterGeneric<SampleDataMV> {
 
     @Override
     protected void registerHolder() {
-        register(1, R.layout.adapter_sample_data, HolderSampleData.class);
+        register(R.layout.adapter_sample_data, HolderSampleData.class);
     }
 }

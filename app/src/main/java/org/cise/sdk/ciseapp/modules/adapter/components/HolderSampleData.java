@@ -9,11 +9,12 @@ import android.widget.TextView;
 import org.cise.core.utilities.ui.adapter.recyclerview.HolderGeneric;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.models.SampleData;
+import org.cise.sdk.ciseapp.modules.adapter.model.SampleDataMV;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HolderSampleData extends HolderGeneric<SampleData> {
+public class HolderSampleData extends HolderGeneric<SampleDataMV> {
 
     @BindView(R.id.name)
     TextView sampleName;
@@ -24,13 +25,13 @@ public class HolderSampleData extends HolderGeneric<SampleData> {
     }
 
     @Override
-    protected void onBindViewHolder(SampleData o) {
+    protected void onBindViewHolder(SampleDataMV o) {
         super.onBindViewHolder(o);
-        sampleName.setText(o.getName());
+        sampleName.setText(o.getModel().getName());
     }
 
     public interface Listener extends HolderGeneric.Listener {
 
-
     }
+
 }

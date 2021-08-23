@@ -29,7 +29,6 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.SingleSubject;
 
 /**
  * basic tutorial source

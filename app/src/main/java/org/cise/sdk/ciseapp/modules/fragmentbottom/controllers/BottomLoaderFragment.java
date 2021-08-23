@@ -20,6 +20,8 @@ import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListene
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.models.SampleData;
 import org.cise.sdk.ciseapp.modules.adapter.components.AdapterSampleData;
+import org.cise.sdk.ciseapp.modules.adapter.components.HolderSampleData;
+import org.cise.sdk.ciseapp.modules.main.models.SampleMV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,7 @@ import butterknife.ButterKnife;
  * Use the {@link BottomLoaderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BottomLoaderFragment extends BottomSheetDialogFragment implements  RecyclerViewScrollListener.PaginationListener<SampleData> {
+public class BottomLoaderFragment extends BottomSheetDialogFragment implements HolderSampleData.Listener, RecyclerViewScrollListener.PaginationListener<SampleMV> {
 
 
     public static final String TAG = "BLF";
@@ -79,7 +81,8 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements  
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        UIHelper.initRecyclerView(rvSample, adapter, this, this, true);
+//        UIHelper.initRecyclerView(rvSample, adapter,  this, this, true);
+        UIHelper.initRecyclerView(rvSample, adapter);
         init();
     }
 
@@ -111,10 +114,9 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements  
         }, 3000);
     }
 
+
     @Override
-    public void loadMoreItems(SampleData sampleData) {
+    public void loadMoreItems(SampleMV sampleMV) {
         requestNextPage(false);
     }
-
-
 }

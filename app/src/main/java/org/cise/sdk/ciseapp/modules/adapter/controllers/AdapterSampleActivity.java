@@ -15,6 +15,7 @@ import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.adapter.components.AdapterSampleData;
 import org.cise.sdk.ciseapp.modules.adapter.components.HolderSampleData;
 import org.cise.sdk.ciseapp.models.SampleData;
+import org.cise.sdk.ciseapp.modules.adapter.model.SampleDataMV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,27 +42,24 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
     }
 
     private void init() {
-        List<SampleData> sampleDatas = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            sampleDatas.add(new SampleData("Sample Data " + (i + 1)));
+        List<SampleDataMV> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(new SampleDataMV(new SampleData("next : " + i)));
         }
-//        adapter.setValue(sampleDatas);
-        new Handler().postDelayed(() -> {
-//            adapter.setError("Error, tap for reload");
-        }, 1000);
+        adapter.addMore(list);
     }
 
     private void requestNextPage(boolean resultSuccess) {
         if (Looper.myLooper() == null) Looper.prepare();
         new Handler().postDelayed(() -> {
-            List<SampleData> list = new ArrayList<>();
+            List<SampleDataMV> list = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
-                list.add(new SampleData("next : " + i));
+                list.add(new SampleDataMV(new SampleData("next : " + i)));
             }
             if (resultSuccess) {
-//                adapter.addMore(list);
+                adapter.addMore(list);
             } else {
-//                adapter.setError("Error, tap for reload");
+//                adapter.er("Error, tap for reload");
             }
         }, 2000);
     }

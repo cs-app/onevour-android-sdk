@@ -62,6 +62,10 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     protected abstract void registerHolder();
 
+    protected <VH extends HolderGeneric> void register(@LayoutRes int layoutId, Class<VH> holder) {
+        register(1, layoutId, holder);
+    }
+
     protected <VH extends HolderGeneric> void register(int type, @LayoutRes int layoutId, Class<VH> holder) {
         if (type <= 0) {
             throw new IllegalArgumentException("please input type greater than 0");
@@ -95,7 +99,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
             View convertView = LayoutInflater.from(context).inflate(layoutId.intValue(), parent, false);
             return holderGenerator(holderClass, convertView);
         }
-        throw new NullPointerException("cannot find holder");
+        throw new NullPointerException("cannot find holder view type " + viewType);
     }
 
     private HolderGeneric holderGenerator(Type type, View convertView) {

@@ -46,7 +46,7 @@ public class UIHelper {
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         if (adapter instanceof AdapterGeneric) {
             AdapterGeneric genericAdapter = ((AdapterGeneric) adapter);
@@ -64,14 +64,14 @@ public class UIHelper {
     public static void initHorizontalRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
 
     public static void initRecyclerViewGrid(RecyclerView recyclerView, RecyclerView.Adapter adapter, int width) {
         recyclerView.setLayoutManager(new AutoFitGridLayoutManager(recyclerView.getContext(), width));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
 
