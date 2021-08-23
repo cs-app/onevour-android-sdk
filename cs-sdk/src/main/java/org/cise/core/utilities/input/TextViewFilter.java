@@ -65,7 +65,7 @@ public class TextViewFilter {
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
             try {
                 if (!source.toString().equalsIgnoreCase("")) {
-                    int input = Integer.parseInt(dest.toString() + source.toString());
+                    int input = Integer.parseInt(dest.toString().concat(source.toString()));
                     if (isInRange(min, max, input)) {
                         return null;
                     }

@@ -71,10 +71,9 @@ public class HttpQueue {
                         handler.post(() -> {
                             listener.onSuccess(jsonResponse);
                         });
-                        Log.d(TAG, "Type : " + responseType);
                     } catch (JsonSyntaxException e) {
                         HttpError httpError = new HttpError(multipart.getResponseCode());
-                        httpError.error("Cannot convert response \n:" + responseResult);
+                        httpError.error("Cannot convert response \n:".concat(responseResult));
                         listener.onError(httpError);
                     }
                 }
@@ -82,15 +81,15 @@ public class HttpQueue {
                 for (StackTraceElement s : e.getStackTrace()) {
                     Log.e(TAG, String.valueOf(s));
                 }
-                Log.e(TAG, "upload http error " + e.getMessage());
+//                Log.e(TAG, "upload http error " + e.getMessage());
                 HttpError httpError = new HttpError(e);
                 handler.post(() -> listener.onError(httpError));
             } catch (JsonSyntaxException e) {
                 HttpError httpError = new HttpError(multipart.getResponseCode());
-                httpError.error("Cannot convert response \n:" + responseString.toString());
+//                httpError.error("Cannot convert response \n:" + responseString.toString());
                 listener.onError(httpError);
             } finally {
-                Log.d(TAG, "process upload finish ");
+                Log.d(TAG, "process upload finish");
             }
         });
     }

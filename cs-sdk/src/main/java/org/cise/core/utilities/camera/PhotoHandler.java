@@ -15,9 +15,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.provider.Settings;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
+
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -137,7 +139,7 @@ public class PhotoHandler implements Serializable, Parcelable {
     }
 
     public String getImageFilePath() {
-        Log.d(TAG, "get image path : " + imageFilePath);
+//        Log.d(TAG, "get image path : " + imageFilePath);
         return imageFilePath;
     }
 
@@ -243,7 +245,7 @@ public class PhotoHandler implements Serializable, Parcelable {
         final Intent i = new Intent();
         i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         i.addCategory(Intent.CATEGORY_DEFAULT);
-        i.setData(Uri.parse("package:" + context.getPackageName()));
+        i.setData(Uri.parse("package:".concat(context.getPackageName())));
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
@@ -269,7 +271,6 @@ public class PhotoHandler implements Serializable, Parcelable {
      * @param height
      */
     public void cameraResult(int width, int height) {
-        Log.d(TAG, "path result : " + getImageFilePathUri());
         if (isCreatedPicture()) {
             compressImageOriginal();
             Glide.with(imageView.getContext()).load(getImageFilePathUri()).into(imageView);
@@ -329,7 +330,7 @@ public class PhotoHandler implements Serializable, Parcelable {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imageDirectory);
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d(TAG, "Oops! Failed create " + imageDirectory + " directory");
+                Log.d(TAG, "Oops! Failed create directory ".concat(imageDirectory));
                 return null;
             }
         }
@@ -340,7 +341,7 @@ public class PhotoHandler implements Serializable, Parcelable {
         imagePath.append(new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()));
         imagePath.append(".jpg");
         setImageFilePath(imagePath.toString());
-        Log.d(TAG, "camera file path : " + getImageFilePath());
+        Log.d(TAG, "camera file path : ".concat(getImageFilePath()));
         File mediaFile = new File(getImageFilePath());
         return mediaFile;
     }
@@ -353,10 +354,10 @@ public class PhotoHandler implements Serializable, Parcelable {
      * compress image result original
      */
     private void compressImageOriginal() {
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imageDirectory + "Compress");
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imageDirectory.concat("Compress"));
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d(TAG, "Oops! Failed create " + imageDirectory + " directory");
+                Log.d(TAG, "Oops! Failed create directory ".concat(imageDirectory));
                 return;
             }
         }
@@ -379,10 +380,10 @@ public class PhotoHandler implements Serializable, Parcelable {
      * compress image copy to compress folder
      */
     private void compressImage() {
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imageDirectory + "Compress");
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imageDirectory.concat("Compress"));
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d(TAG, "Oops! Failed create " + imageDirectory + " directory");
+                Log.d(TAG, "Oops! Failed create directory ".concat(imageDirectory));
                 return;
             }
         }
@@ -391,7 +392,7 @@ public class PhotoHandler implements Serializable, Parcelable {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
             Bitmap bitmap = BitmapFactory.decodeFile(getImageUriPath(), options);
-            FileOutputStream out = new FileOutputStream(mediaStorageDir.getPath() + File.separator + imageNamePrefix + timeStamp + ".jpg");
+            FileOutputStream out = new FileOutputStream(mediaStorageDir.getPath().concat(File.separator).concat(imageNamePrefix).concat(timeStamp).concat(".jpg"));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();

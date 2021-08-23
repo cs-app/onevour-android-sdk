@@ -58,7 +58,7 @@ public class ViewPagerState extends ViewPager {
             try {
                 view.restoreHierarchyState(state);
             } catch (Exception e) {
-                Log.d(ViewPagerState.class.getSimpleName(), "Unable to restore view: " + e.getMessage());
+                Log.d(ViewPagerState.class.getSimpleName(), "Unable to restore view: ".concat(e.getMessage()));
             }
         }
         setViewPositionTag(view, position);

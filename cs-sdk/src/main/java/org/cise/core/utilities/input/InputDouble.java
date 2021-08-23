@@ -54,7 +54,7 @@ public class InputDouble implements NumberInputAdapter {
 
     @Override
     public void append(String valueChar) throws ParseException {
-        Log.d(TAG, "input " + valueChar);
+        Log.d(TAG, "input ".concat(valueChar));
         if (valueChar.equalsIgnoreCase(decimalSeparator)) {
             isAfterPoint = true;
             cursor = 0;
@@ -88,7 +88,7 @@ public class InputDouble implements NumberInputAdapter {
     private void appendComma(String valueChar) {
         BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE, new MathContext(3));
         String fractionalPartStr = fractionalPart.toString();
-        if (fractionalPartStr.length() == 3) fractionalPartStr = fractionalPartStr + "0";
+        if (fractionalPartStr.length() == 3) fractionalPartStr = fractionalPartStr.concat("0");
         char[] values = fractionalPartStr.toCharArray();
         values[cursor + 2] = valueChar.charAt(0);
         if (cursor == 0) cursor++;

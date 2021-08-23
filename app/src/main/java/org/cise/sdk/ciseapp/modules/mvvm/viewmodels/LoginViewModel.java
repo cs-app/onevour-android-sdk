@@ -30,7 +30,7 @@ public class LoginViewModel extends ViewModel {
         } else {
             isLoading.setValue(!isLoading.getValue());
         }
-        Log.d("MVVMLogin", "update login user " + user.getValue().getUsername() + " and loading " + isLoading.getValue());
+//        Log.d("MVVMLogin", "update login user " + user.getValue().getUsername() + " and loading " + isLoading.getValue());
     }
 
     public void init() {

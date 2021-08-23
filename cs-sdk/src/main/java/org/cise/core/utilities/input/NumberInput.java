@@ -107,7 +107,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
         if (v.getId() == editText.getId() && motionEvent.getAction() == MotionEvent.ACTION_UP) {
-            Log.d(TAG, "Action touch event : " + motionEvent.getAction());
+            Log.d(TAG, "Action touch event : ".concat(String.valueOf(motionEvent.getAction())));
             try {
                 adapter.setValue(editText.getText().toString());
                 alert.show(adapter.getValueString());

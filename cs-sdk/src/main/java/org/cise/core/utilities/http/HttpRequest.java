@@ -250,7 +250,7 @@ public class HttpRequest<T> {
     private void errorHandler(int errorCode) {
         if (null == listener) return;
         new Handler(Looper.getMainLooper()).post(() -> listener.onError(new HttpError(errorCode)));
-        Log.e(TAG, "error hit api code " + errorCode + " " + method() + " " + endpoint);
+        Log.e(TAG, "error hit api code  ".concat(String.valueOf(errorCode)).concat(method()));
     }
 
     /**

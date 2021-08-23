@@ -30,7 +30,6 @@ public class RefSession {
 
     public <T> T find(String key, Class<T> cls) {
         String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key, null);
-        android.util.Log.d(TAG, "find : " + key + "\n" + valueString);
         if (null == valueString) return null;
         return GsonHelper.newInstance().getGson().fromJson(valueString, cls);
     }
@@ -98,7 +97,6 @@ public class RefSession {
         if (null == value || null == key || key.trim().isEmpty()) {
             throw new NullPointerException("cannot store null object, key and empty key");
         }
-        android.util.Log.d(TAG, "set object with key: " + key);
         SharedPreferences.Editor editor = editor(EDITOR_DEFAULT);
         if (isNative) {
             if (value instanceof Integer) {
@@ -120,7 +118,7 @@ public class RefSession {
             editor.putString(key, valueString);
         }
         if (!editor.commit()) {
-            throw new IllegalStateException("cannot commit save keys " + key);
+            throw new IllegalStateException("cannot commit save keys ".concat(key));
         }
     }
 
@@ -144,10 +142,10 @@ public class RefSession {
             }
             sb.append(key).append("|");
             editor.remove(key);
-            android.util.Log.d(TAG, "remove " + key);
+            android.util.Log.d(TAG, "remove ".concat(key));
         }
         if (!editor.commit()) {
-            throw new IllegalStateException("cannot commit remove keys " + sb.toString());
+            throw new IllegalStateException("cannot commit remove keys ".concat(sb.toString()));
         }
     }
 }

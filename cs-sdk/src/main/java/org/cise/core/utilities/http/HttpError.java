@@ -15,40 +15,41 @@ import java.util.Map;
  */
 public class HttpError {
 
-    private String message = "";
+    private StringBuilder message = new StringBuilder();
+
     private Exception exception;
 
     public HttpError(int code) {
-        message = "HTTP " + code + " " + HttpStatusCode.getMessage(code);
+        message.append("HTTP ").append(code).append(HttpStatusCode.getMessage(code));
     }
 
     public void error(String errorMessage) {
-        this.message = errorMessage;
+        this.message.append(errorMessage);
     }
 
     public HttpError(MalformedURLException malformedURLException) {
         exception = malformedURLException;
-        message = malformedURLException.getMessage();
+        message.append(malformedURLException.getMessage());
     }
 
     public HttpError(String endpoint, IOException iOException) {
         exception = iOException;
-        message = endpoint + "\n" + iOException.getMessage();
+        message.append(endpoint).append("\n").append(iOException.getMessage());
     }
 
     public HttpError(IOException iOException) {
         exception = iOException;
-        message = iOException.getMessage();
+        message.append(iOException.getMessage());
     }
 
     public HttpError(IOException iOException, String message) {
         exception = iOException;
-        this.message = message;
+        this.message.append(message);
     }
 
     public HttpError(Exception exception) {
         this.exception = exception;
-        message = exception.getMessage();
+        message.append(exception.getMessage());
     }
 
     public Exception getException() {
@@ -56,7 +57,7 @@ public class HttpError {
     }
 
     public String getMessage() {
-        return message;
+        return message.toString();
     }
 
     public enum HttpStatusCode {

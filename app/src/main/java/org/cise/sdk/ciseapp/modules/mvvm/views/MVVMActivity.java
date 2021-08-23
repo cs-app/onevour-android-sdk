@@ -37,6 +37,6 @@ public class MVVMActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess(LoginUser loginUser) {
-        Log.d("MVVM", "model change " + loginUser.getUserDTO().getUsername());
+//        Log.d("MVVM", "model change " + loginUser.getUserDTO().getUsername());
     }
 }

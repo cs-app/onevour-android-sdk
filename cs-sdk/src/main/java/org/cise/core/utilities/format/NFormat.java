@@ -65,7 +65,7 @@ public class NFormat {
     public static String percentFormat(double value) {
         String result = percent().format(value);
         if (1 > value && !result.startsWith("0")) {
-            return "0" + result;
+            return "0".concat(result);
         }
         return result;
     }

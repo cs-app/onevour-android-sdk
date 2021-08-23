@@ -64,7 +64,12 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
                 listener.loadMoreItems(adapter.getItem(totalItemCount - 1));
             }
         }
-        Log.d(TAG, visibleItemCount + "|" + totalItemCount + "|" + firstVisibleItemPosition + "|" + adapter.isLoader());
+        StringBuilder sb = new StringBuilder();
+        sb.append(visibleItemCount).append("|");
+        sb.append(totalItemCount).append("|");
+        sb.append(firstVisibleItemPosition).append("|");
+        sb.append(adapter.isLoader());
+        Log.d(TAG, sb.toString());
     }
 
     public interface PaginationListener<E> {

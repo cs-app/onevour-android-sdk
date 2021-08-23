@@ -57,41 +57,41 @@ public class HttpMultipart {
      *      * @throws IOException
      *      
      */
-    public HttpMultipart(Context context,String requestURL) throws IOException {
+    public HttpMultipart(Context context, String requestURL) throws IOException {
         // creates a unique boundary based on time stamp
-        boundary = "===" + System.currentTimeMillis() + "===";
+        boundary = "===".concat(String.valueOf(System.currentTimeMillis())).concat("===");
         initializeHttp(context, requestURL, 0);
     }
 
-    public HttpMultipart(Context context,String requestURL, int timeout) throws IOException {
+    public HttpMultipart(Context context, String requestURL, int timeout) throws IOException {
         // creates a unique boundary based on time stamp
-        boundary = "===" + System.currentTimeMillis() + "===";
+        boundary = "===".concat(String.valueOf(System.currentTimeMillis())).concat("===");
         initializeHttp(context, requestURL, timeout);
     }
 
-    public HttpMultipart(Context context,String requestURL, String charset) throws IOException {
+    public HttpMultipart(Context context, String requestURL, String charset) throws IOException {
         this.charset = charset;
         // creates a unique boundary based on time stamp
-        boundary = "===" + System.currentTimeMillis() + "===";
+        boundary = "===".concat(String.valueOf(System.currentTimeMillis())).concat("===");
         initializeHttp(context, requestURL, 0);
     }
 
-    public HttpMultipart(Context context,String requestURL, String charset, int timeout) throws IOException {
+    public HttpMultipart(Context context, String requestURL, String charset, int timeout) throws IOException {
         this.charset = charset;
         // creates a unique boundary based on time stamp
-        boundary = "===" + System.currentTimeMillis() + "===";
+        boundary = "===".concat(String.valueOf(System.currentTimeMillis())).concat("===");
         initializeHttp(context, requestURL, timeout);
     }
 
     private void initializeHttp(Context context, String requestURL, int timeout) throws IOException {
-        Log.d(TAG, "upload url : "+requestURL);
+        Log.d(TAG, "upload url : ".concat(requestURL));
         this.context = context;
         URL url = new URL(requestURL);
         httpConn = (HttpURLConnection) url.openConnection();
         httpConn.setUseCaches(false);
         httpConn.setDoOutput(true); // indicates POST method
         httpConn.setDoInput(true);
-        httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=".concat(boundary));
         httpConn.setRequestProperty("User-Agent", "Cise-Agent");
         httpConn.setConnectTimeout(timeout < MIN_TIMEOUT ? MIN_TIMEOUT : timeout);
         httpConn.setRequestProperty("connection", "close");
@@ -102,15 +102,15 @@ public class HttpMultipart {
         outputStream = httpConn.getOutputStream();
         writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true);
         for (Map.Entry<String, String> entry : formHeader.entrySet()) {
-            Log.d(TAG, "Key : " + entry.getKey() + " Value : " + entry.getValue());
+//            Log.d(TAG, "Key : " + entry.getKey() + " Value : " + entry.getValue());
             addHeader(entry.getKey(), entry.getValue());
         }
         for (Map.Entry<String, String> entry : formField.entrySet()) {
-            Log.d(TAG, "Key : " + entry.getKey() + " Value : " + entry.getValue());
+//            Log.d(TAG, "Key : " + entry.getKey() + " Value : " + entry.getValue());
             addField(entry.getKey(), entry.getValue());
         }
         for (Map.Entry<String, File> entry : formFile.entrySet()) {
-            Log.d(TAG, "Key : " + entry.getKey() + " Value : " + entry.getValue());
+//            Log.d(TAG, "Key : " + entry.getKey() + " Value : " + entry.getValue());
             addFilePart(entry.getKey(), entry.getValue());
         }
     }
@@ -178,8 +178,8 @@ public class HttpMultipart {
         writer.append("--");
         writer.append(boundary);
         writer.append(LINE_FEED);
-        writer.append("Content-Disposition: form-data; name=\"" + fieldName + "\"; filename=\"" + fileName + "\"").append(LINE_FEED);
-        writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(fileName)).append(LINE_FEED);
+        writer.append("Content-Disposition: form-data; name=\"".concat(fieldName).concat("\"; filename=\"").concat(fileName).concat("\"")).append(LINE_FEED);
+        writer.append("Content-Type: ".concat(URLConnection.guessContentTypeFromName(fileName)).concat(LINE_FEED));
         writer.append("Content-Transfer-Encoding: binary").append(LINE_FEED);
         writer.append(LINE_FEED);
         writer.flush();
@@ -203,7 +203,7 @@ public class HttpMultipart {
      */
 
     private void addHeader(String name, String value) {
-        writer.append(name + ": " + value).append(LINE_FEED);
+        writer.append(name.concat(": ").concat(value)).append(LINE_FEED);
         writer.flush();
     }
 
@@ -218,7 +218,7 @@ public class HttpMultipart {
     public List<String> finish() throws IOException {
         List<String> response = new ArrayList<String>();
         writer.append(LINE_FEED).flush();
-        writer.append("--" + boundary + "--").append(LINE_FEED);
+        writer.append("--".concat(boundary).concat("--")).append(LINE_FEED);
         writer.close();
         // checks server's status code first
         int status = httpConn.getResponseCode();
@@ -232,7 +232,7 @@ public class HttpMultipart {
             reader.close();
             httpConn.disconnect();
         } else {
-            throw new IOException("Server returned " + status);
+            throw new IOException("Server returned ".concat(String.valueOf(status)));
         }
         return response;
     }

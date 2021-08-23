@@ -9,7 +9,7 @@ public class DummyHelper {
         if (0 > maxLoop) maxLoop = 10;
         List<String> list = new ArrayList<>();
         for (int i = 0; i < maxLoop; i++) {
-            list.add("Sample " + i);
+            list.add("Sample ".concat(String.valueOf(i)));
         }
         return list;
     }

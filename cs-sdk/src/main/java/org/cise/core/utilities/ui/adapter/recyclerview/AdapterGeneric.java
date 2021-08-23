@@ -71,7 +71,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
             throw new IllegalArgumentException("please input type greater than 0");
         }
         if (ValueUtils.nonNull(holders.get(type))) {
-            throw new IllegalArgumentException("holder " + holder.getName() + " already register!");
+            throw new IllegalArgumentException("holder already register! ".concat(holder.getName()));
         }
         holders.put(type, holder);
         typeHolders.put(type, type);
@@ -80,7 +80,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
-        Log.d(TAG, "item view type: " + position);
+        Log.d(TAG, "item view type: ".concat(String.valueOf(position)));
         AdapterModel value = adapterList.get(position);
         if (ValueUtils.nonNull(value)) {
             return value.getType();
@@ -99,7 +99,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
             View convertView = LayoutInflater.from(context).inflate(layoutId.intValue(), parent, false);
             return holderGenerator(holderClass, convertView);
         }
-        throw new NullPointerException("cannot find holder view type " + viewType);
+        throw new NullPointerException("cannot find holder view type ".concat(String.valueOf(viewType)));
     }
 
     private HolderGeneric holderGenerator(Type type, View convertView) {
@@ -108,9 +108,9 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
             if (ValueUtils.isNull(cached.get(type.hashCode()))) {
                 Constructor constructor = ((Class<HolderGeneric>) type).getConstructor(View.class);
                 viewHolder = (HolderGeneric) constructor.newInstance(convertView);
-                cached.put("VH" + type.hashCode(), viewHolder);
+                cached.put("VH".concat(String.valueOf(type.hashCode())), viewHolder);
             } else {
-                viewHolder = cached.get("VH" + type.hashCode());
+                viewHolder = cached.get("VH".concat(String.valueOf(type.hashCode())));
             }
         } catch (InstantiationException e) {
             Log.e(TAG, "Incompatible holder");
@@ -123,7 +123,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
             Log.e(TAG, ExceptionUtils.message(e));
         } finally {
             if (ValueUtils.nonNull(viewHolder)) {
-                Log.d(TAG, "Class : " + viewHolder.getClass());
+                Log.d(TAG, "Class : ".concat(viewHolder.getClass().getSimpleName()));
             }
         }
         return viewHolder;
@@ -144,7 +144,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         holder.onBindViewHolder(adapterList, position);
         holder.onBindViewHolder(adapterList, position, size);
         holder.onBindViewHolder(o, position, 0 == position && !isLoader, position == getItemCount() - 1 && !isLoader);
-        Log.d(TAG, "bind position " + position);
+        Log.d(TAG, "bind position ".concat(String.valueOf(position)));
     }
 
     @Override

@@ -90,7 +90,7 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements H
         // 1240009959983
         List<SampleData> sampleDatas = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            sampleDatas.add(new SampleData("Sample Data " + (i + 1)));
+            sampleDatas.add(new SampleData("Sample Data ".concat(String.valueOf(i + 1))));
         }
 //        adapter.setValue(sampleDatas);
         new Handler().postDelayed(() -> {
@@ -103,7 +103,7 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements H
         new Handler().postDelayed(() -> {
             List<SampleData> list = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
-                list.add(new SampleData("next : " + i));
+                list.add(new SampleData("next : ".concat(String.valueOf(i))));
             }
             if (resultSuccess) {
 

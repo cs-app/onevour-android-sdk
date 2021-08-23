@@ -44,7 +44,7 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
     private void init() {
         List<SampleDataMV> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            list.add(new SampleDataMV(new SampleData("next : " + i)));
+            list.add(new SampleDataMV(new SampleData("next : ".concat(String.valueOf(i)))));
         }
         adapter.addMore(list);
     }
@@ -54,7 +54,7 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
         new Handler().postDelayed(() -> {
             List<SampleDataMV> list = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
-                list.add(new SampleDataMV(new SampleData("next : " + i)));
+                list.add(new SampleDataMV(new SampleData("next : ".concat(String.valueOf(i)))));
             }
             if (resultSuccess) {
                 adapter.addMore(list);
@@ -67,13 +67,13 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
     @Override
     public void onLoadRetry(int index, SampleData o) {
         requestNextPage(true);
-        Log.d(TAG, "retry load data from last : " + o + " from index: " + index);
+        Log.d(TAG, "retry load data from last :  from index: ".concat(String.valueOf(index)));
     }
 
     @Override
     public void loadMoreItems(SampleData sampleData) {
         requestNextPage(false);
-        Log.d(TAG, "load more from last value: " + sampleData.getName());
+        Log.d(TAG, "load more from last value: ".concat(sampleData.getName()));
 
     }
 }

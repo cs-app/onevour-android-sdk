@@ -153,12 +153,12 @@ public class RXActivity extends AppCompatActivity {
 
             @Override
             public void onNext(String s) {
-                Log.d(TAG, "Name: " + s);
+//                Log.d(TAG, "Name: " + s);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e(TAG, "onError: " + e.getMessage());
+                Log.e(TAG, "onError: ".concat(e.getMessage()));
             }
 
             @Override
@@ -174,12 +174,12 @@ public class RXActivity extends AppCompatActivity {
 
             @Override
             public void onNext(String s) {
-                Log.d(TAG, "Name: " + s);
+//                Log.d(TAG, "Name: " + s);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e(TAG, "onError: " + e.getMessage());
+                Log.e(TAG, "onError: ".concat(e.getMessage()));
             }
 
             @Override
@@ -196,12 +196,12 @@ public class RXActivity extends AppCompatActivity {
 
             @Override
             public void onNext(String s) {
-                Log.d(TAG, "Name: " + s);
+//                Log.d(TAG, "Name: " + s);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e(TAG, "onError: " + e.getMessage());
+                Log.e(TAG, "onError: ".concat(e.getMessage()));
             }
 
             @Override
@@ -226,7 +226,7 @@ public class RXActivity extends AppCompatActivity {
     TextView txtBelowEditText, txtBelowButton;
     EditText editText, editText2;
 
-    private void bindingData(){
+    private void bindingData() {
         button = findViewById(R.id.button);
         button2 = findViewById(R.id.button2);
         button3 = findViewById(R.id.button3);
@@ -248,7 +248,7 @@ public class RXActivity extends AppCompatActivity {
                             public void accept(Object o) {
                                 Toast.makeText(getApplicationContext(), "Avoid multiple clicks using throttleFirst", Toast.LENGTH_SHORT).show();
                                 if (o instanceof Button) {
-                                    txtBelowButton.setText(((Button) o).getText().toString() + " clicked");
+                                    txtBelowButton.setText(((Button) o).getText().toString().concat(" clicked"));
                                 } else if (o instanceof FloatingActionButton) {
                                     txtBelowButton.setText("Fab clicked");
                                 }
@@ -262,7 +262,7 @@ public class RXActivity extends AppCompatActivity {
                 subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String o) throws Exception {
-                        txtBelowButton.setText(o + " was clicked");
+                        txtBelowButton.setText("was clicked ".concat(o));
                     }
                 });
 
@@ -307,7 +307,6 @@ public class RXActivity extends AppCompatActivity {
 */
 
         // Observable<String> animalsObservable = SingleSubject<String>.create();
-
 
 
         CompositeDisposable compositeDisposable = new CompositeDisposable();
