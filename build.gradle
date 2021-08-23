@@ -1,15 +1,10 @@
-ext {
-    targetCompatibility = 1.8
-}
-
 buildscript {
-    
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.1'
+        classpath "com.android.tools.build:gradle:7.0.1"
     }
 }
 
