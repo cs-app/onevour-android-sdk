@@ -35,7 +35,7 @@ public class HttpRequest<T> {
 
     private final String TAG = HttpRequest.class.getSimpleName();
 
-    private final int MIN_TIMEOUT = 9000;
+    private final int MIN_TIMEOUT = 12000;
 
     private int timeout = 0;
 
