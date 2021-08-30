@@ -3,10 +3,14 @@ package org.cise.sdk.ciseapp.modules.main.models;
 // Created by Zuliadin on 2019-12-24.
 //
 
+import com.google.gson.annotations.Expose;
+
 public class Sample {
 
+    @Expose
     private String sample;
 
+//    @Expose
     private Class clazz;
 
     public Sample(String sample, Class clazz) {

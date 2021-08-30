@@ -2,14 +2,22 @@ package org.cise.core.utilities.commons;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.google.gson.reflect.TypeToken;
 
 import org.cise.core.utilities.json.gson.GsonHelper;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class RefSession {
 
     private final String TAG = RefSession.class.getSimpleName();
 
-    private final String EDITOR_DEFAULT = RefSession.class.getSimpleName();
+    protected final String EDITOR_DEFAULT = RefSession.class.getSimpleName();
 
     private SharedPreferences getSharedPreferences(String Key) {
         return ContextHelper.getApplication().getSharedPreferences(Key, Context.MODE_PRIVATE);
@@ -32,6 +40,14 @@ public class RefSession {
         String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key, null);
         if (null == valueString) return null;
         return GsonHelper.newInstance().getGson().fromJson(valueString, cls);
+    }
+
+    public <T> List<T> findCollection(String key, Class<T> cls) {
+        String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key, null);
+        if (null == valueString) return null;
+        String value = findString(key);
+        if (ValueUtils.isEmpty(value)) return null;
+        return GsonHelper.newInstance().getGson().fromJson(valueString, TypeToken.getParameterized(ArrayList.class, cls).getType());
     }
 
 
@@ -93,10 +109,16 @@ public class RefSession {
         save(key, value, false);
     }
 
-    public void save(String key, Object value, boolean isNative) {
-        if (null == value || null == key || key.trim().isEmpty()) {
+    public void saveCollection(String key, List<?> value) {
+        String valueString = GsonHelper.newInstance().getGson().toJson(value);
+        save(key, valueString, true);
+    }
+
+    public void save(String keyRef, Object value, boolean isNative) {
+        if (ValueUtils.isEmpty(keyRef) || ValueUtils.isNull(value)) {
             throw new NullPointerException("cannot store null object, key and empty key");
         }
+        String key = keyRef.trim().toUpperCase();
         SharedPreferences.Editor editor = editor(EDITOR_DEFAULT);
         if (isNative) {
             if (value instanceof Integer) {
@@ -142,10 +164,12 @@ public class RefSession {
             }
             sb.append(key).append("|");
             editor.remove(key);
-            android.util.Log.d(TAG, "remove ".concat(key));
+            Log.d(TAG, "remove ".concat(key));
         }
         if (!editor.commit()) {
             throw new IllegalStateException("cannot commit remove keys ".concat(sb.toString()));
         }
     }
+
+
 }

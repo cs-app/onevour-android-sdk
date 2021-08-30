@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.cise.core.utilities.commons.ContextHelper;
+import org.cise.core.utilities.commons.RefSession;
 import org.cise.core.utilities.helper.UIHelper;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.form.controllers.FormSimpleActivity;
@@ -34,19 +36,18 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
     @BindView(R.id.rv_sample)
     RecyclerView rvSample;
 
+    RefSession refSession = new RefSession();
+
     private SampleAdapter adapter = new SampleAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ContextHelper.init(getApplication());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         UIHelper.initRecyclerView(rvSample, adapter);
         adapter.setHolderListener(this);
-        init();
-    }
-
-    private void init() {
         List<SampleMV> samples = new ArrayList<>();
         samples.add(new SampleMV("Adapter", AdapterSampleActivity.class));
         samples.add(new SampleMV("Fragment BackStack", FragmentActivity.class));
@@ -56,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
         samples.add(new SampleMV("Form Scroll", FormScrollActivity.class));
         samples.add(new SampleMV("RXJava", RXActivity.class));
         samples.add(new SampleMV("MVVM-Binding", MVVMActivity.class));
+        refSession.saveCollection("menu", samples);
+        init();
+    }
+
+    private void init() {
+        List<SampleMV> samples = refSession.findCollection("menu", SampleMV.class);
         adapter.setValue(samples);
     }
 

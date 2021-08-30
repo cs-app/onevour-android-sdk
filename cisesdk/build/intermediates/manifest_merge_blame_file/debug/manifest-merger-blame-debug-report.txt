@@ -1,0 +1,53 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.cise.core" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="16"
+6-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml
+7        android:targetSdkVersion="30" />
+7-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml
+8
+9    <uses-permission android:name="android.permission.INTERNET" />
+9-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:4:5-67
+9-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:4:22-64
+10    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+10-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:5:5-79
+10-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:5:22-76
+11    <uses-permission android:name="android.permission.CAMERA" />
+11-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:6:5-65
+11-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:6:22-62
+12    <uses-permission android:name="android.permission.WAKE_LOCK" />
+12-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:7:5-68
+12-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:7:22-65
+13    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+13-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:8:5-81
+13-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:8:22-78
+14
+15    <uses-feature
+15-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:10:5-84
+16        android:name="android.hardware.camera"
+16-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:10:19-57
+17        android:required="false" />
+17-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:10:58-82
+18    <uses-feature
+18-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:11:5-13:36
+19        android:name="android.hardware.camera.autofocus"
+19-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:12:9-57
+20        android:required="false" />
+20-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:13:9-33
+21    <uses-feature android:name="android.hardware.location.gps" />
+21-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:14:5-66
+21-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:14:19-63
+22
+23    <application
+23-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:16:5-21:19
+24        android:allowBackup="true"
+24-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:17:9-35
+25        android:label="@string/app_name"
+25-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:18:9-41
+26        android:supportsRtl="true" >
+26-->C:\Users\demOn\Documents\Workspace\Sphere\cs-sdk\cisesdk\src\main\AndroidManifest.xml:19:9-35
+27    </application>
+28
+29</manifest>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pad_line">1dp</dimen>
+    <dimen name="pad_radius">18dp</dimen>
+    <dimen name="pad_size">65dp</dimen>
+    <string name="app_name">Cise Core</string>
+    <string name="empty"/>
+    <string name="error_info">Error</string>
+    <string name="loading">Loading</string>
+    <string name="reload">Reload!</string>
+    <declare-styleable name="ImageViewRound">
+        <attr format="dimension" name="round"/>
+    </declare-styleable>
+</resources>

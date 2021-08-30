@@ -1,9 +1,13 @@
 package org.cise.core.utilities.ui.adapter.recyclerview;
 
+import com.google.gson.annotations.Expose;
+
 public class AdapterModel<T> {
 
+    @Expose
     private int type = 1;
 
+    @Expose
     private T model;
 
     public AdapterModel(int type) {

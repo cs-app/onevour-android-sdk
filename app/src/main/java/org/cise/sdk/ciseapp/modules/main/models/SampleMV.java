@@ -7,7 +7,9 @@ public class SampleMV extends AdapterModel<Sample> {
     public SampleMV(Sample model) {
         super(model);
     }
+
     public SampleMV(String sample, Class clazz) {
         super(new Sample(sample, clazz));
     }
+
 }
