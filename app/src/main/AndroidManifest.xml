@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.mvvm.views.MVVMActivity"/>
+        <activity
+            android:name=".modules.chat.ChatActivity"
+            android:exported="true" />
+        <activity android:name=".modules.mvvm.views.MVVMActivity" />
         <activity android:name=".modules.rxjava.controllers.RXActivity" />
         <activity android:name=".modules.formscroll.controllers.FormScrollActivity" />
         <activity android:name=".modules.form.controllers.FormSimpleActivity" />
