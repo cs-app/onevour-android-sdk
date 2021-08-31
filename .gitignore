@@ -15,6 +15,7 @@
 /logs
 /classes
 /.idea/*
+/cisesdk/build/*
 .DS_Store
 .gradle
 .idea
