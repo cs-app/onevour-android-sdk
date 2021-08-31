@@ -26,6 +26,7 @@ import org.cise.core.utilities.json.gson.GsonHelper;
 import org.cise.sdk.ciseapp.R;
 
 import java.io.EOFException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +42,8 @@ public class ChatActivity extends AppCompatActivity {
 
     AdapterMessage adapterMessage = new AdapterMessage();
 
+    AtomicBoolean error = new AtomicBoolean();
+
     StompClient client;
 
     @BindView(R.id.messages)
@@ -48,14 +51,6 @@ public class ChatActivity extends AppCompatActivity {
 
     @BindView(R.id.message)
     EditText message;
-
-    @Override
-    protected void onStop() {
-        if (ValueUtils.nonNull(client) && client.isConnected()) {
-            client.disconnect();
-        }
-        super.onStop();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,21 +129,30 @@ public class ChatActivity extends AppCompatActivity {
             switch (lifecycleEvent.getType()) {
                 case OPENED:
                     Log.d(TAG, "Stomp connection opened");
+                    registerListener();
                     break;
 
                 case ERROR:
                     Log.e(TAG, "Error", lifecycleEvent.getException());
+                    error.set(true);
+
                     break;
 
                 case CLOSED:
                     Log.d(TAG, "Stomp connection closed");
-                    client.connect();
+                    if (error.get()) {
+                        client.connect();
+                        error.set(false);
+                    }
                     break;
             }
         });
 
         Log.d(TAG, "connection status " + client.isConnected());
 //        client.topic("/topic/public").safeSubscribe();
+    }
+
+    private void registerListener() {
         client.topic("/topic/public").subscribe(message -> {
             Log.i(TAG, "Received message: " + message.getPayload());
             ChatMessage chatMessage = GsonHelper.gson.fromJson(message.getPayload(), ChatMessage.class);
