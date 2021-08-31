@@ -8,4 +8,6 @@
     <string name="title_menu_a">Menu A</string>
     <string name="number">Number</string>
     <string name="decimal">Decimal</string>
+    <string name="send">Send</string>
+    <string name="type_a_message">Type a message</string>
 </resources>

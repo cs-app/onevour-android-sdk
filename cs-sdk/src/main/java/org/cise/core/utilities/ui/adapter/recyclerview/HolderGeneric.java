@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.IdRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.cise.core.utilities.commons.ValueUtils;
@@ -24,13 +25,20 @@ public class HolderGeneric<T> extends RecyclerView.ViewHolder {
 
     private int position;
 
+    private View view;
+
     private List<Listener> listener = new ArrayList<>();
 
     private Map<Class, Listener> cachedListener = new HashMap<>();
 
     public HolderGeneric(View view) {
         super(view);
+        this.view = view;
         this.context = view.getContext();
+    }
+
+    protected <T extends View> T findViewById(@IdRes int id) {
+        return view.findViewById(id);
     }
 
     public void setListener(HolderGeneric.Listener listener) {

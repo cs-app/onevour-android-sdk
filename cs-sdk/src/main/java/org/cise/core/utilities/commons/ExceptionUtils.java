@@ -6,7 +6,7 @@ package org.cise.core.utilities.commons;
 public class ExceptionUtils {
 
     public static String message(Exception e) {
-        StringBuilder sb = new StringBuilder(e.getMessage());
+        StringBuilder sb = new StringBuilder(e.getCause().getMessage());
         sb.append("\n");
         for (StackTraceElement st : e.getStackTrace()) {
             sb.append(st);
