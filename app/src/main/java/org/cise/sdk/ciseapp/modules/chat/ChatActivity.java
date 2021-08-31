@@ -102,7 +102,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         connection();
-        sendMessageJoin("Hello");
 
     }
 
@@ -130,6 +129,7 @@ public class ChatActivity extends AppCompatActivity {
                 case OPENED:
                     Log.d(TAG, "Stomp connection opened");
                     registerListener();
+                    sendMessageJoin();
                     break;
 
                 case ERROR:
@@ -156,12 +156,15 @@ public class ChatActivity extends AppCompatActivity {
         client.topic("/topic/public").subscribe(message -> {
             Log.i(TAG, "Received message: " + message.getPayload());
             ChatMessage chatMessage = GsonHelper.gson.fromJson(message.getPayload(), ChatMessage.class);
+            if (chatMessage.getType() != MessageType.CHAT) {
+                chatMessage.setContent(chatMessage.getType().name());
+            }
             onReceiveMessage(chatMessage);
         });
     }
 
-    private void sendMessageJoin(String message) {
-        if (ValueUtils.isNull(client) || !client.isConnected()) return;
+    private void sendMessageJoin() {
+        if (ValueUtils.isNull(client)) return;
         ChatMessage user = session.find(ChatMessage.class);
         if (ValueUtils.isNull(user)) {
             Toast.makeText(this, "input name", Toast.LENGTH_LONG).show();
@@ -169,7 +172,6 @@ public class ChatActivity extends AppCompatActivity {
         }
         user.setType(MessageType.JOIN);
         user.setSender(user.getSender());
-        user.setContent(message);
         client.send("/app/chat.addUser", GsonHelper.gson.toJson(user)).subscribe(
                 () -> Log.d(TAG, "Sent data!"),
                 error -> Log.e(TAG, "Encountered error while sending data!", error)
@@ -177,7 +179,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String message) {
-        if (ValueUtils.isNull(client) || !client.isConnected()) return;
+        if (ValueUtils.isNull(client)) return;
         ChatMessage user = session.find(ChatMessage.class);
         if (ValueUtils.isNull(user)) {
             Snackbar.make(this.message, "input name", 1500).show();
