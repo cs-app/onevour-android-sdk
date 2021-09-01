@@ -1,10 +1,5 @@
 package org.cise.sdk.ciseapp.modules.chat;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,7 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,7 +23,6 @@ import org.cise.core.utilities.helper.UIHelper;
 import org.cise.core.utilities.json.gson.GsonHelper;
 import org.cise.sdk.ciseapp.R;
 
-import java.io.EOFException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.BindView;
@@ -167,14 +164,17 @@ public class ChatActivity extends AppCompatActivity {
         if (ValueUtils.isNull(client)) return;
         ChatMessage user = session.find(ChatMessage.class);
         if (ValueUtils.isNull(user)) {
-            Toast.makeText(this, "input name", Toast.LENGTH_LONG).show();
+            showError("input name in setting toolbars");
             return;
         }
         user.setType(MessageType.JOIN);
         user.setSender(user.getSender());
         client.send("/app/chat.addUser", GsonHelper.gson.toJson(user)).subscribe(
                 () -> Log.d(TAG, "Sent data!"),
-                error -> Log.e(TAG, "Encountered error while sending data!", error)
+                error -> {
+                    Log.e(TAG, "Encountered error while sending data!", error);
+                    showError(error.getMessage());
+                }
         );
     }
 
@@ -182,7 +182,7 @@ public class ChatActivity extends AppCompatActivity {
         if (ValueUtils.isNull(client)) return;
         ChatMessage user = session.find(ChatMessage.class);
         if (ValueUtils.isNull(user)) {
-            Snackbar.make(this.message, "input name", 1500).show();
+            showError("input name in Setting toolbar");
             return;
         }
         user.setType(MessageType.CHAT);
@@ -191,8 +191,17 @@ public class ChatActivity extends AppCompatActivity {
         user.setTime(DTFormat.now());
         client.send("/app/chat.sendMessage", GsonHelper.gson.toJson(user)).subscribe(
                 () -> Log.d(TAG, "Sent data!"),
-                error -> Log.e(TAG, "Encountered error while sending data!", error)
+                error -> {
+                    Log.e(TAG, "Encountered error while sending data!", error);
+                    showError(error.getMessage());
+                }
         );
+    }
+
+    private void showError(String message) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            Snackbar.make(this.message, message, 1500).show();
+        });
     }
 
 
