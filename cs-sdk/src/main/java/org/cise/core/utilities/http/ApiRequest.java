@@ -18,40 +18,62 @@ public class ApiRequest {
     }
 
     public static <T> void get(String url, HttpListener<T> listener) {
-        queue().add(new HttpRequest(url, listener));
+        queue().add(new HttpRequest(url, "GET", null, null, listener));
     }
 
     public static <T> void get(String url, Map<String, String> header, HttpListener<T> listener) {
-        queue().add(new HttpRequest(url, header, listener));
-    }
-
-    public static <T> void post(String url, T json) {
-        post(url, json, null);
+        queue().add(new HttpRequest(url, "GET", header, null, listener));
     }
 
     public static <T, E> void post(String url, T json, HttpListener<E> listener) {
         if (json instanceof String) {
-            queue().add(new HttpRequest(url, (String) json, listener));
+            queue().add(new HttpRequest(url, "POST", null, (String) json, listener));
         } else {
             String body = GsonHelper.newInstance().getGson().toJson(json);
-            queue().add(new HttpRequest(url, body, listener));
+            queue().add(new HttpRequest(url, "POST", null, body, listener));
         }
     }
 
     public static <T, E> void post(String url, Map<String, String> header, T json, HttpListener<E> listener) {
         if (json instanceof String) {
-            queue().add(new HttpRequest(url, header, (String) json, listener));
+            queue().add(new HttpRequest(url, "POST", header, (String) json, listener));
         } else {
             String body = GsonHelper.newInstance().getGson().toJson(json);
-            queue().add(new HttpRequest(url, header, body, listener));
+            queue().add(new HttpRequest(url, "POST", header, body, listener));
         }
     }
 
     public static <T, E> void post(String url, int timeout, T json, HttpListener<E> listener) {
         if (json instanceof String) {
-            queue().add(new HttpRequest(url, timeout, (String) json, listener));
+            queue().add(new HttpRequest(url, "POST", timeout, (String) json, listener));
         } else {
-            queue().add(new HttpRequest(url, timeout, GsonHelper.newInstance().getGson().toJson(json), listener));
+            queue().add(new HttpRequest(url, "POST", timeout, GsonHelper.newInstance().getGson().toJson(json), listener));
+        }
+    }
+
+    public static <T, E> void delete(String url, T json, HttpListener<E> listener) {
+        if (json instanceof String) {
+            queue().add(new HttpRequest(url, "DELETE", null, (String) json, listener));
+        } else {
+            String body = GsonHelper.newInstance().getGson().toJson(json);
+            queue().add(new HttpRequest(url, "DELETE", null, body, listener));
+        }
+    }
+
+    public static <T, E> void delete(String url, Map<String, String> header, T json, HttpListener<E> listener) {
+        if (json instanceof String) {
+            queue().add(new HttpRequest(url, "DELETE", header, (String) json, listener));
+        } else {
+            String body = GsonHelper.newInstance().getGson().toJson(json);
+            queue().add(new HttpRequest(url, "DELETE", header, body, listener));
+        }
+    }
+
+    public static <T, E> void delete(String url, int timeout, T json, HttpListener<E> listener) {
+        if (json instanceof String) {
+            queue().add(new HttpRequest(url, "DELETE", timeout, (String) json, listener));
+        } else {
+            queue().add(new HttpRequest(url, "DELETE", timeout, GsonHelper.newInstance().getGson().toJson(json), listener));
         }
     }
 

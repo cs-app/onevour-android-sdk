@@ -41,6 +41,8 @@ public class HttpRequest<T> {
 
     private String endpoint;
 
+    private String method;
+
     private Map<String, String> header;
 
     private String body;
@@ -49,47 +51,63 @@ public class HttpRequest<T> {
 
     // GET
     public HttpRequest(String url, HttpListener<T> listener) {
-        initialize(url, MIN_TIMEOUT, null, body, listener);
+        initialize(url, "GET", MIN_TIMEOUT, null, body, listener);
     }
 
     // GET
     public HttpRequest(String url, int timeout, HttpListener<T> listener) {
-        initialize(url, timeout, null, body, listener);
+        initialize(url, "GET", timeout, null, body, listener);
     }
 
     // GET
     public HttpRequest(String url, Map<String, String> header, HttpListener<T> listener) {
-        initialize(url, MIN_TIMEOUT, header, body, listener);
+        initialize(url, "GET", MIN_TIMEOUT, header, body, listener);
     }
 
     // GET
     public HttpRequest(String url, int timeout, Map<String, String> header, HttpListener<T> listener) {
-        initialize(url, timeout, header, body, listener);
+        initialize(url, "GET", timeout, header, body, listener);
     }
 
     // POST
     protected HttpRequest(String url, String body, HttpListener<T> listener) {
-        initialize(url, MIN_TIMEOUT, null, body, listener);
+        initialize(url, "GET", MIN_TIMEOUT, null, body, listener);
     }
 
     // POST
     protected HttpRequest(String url, int timeout, String body, HttpListener<T> listener) {
-        initialize(url, timeout, null, body, listener);
+        initialize(url, "POST", timeout, null, body, listener);
     }
 
     // POST
     protected HttpRequest(String url, Map<String, String> header, String body, HttpListener<T> listener) {
-        initialize(url, MIN_TIMEOUT, header, body, listener);
+        initialize(url, "POST", MIN_TIMEOUT, header, body, listener);
     }
 
     // POST
     protected HttpRequest(String url, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
-        initialize(url, timeout, header, body, listener);
+        initialize(url, "POST", timeout, header, body, listener);
     }
 
-    private void initialize(String url, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
+    // POST
+    protected HttpRequest(String url, String method, int timeout, String body, HttpListener<T> listener) {
+        initialize(url, method, timeout, null, body, listener);
+    }
+
+    // POST
+    protected HttpRequest(String url,String method, Map<String, String> header, String body, HttpListener<T> listener) {
+        initialize(url, method, MIN_TIMEOUT, header, body, listener);
+    }
+
+    // POST
+    protected HttpRequest(String url,String method, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
+        initialize(url, method, timeout, header, body, listener);
+    }
+
+    private void initialize(String url, String method, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
         this.endpoint = url;
         this.timeout = timeout;
+        this.method = method;
         this.header = header;
         this.body = body;
         this.listener = listener;
@@ -202,8 +220,9 @@ public class HttpRequest<T> {
     }
 
     private String method() {
-        if (null == body) return "GET";
-        return "POST";
+//        if (null == body) return "GET";
+//        return "POST";
+        return method;
     }
 
     private void enableHeader(HttpURLConnection conn) {

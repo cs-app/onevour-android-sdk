@@ -13,15 +13,16 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Map;
 
 /**
- * API_TOKEN_REFRESH_URL : token refresh url, set on create application
- * API_TOKEN_REFRESH : set after success login
- * API_TOKEN : set after success login
+ * <b>API_TOKEN</b> : set after success login
+ * <b>API_TOKEN_REFRESH</b> : set after success login</br>
+ * <b>API_TOKEN_REFRESH_URL</b> : token refresh url, set on create application</br>
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class ApiRequestBuilder {
 
     private final String TAG = ApiRequestBuilder.class.getSimpleName();
 
-    private RefSession session = new RefSession();
+    private final RefSession session = new RefSession();
 
     private Map<String, String> header;
 
@@ -155,6 +156,9 @@ public class ApiRequestBuilder {
         }
         if ("POST".equalsIgnoreCase(method)) {
             ApiRequest.post(url, header, body, listener);
+        }
+        if ("DELETE".equalsIgnoreCase(method)) {
+            ApiRequest.delete(url, header, body, listener);
         }
     }
 
