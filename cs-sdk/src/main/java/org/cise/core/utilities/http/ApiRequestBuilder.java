@@ -122,8 +122,8 @@ public class ApiRequestBuilder {
                         return;
                     }
                     Log.i(TAG, "new token receive");
-                    session.save("TOKEN", newToken.getAccessToken(), true);
-                    session.save("TOKEN_REFRESH", newToken.getRefreshToken(), true);
+                    session.saveString("API_TOKEN", newToken.getAccessToken());
+                    session.saveString("API_TOKEN_REFRESH", newToken.getRefreshToken());
                     // update header
                     if (ValueOf.nonNull(header)) {
                         header.put("Authorization", "Bearer " + newToken.getAccessToken());
