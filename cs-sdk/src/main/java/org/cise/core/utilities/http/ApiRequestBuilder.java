@@ -134,19 +134,19 @@ public class ApiRequestBuilder {
             }
 
             @Override
-            public void onError(HttpError httpError) {
-                Log.e(TAG, "request token refresh " + httpError.getMessage());
+            public void onError(Error error) {
+                Log.e(TAG, "request token refresh " + error.getMessage());
                 if (ValueOf.isNull(listener)) return;
-                listener.onError(httpError);
+                listener.onError(error);
             }
         });
     }
 
     private void error(int code, String message) {
         if (ValueOf.isNull(listener)) return;
-        HttpError httpError = new HttpError(code);
-        httpError.error(message);
-        listener.onError(httpError);
+        Error error = new Error(code);
+        error.error(message);
+        listener.onError(error);
     }
 
     private void request() {

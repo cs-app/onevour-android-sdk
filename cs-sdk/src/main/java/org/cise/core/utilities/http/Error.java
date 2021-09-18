@@ -13,13 +13,13 @@ import java.util.Map;
 /**
  * @author user
  */
-public class HttpError {
+public class Error {
 
     private final StringBuilder message = new StringBuilder();
 
     private Exception exception;
 
-    public HttpError(int code) {
+    public Error(int code) {
         message.append("HTTP ").append(code).append(" ").append(HttpStatusCode.getMessage(code));
     }
 
@@ -27,27 +27,27 @@ public class HttpError {
         this.message.append(errorMessage);
     }
 
-    public HttpError(MalformedURLException malformedURLException) {
+    public Error(MalformedURLException malformedURLException) {
         exception = malformedURLException;
         message.append(malformedURLException.getMessage());
     }
 
-    public HttpError(String endpoint, IOException iOException) {
+    public Error(String endpoint, IOException iOException) {
         exception = iOException;
         message.append(endpoint).append(" ").append(iOException.getMessage());
     }
 
-    public HttpError(IOException iOException) {
+    public Error(IOException iOException) {
         exception = iOException;
         message.append(iOException.getMessage());
     }
 
-    public HttpError(IOException iOException, String message) {
+    public Error(IOException iOException, String message) {
         exception = iOException;
         this.message.append(message);
     }
 
-    public HttpError(Exception exception) {
+    public Error(Exception exception) {
         this.exception = exception;
         message.append(exception.getMessage());
     }

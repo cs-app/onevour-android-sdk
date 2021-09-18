@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.cise.core.utilities.http.ApiRequest;
-import org.cise.core.utilities.http.HttpError;
+import org.cise.core.utilities.http.Error;
 import org.cise.core.utilities.http.HttpListener;
 import org.cise.sdk.ciseapp.R;
 
@@ -36,8 +36,8 @@ public class FragmentBottomActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError(HttpError httpError) {
-                Log.e("API-TEST", httpError.getMessage());
+            public void onError(Error error) {
+                Log.e("API-TEST", error.getMessage());
             }
         });
     }

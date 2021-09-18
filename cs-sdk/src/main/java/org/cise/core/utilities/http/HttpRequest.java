@@ -242,13 +242,13 @@ public class HttpRequest<T> {
 
     private void errorHandler(Exception error) {
         if (null == listener) return;
-        new Handler(Looper.getMainLooper()).post(() -> listener.onError(new HttpError(error)));
+        new Handler(Looper.getMainLooper()).post(() -> listener.onError(new Error(error)));
         Log.e(TAG, error.getMessage(), error);
     }
 
     private void errorHandler(int errorCode) {
         if (null == listener) return;
-        new Handler(Looper.getMainLooper()).post(() -> listener.onError(new HttpError(errorCode)));
+        new Handler(Looper.getMainLooper()).post(() -> listener.onError(new Error(errorCode)));
         Log.e(TAG, "error hit api code  ".concat(String.valueOf(errorCode)).concat(method()));
     }
 

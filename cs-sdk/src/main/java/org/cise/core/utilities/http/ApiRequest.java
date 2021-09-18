@@ -13,8 +13,8 @@ public class ApiRequest {
 
     private static final String TAG = ApiRequest.class.getSimpleName();
 
-    private static HttpQueue queue() {
-        return HttpQueue.newInstance();
+    private static ApiQueue queue() {
+        return ApiQueue.newInstance();
     }
 
     public static <T> void get(String url, HttpListener<T> listener) {

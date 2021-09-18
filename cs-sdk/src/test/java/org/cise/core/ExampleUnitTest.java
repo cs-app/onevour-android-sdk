@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.cise.core.utilities.http.ApiRequest;
-import org.cise.core.utilities.http.HttpError;
+import org.cise.core.utilities.http.Error;
 import org.cise.core.utilities.http.HttpListener;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ public class ExampleUnitTest {
             }
 
             @Override
-            public void onError(HttpError httpError) {
+            public void onError(Error httpError) {
                 Log.e("API-TEST", httpError.getMessage());
             }
         });

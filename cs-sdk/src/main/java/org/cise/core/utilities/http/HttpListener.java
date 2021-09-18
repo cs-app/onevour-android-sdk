@@ -4,6 +4,6 @@ public interface HttpListener<T> {
 
     void onSuccess(T response);
 
-    void onError(HttpError httpError);
+    void onError(Error error);
 
 }

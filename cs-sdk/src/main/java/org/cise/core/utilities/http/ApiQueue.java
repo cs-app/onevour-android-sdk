@@ -23,23 +23,23 @@ import java.util.concurrent.Executors;
 /**
  * @author Zuliadin
  */
-public class HttpQueue {
+public class ApiQueue {
 
-    private static final String TAG = HttpQueue.class.getSimpleName();
+    private static final String TAG = ApiQueue.class.getSimpleName();
 
     private final int MAX_POOL = 16;
 
-    private static HttpQueue httpQueue;
+    private static ApiQueue apiQueue;
 
     private ExecutorService executor = Executors.newFixedThreadPool(MAX_POOL);
 
-    private HttpQueue() {
+    private ApiQueue() {
         if (null == executor) executor = Executors.newFixedThreadPool(MAX_POOL);
     }
 
-    public static HttpQueue newInstance() {
-        if (null == httpQueue) httpQueue = new HttpQueue();
-        return httpQueue;
+    public static ApiQueue newInstance() {
+        if (null == apiQueue) apiQueue = new ApiQueue();
+        return apiQueue;
     }
 
     @SuppressWarnings({"rawtypes"})
@@ -75,20 +75,20 @@ public class HttpQueue {
                             listener.onSuccess(jsonResponse);
                         });
                     } catch (JsonSyntaxException e) {
-                        HttpError httpError = new HttpError(multipart.getResponseCode());
-                        httpError.error("Cannot convert response \n:".concat(responseResult));
-                        listener.onError(httpError);
+                        Error error = new Error(multipart.getResponseCode());
+                        error.error("Cannot convert response \n:".concat(responseResult));
+                        listener.onError(error);
                     }
                 }
             } catch (final IOException e) {
                 for (StackTraceElement s : e.getStackTrace()) {
                     Log.e(TAG, String.valueOf(s));
                 }
-                HttpError httpError = new HttpError(e);
-                handler.post(() -> listener.onError(httpError));
+                Error error = new Error(e);
+                handler.post(() -> listener.onError(error));
             } catch (JsonSyntaxException e) {
-                HttpError httpError = new HttpError(multipart.getResponseCode());
-                listener.onError(httpError);
+                Error error = new Error(multipart.getResponseCode());
+                listener.onError(error);
             } finally {
                 Log.d(TAG, "process upload finish");
             }
