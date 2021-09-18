@@ -5,12 +5,10 @@ import android.util.Log;
 
 import org.cise.core.utilities.http.ApiRequest;
 import org.cise.core.utilities.http.HttpError;
-import org.cise.core.utilities.http.HttpRequest;
-import org.cise.core.utilities.http.HttpResponse;
+import org.cise.core.utilities.http.HttpListener;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -33,7 +31,7 @@ public class ExampleUnitTest {
     @Test
     public void test_http() throws Exception {
         Log.d("API-TEST", "INFO START");
-        ApiRequestTest request = new ApiRequestTest(context, "https://api.digitalrecordcard.com/index.php/api_v1/login", new HttpResponse.Listener<String>() {
+        ApiRequestTest request = new ApiRequestTest(context, "https://api.digitalrecordcard.com/index.php/api_v1/login", new HttpListener<String>() {
             @Override
             public void onSuccess(String response) {
                 Log.d("API-TEST", response);

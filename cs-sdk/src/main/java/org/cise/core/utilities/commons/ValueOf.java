@@ -3,7 +3,7 @@ package org.cise.core.utilities.commons;
 // Created by Zuliadin on 2019-12-24.
 //
 
-public class ValueUtils {
+public class ValueOf {
 
     public static boolean isNull(Object value) {
         return null == value;

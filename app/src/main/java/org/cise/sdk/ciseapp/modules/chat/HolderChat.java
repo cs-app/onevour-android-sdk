@@ -4,7 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 import org.cise.core.utilities.ui.adapter.recyclerview.HolderGeneric;
 import org.cise.sdk.ciseapp.R;
 
@@ -16,7 +16,7 @@ public class HolderChat extends HolderGeneric<MessageModel> {
 
     public HolderChat(View view) {
         super(view);
-        Log.d(TAG, "view is null : " + ValueUtils.isNull(sender));
+        Log.d(TAG, "view is null : " + ValueOf.isNull(sender));
         sender = findViewById(R.id.sender);
         time = findViewById(R.id.time);
         message = findViewById(R.id.message);

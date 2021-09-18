@@ -2,9 +2,8 @@ package org.cise.core.utilities.json.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.DateTypeAdapter;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 import java.util.Date;
 
@@ -37,7 +36,7 @@ public class GsonHelper {
     }
 
     public static GsonHelper newInstance() {
-        if (ValueUtils.isNull(gson, gsonHelper)) {
+        if (ValueOf.isNull(gson, gsonHelper)) {
             gsonHelper = new GsonHelper();
         }
         return gsonHelper;

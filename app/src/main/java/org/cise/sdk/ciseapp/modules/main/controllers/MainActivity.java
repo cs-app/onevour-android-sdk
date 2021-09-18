@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.cise.core.utilities.commons.ContextHelper;
 import org.cise.core.utilities.commons.RefSession;
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 import org.cise.core.utilities.helper.UIHelper;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.adapter.controllers.AdapterSampleActivity;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
 
     private void init() {
         List<SampleMV> samples = refSession.findCollection("MENU", SampleMV.class);
-        if (ValueUtils.isNull(samples)) return;
+        if (ValueOf.isNull(samples)) return;
         Log.d(TAG, "list size from ref session " + samples.size());
         // adapter.setValue(samples);
     }

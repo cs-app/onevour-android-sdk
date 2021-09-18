@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 import org.cise.sdk.ciseapp.R;
 
 /**
@@ -24,7 +24,7 @@ public class PageThreeFragment extends Fragment {
     }
 
     public static PageThreeFragment newInstance() {
-        if (ValueUtils.isNull(fragment)) {
+        if (ValueOf.isNull(fragment)) {
             fragment = new PageThreeFragment();
         }
         return fragment;

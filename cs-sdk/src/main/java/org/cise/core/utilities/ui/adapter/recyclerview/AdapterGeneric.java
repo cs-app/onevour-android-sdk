@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.cise.core.utilities.commons.ExceptionUtils;
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -29,9 +29,9 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerView.Adapter<HolderGeneric<E>> implements HolderGeneric.Listener {
 
-    private static final String TAG = "GAdapter";
+    private static final String TAG = AdapterGeneric.class.getSimpleName();
 
-    private Map<String, HolderGeneric> cached = new HashMap<>();
+    private final Map<String, HolderGeneric> cached = new HashMap<>();
 
     private ArrayList<E> adapterList = new ArrayList<>();
 
@@ -41,15 +41,15 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     private boolean isLoader;
 
-    private Map<Integer, Class> holders = new HashMap<>();
+    private final Map<Integer, Class> holders = new HashMap<>();
 
-    private Map<Integer, Integer> layoutHolders = new HashMap<>();
+    private final Map<Integer, Integer> layoutHolders = new HashMap<>();
 
-    private Map<Integer, Integer> typeHolders = new HashMap<>();
+    private final Map<Integer, Integer> typeHolders = new HashMap<>();
 
     private AdapterGeneric.AdapterListener<E> adapterListener;
 
-    private List<HolderGeneric.Listener> holderListener = new ArrayList<>();
+    private final List<HolderGeneric.Listener> holderListener = new ArrayList<>();
 
     protected AdapterGeneric() {
         registerHolder();
@@ -70,7 +70,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         if (type <= 0) {
             throw new IllegalArgumentException("please input type greater than 0");
         }
-        if (ValueUtils.nonNull(holders.get(type))) {
+        if (ValueOf.nonNull(holders.get(type))) {
             throw new IllegalArgumentException("holder already register! ".concat(holder.getName()));
         }
         holders.put(type, holder);
@@ -82,7 +82,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
     public int getItemViewType(int position) {
         Log.d(TAG, "item view type: ".concat(String.valueOf(position)));
         AdapterModel value = adapterList.get(position);
-        if (ValueUtils.nonNull(value)) {
+        if (ValueOf.nonNull(value)) {
             return value.getType();
         }
         return VIEW_LOADER;
@@ -95,7 +95,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         Context context = parent.getContext();
         Integer layoutId = layoutHolders.get(viewType);
         Class holderClass = holders.get(viewType);
-        if (ValueUtils.nonNull(layoutId)) {
+        if (ValueOf.nonNull(layoutId)) {
             View convertView = LayoutInflater.from(context).inflate(layoutId.intValue(), parent, false);
             return holderGenerator(holderClass, convertView);
         }
@@ -105,7 +105,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
     private HolderGeneric holderGenerator(Type type, View convertView) {
         HolderGeneric viewHolder = null;
         try {
-            if (ValueUtils.isNull(cached.get(type.hashCode()))) {
+            if (ValueOf.isNull(cached.get(type.hashCode()))) {
                 Constructor constructor = ((Class<HolderGeneric>) type).getConstructor(View.class);
                 viewHolder = (HolderGeneric) constructor.newInstance(convertView);
                 cached.put("VH".concat(String.valueOf(type.hashCode())), viewHolder);
@@ -122,7 +122,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         } catch (NoSuchMethodException e) {
             Log.e(TAG, ExceptionUtils.message(e));
         } finally {
-            if (ValueUtils.nonNull(viewHolder)) {
+            if (ValueOf.nonNull(viewHolder)) {
                 Log.d(TAG, "Class : ".concat(viewHolder.getClass().getSimpleName()));
             }
         }
@@ -164,7 +164,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         isLoader = loader;
         int size = this.adapterList.size();
         if (isLoader) {
-            if (size > 0 && ValueUtils.nonNull(this.adapterList.get(size - 1))) {
+            if (size > 0 && ValueOf.nonNull(this.adapterList.get(size - 1))) {
                 this.adapterList.add(null);
                 notifyItemInserted(size);
             } else if (size == 0) {
@@ -180,7 +180,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
     }
 
     public void addMore(E o) {
-        if (ValueUtils.isNull(o)) {
+        if (ValueOf.isNull(o)) {
             Log.w(TAG, "cannot insert null value!");
             return;
         }
@@ -239,12 +239,6 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         return null;
     }
 
-    public interface AdapterListener<E> {
-
-        void onLoadRetry(int index, E o);
-
-    }
-
     public void showLoader() {
         setLoader(true);
     }
@@ -255,5 +249,11 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     public boolean isLoader() {
         return isLoader;
+    }
+
+    public interface AdapterListener<E> {
+
+        void onLoadRetry(int index, E o);
+
     }
 }

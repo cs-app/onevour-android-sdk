@@ -11,10 +11,9 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class PermissionUtils {
 
-    private static final String TAG = "PerMng";
+    private static final String TAG = PermissionUtils.class.getSimpleName();
 
     public static int requestCode = 501;
 
@@ -26,7 +25,7 @@ public class PermissionUtils {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    public static boolean isGranted(Context context){
+    public static boolean isGranted(Context context) {
         for (String s : permissions) {
             if (ContextCompat.checkSelfPermission(context, s) != PackageManager.PERMISSION_GRANTED) {
                 return false;
@@ -63,7 +62,7 @@ public class PermissionUtils {
         return result;
     }
 
-    private static void askToUser(Activity activity, boolean result, List<String> permissions){
+    private static void askToUser(Activity activity, boolean result, List<String> permissions) {
         if (!result) {
             List<String> permissionsAllowRequest = new ArrayList<>();
             for (String permission : permissions) {

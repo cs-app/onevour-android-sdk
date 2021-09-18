@@ -8,10 +8,8 @@ import com.google.gson.reflect.TypeToken;
 
 import org.cise.core.utilities.json.gson.GsonHelper;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class RefSession {
 
@@ -46,7 +44,7 @@ public class RefSession {
         String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key, null);
         if (null == valueString) return null;
         String value = findString(key);
-        if (ValueUtils.isEmpty(value)) return null;
+        if (ValueOf.isEmpty(value)) return null;
         return GsonHelper.newInstance().getGson().fromJson(valueString, TypeToken.getParameterized(ArrayList.class, cls).getType());
     }
 
@@ -115,7 +113,7 @@ public class RefSession {
     }
 
     public void save(String keyRef, Object value, boolean isNative) {
-        if (ValueUtils.isEmpty(keyRef) || ValueUtils.isNull(value)) {
+        if (ValueOf.isEmpty(keyRef) || ValueOf.isNull(value)) {
             throw new NullPointerException("cannot store null object, key and empty key");
         }
         String key = keyRef.trim().toUpperCase();

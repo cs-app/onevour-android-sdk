@@ -71,7 +71,6 @@ public class UIHelper {
     public static void initRecyclerViewGrid(RecyclerView recyclerView, RecyclerView.Adapter adapter, int width) {
         recyclerView.setLayoutManager(new AutoFitGridLayoutManager(recyclerView.getContext(), width));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
 

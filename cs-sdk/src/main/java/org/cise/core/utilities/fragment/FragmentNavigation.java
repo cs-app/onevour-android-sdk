@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 public class FragmentNavigation {
 
@@ -71,7 +71,7 @@ public class FragmentNavigation {
             FragmentManager fragmentManager = activity.getSupportFragmentManager();
             Fragment existFragment = fragmentManager.findFragmentByTag(tag);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            if (ValueUtils.nonNull(existFragment)) transaction.remove(existFragment);
+            if (ValueOf.nonNull(existFragment)) transaction.remove(existFragment);
             transaction.replace(containerLayout, fragment, tag);
             if (isback) {
                 transaction.addToBackStack(null);
@@ -89,7 +89,7 @@ public class FragmentNavigation {
         AppCompatActivity activity = (AppCompatActivity) context;
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         Fragment existFragment = fragmentManager.findFragmentByTag(tag);
-        if (ValueUtils.isNull(existFragment)) {
+        if (ValueOf.isNull(existFragment)) {
             return true;
         }
         return !existFragment.isVisible();

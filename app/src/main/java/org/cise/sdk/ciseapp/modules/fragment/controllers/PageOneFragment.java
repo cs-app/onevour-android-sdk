@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 import org.cise.core.utilities.fragment.FragmentNavigation;
 import org.cise.sdk.ciseapp.R;
 
@@ -28,7 +28,7 @@ public class PageOneFragment extends Fragment {
     }
 
     public static PageOneFragment newInstance() {
-        if (ValueUtils.isNull(fragment)) {
+        if (ValueOf.isNull(fragment)) {
             fragment = new PageOneFragment();
         }
         return fragment;

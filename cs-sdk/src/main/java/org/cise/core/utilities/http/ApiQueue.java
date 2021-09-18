@@ -26,8 +26,11 @@ import java.util.concurrent.Executors;
 public class HttpQueue {
 
     private static final String TAG = HttpQueue.class.getSimpleName();
-    private final int MAX_POOL = 8;
+
+    private final int MAX_POOL = 16;
+
     private static HttpQueue httpQueue;
+
     private ExecutorService executor = Executors.newFixedThreadPool(MAX_POOL);
 
     private HttpQueue() {
@@ -46,7 +49,7 @@ public class HttpQueue {
     }
 
     @SuppressWarnings({"unchecked"})
-    public <T> void add(final HttpMultipart multipart, final HttpResponse.Listener<T> listener) {
+    public <T> void add(final HttpMultipart multipart, final HttpListener<T> listener) {
         if (null == executor) executor = Executors.newFixedThreadPool(MAX_POOL);
         executor.execute(() -> {
             if (null == listener) return;
@@ -81,12 +84,10 @@ public class HttpQueue {
                 for (StackTraceElement s : e.getStackTrace()) {
                     Log.e(TAG, String.valueOf(s));
                 }
-//                Log.e(TAG, "upload http error " + e.getMessage());
                 HttpError httpError = new HttpError(e);
                 handler.post(() -> listener.onError(httpError));
             } catch (JsonSyntaxException e) {
                 HttpError httpError = new HttpError(multipart.getResponseCode());
-//                httpError.error("Cannot convert response \n:" + responseString.toString());
                 listener.onError(httpError);
             } finally {
                 Log.d(TAG, "process upload finish");
@@ -101,7 +102,7 @@ public class HttpQueue {
     /**
      * get type from interface
      */
-    private <T> Type getResponseType(HttpResponse.Listener<T> listener) {
+    private <T> Type getResponseType(HttpListener<T> listener) {
         if (null == listener) return null;
         Type[] types = listener.getClass().getGenericInterfaces();
         for (Type type : types) {

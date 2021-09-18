@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.annotation.IdRes;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +91,7 @@ public class HolderGeneric<T> extends RecyclerView.ViewHolder {
 
     public <E extends HolderGeneric.Listener> E getListener(Class<E> clazz) {
         HolderGeneric.Listener listenerTMP = cachedListener.get(clazz);
-        if (ValueUtils.nonNull(listenerTMP)) {
+        if (ValueOf.nonNull(listenerTMP)) {
             return (E) listenerTMP;
         }
         for (HolderGeneric.Listener o : listener) {

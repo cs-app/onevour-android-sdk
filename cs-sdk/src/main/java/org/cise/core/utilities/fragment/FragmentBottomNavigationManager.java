@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 import java.security.InvalidParameterException;
 import java.util.HashMap;
@@ -51,20 +51,20 @@ public class FragmentBottomNavigationManager {
     }
 
     public void register(int menuId, Fragment fragment, String tag) {
-        if (ValueUtils.isZero(menuId)) {
+        if (ValueOf.isZero(menuId)) {
             throw new InvalidParameterException("menu id must > 0");
         }
-        if (ValueUtils.isNull(fragment)) {
+        if (ValueOf.isNull(fragment)) {
             throw new NullPointerException("fragment cannot set null");
         }
-        if (ValueUtils.isEmpty(tag)) {
+        if (ValueOf.isEmpty(tag)) {
             throw new NullPointerException("tag cannot set null");
         }
         this.map.put(menuId, new FragmentWrapper(fragment, tag));
     }
 
     public boolean onNavigationItemSelected(MenuItem item) {
-        if (ValueUtils.nonNull(activeFragment)) {
+        if (ValueOf.nonNull(activeFragment)) {
             stateSparse.put(selectedIndexFragment, fm.saveFragmentInstanceState(activeFragment));
         }
         return active(item.getItemId());
@@ -73,25 +73,25 @@ public class FragmentBottomNavigationManager {
     public boolean active(int fragmentId) {
         selectedIndexFragment = fragmentId;
         FragmentWrapper fragmentWrapper = map.get(selectedIndexFragment);
-        if (ValueUtils.isNull(fragmentWrapper)) {
+        if (ValueOf.isNull(fragmentWrapper)) {
             return false;
         }
-        if (ValueUtils.nonNull(activeFragment) && activeFragment.equals(fragmentWrapper.getFragment())) {
+        if (ValueOf.nonNull(activeFragment) && activeFragment.equals(fragmentWrapper.getFragment())) {
             return true;
         }
         return initFragment(selectedIndexFragment, fragmentWrapper);
     }
 
     private boolean initFragment(int fragmentId, FragmentWrapper fragmentWrapper) {
-        if (ValueUtils.isNull(context, fragmentWrapper, fm) && containerLayout == 0) {
+        if (ValueOf.isNull(context, fragmentWrapper, fm) && containerLayout == 0) {
             return false;
         }
         Fragment fragment = fragmentWrapper.getFragment();
         String tag = fragmentWrapper.getKey();
-        if (ValueUtils.nonNull(stateSparse)) {
+        if (ValueOf.nonNull(stateSparse)) {
             Fragment.SavedState state = stateSparse.get(fragmentId);
-            if (ValueUtils.nonNull(state)) {
-                if (ValueUtils.isNull(fragment.getFragmentManager())) {
+            if (ValueOf.nonNull(state)) {
+                if (ValueOf.isNull(fragment.getFragmentManager())) {
                     fragment.setInitialSavedState(state);
                 }
             }
@@ -103,7 +103,7 @@ public class FragmentBottomNavigationManager {
 
     // state handler
     public void onCreateStateHandler(Bundle savedInstanceState) {
-        if (ValueUtils.nonNull(savedInstanceState)) {
+        if (ValueOf.nonNull(savedInstanceState)) {
             stateSparse = savedInstanceState.getSparseParcelableArray(SAVED_STATE_CONTAINER_KEY);
             selectedIndexFragment = savedInstanceState.getInt(SAVED_STATE_CURRENT_TAB_KEY);
         }
@@ -111,7 +111,7 @@ public class FragmentBottomNavigationManager {
 
     // state handler
     public void onSaveInstanceState(Bundle outState) {
-        if (ValueUtils.nonNull(outState)) {
+        if (ValueOf.nonNull(outState)) {
             outState.putSparseParcelableArray(SAVED_STATE_CONTAINER_KEY, stateSparse);
             outState.putInt(SAVED_STATE_CONTAINER_KEY, selectedIndexFragment);
         }

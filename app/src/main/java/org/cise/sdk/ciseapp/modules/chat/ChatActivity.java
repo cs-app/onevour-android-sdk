@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.cise.core.utilities.commons.RefSession;
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 import org.cise.core.utilities.format.DTFormat;
 import org.cise.core.utilities.helper.UIHelper;
 import org.cise.core.utilities.json.gson.GsonHelper;
@@ -68,7 +68,7 @@ public class ChatActivity extends AppCompatActivity {
         alertDialogBuilder.setView(promptsView);
         final EditText userInput = promptsView.findViewById(R.id.name);
         ChatMessage chatMessage = session.find(ChatMessage.class);
-        if (ValueUtils.isNull(chatMessage)) chatMessage = new ChatMessage();
+        if (ValueOf.isNull(chatMessage)) chatMessage = new ChatMessage();
         userInput.setText(chatMessage.getSender());
         // set dialog message
         alertDialogBuilder.setCancelable(false).setPositiveButton("OK", (dialog, id) -> {
@@ -105,7 +105,7 @@ public class ChatActivity extends AppCompatActivity {
     @OnClick(R.id.send)
     public void send() {
         String values = message.getText().toString().trim();
-        if (ValueUtils.isEmpty(values)) return;
+        if (ValueOf.isEmpty(values)) return;
         sendMessage(values);
         message.setText(null);
     }
@@ -161,9 +161,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessageJoin() {
-        if (ValueUtils.isNull(client)) return;
+        if (ValueOf.isNull(client)) return;
         ChatMessage user = session.find(ChatMessage.class);
-        if (ValueUtils.isNull(user)) {
+        if (ValueOf.isNull(user)) {
             showError("input name in setting toolbars");
             return;
         }
@@ -179,9 +179,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String message) {
-        if (ValueUtils.isNull(client)) return;
+        if (ValueOf.isNull(client)) return;
         ChatMessage user = session.find(ChatMessage.class);
-        if (ValueUtils.isNull(user)) {
+        if (ValueOf.isNull(user)) {
             showError("input name in Setting toolbar");
             return;
         }

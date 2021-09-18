@@ -1,28 +1,18 @@
 package org.cise.sdk.ciseapp.modules.fragmentbottomnavigation.controllers;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.cise.core.utilities.commons.ValueUtils;
 import org.cise.core.utilities.fragment.FragmentBottomNavigationManager;
-import org.cise.core.utilities.fragment.FragmentNavigation;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.fragment.controllers.PageOneFragment;
 import org.cise.sdk.ciseapp.modules.fragment.controllers.PageThreeFragment;
 import org.cise.sdk.ciseapp.modules.fragment.controllers.PageTwoFragment;
-
-import java.security.InvalidParameterException;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

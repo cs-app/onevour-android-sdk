@@ -15,12 +15,12 @@ import java.util.Map;
  */
 public class HttpError {
 
-    private StringBuilder message = new StringBuilder();
+    private final StringBuilder message = new StringBuilder();
 
     private Exception exception;
 
     public HttpError(int code) {
-        message.append("HTTP ").append(code).append(HttpStatusCode.getMessage(code));
+        message.append("HTTP ").append(code).append(" ").append(HttpStatusCode.getMessage(code));
     }
 
     public void error(String errorMessage) {
@@ -34,7 +34,7 @@ public class HttpError {
 
     public HttpError(String endpoint, IOException iOException) {
         exception = iOException;
-        message.append(endpoint).append("\n").append(iOException.getMessage());
+        message.append(endpoint).append(" ").append(iOException.getMessage());
     }
 
     public HttpError(IOException iOException) {
@@ -57,6 +57,10 @@ public class HttpError {
     }
 
     public String getMessage() {
+        String finalMessage = message.toString();
+        if(finalMessage.contains("http://")||finalMessage.contains("https://")) {
+            return "Cannot connect to host";
+        }
         return message.toString();
     }
 
@@ -131,7 +135,9 @@ public class HttpError {
         }
 
         private int code;
+
         private String desc;
+
         private String text;
 
         HttpStatusCode(int code, String desc) {

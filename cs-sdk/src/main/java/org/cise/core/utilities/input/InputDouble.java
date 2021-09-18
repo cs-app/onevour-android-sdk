@@ -2,7 +2,7 @@ package org.cise.core.utilities.input;
 
 import android.util.Log;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -47,7 +47,7 @@ public class InputDouble implements NumberInputAdapter {
 
     @Override
     public void setValue(String valueStr) throws ParseException {
-        if (ValueUtils.isEmpty(valueStr)) {
+        if (ValueOf.isEmpty(valueStr)) {
             value.set(BigDecimal.valueOf(0.00));
         } else value.set(BigDecimal.valueOf(numberFormat.parse(valueStr.trim()).doubleValue()));
     }

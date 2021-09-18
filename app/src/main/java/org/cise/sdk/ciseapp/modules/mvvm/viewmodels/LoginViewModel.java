@@ -1,12 +1,11 @@
 package org.cise.sdk.ciseapp.modules.mvvm.viewmodels;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 import org.cise.sdk.ciseapp.modules.mvvm.models.LoginUser;
 import org.cise.sdk.ciseapp.modules.mvvm.models.UserDTO;
 
@@ -25,7 +24,7 @@ public class LoginViewModel extends ViewModel {
     public void onClick(View view) {
         LoginUser loginUser = new LoginUser(user.getValue());
         userMutableLiveData.setValue(loginUser);
-        if (ValueUtils.isNull(isLoading.getValue())) {
+        if (ValueOf.isNull(isLoading.getValue())) {
             isLoading.setValue(true);
         } else {
             isLoading.setValue(!isLoading.getValue());
@@ -34,7 +33,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void init() {
-        if (ValueUtils.isNull(user.getValue())) {
+        if (ValueOf.isNull(user.getValue())) {
             user.setValue(new UserDTO("ZULIADIN", "123456"));
             LoginUser loginUser = new LoginUser(user.getValue());
             userMutableLiveData.setValue(loginUser);

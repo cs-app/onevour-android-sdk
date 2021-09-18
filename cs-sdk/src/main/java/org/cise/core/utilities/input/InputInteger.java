@@ -1,6 +1,6 @@
 package org.cise.core.utilities.input;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,7 +27,7 @@ public class InputInteger implements NumberInputAdapter {
 
     @Override
     public void setValue(String valueStr) {
-        if (ValueUtils.isEmpty(valueStr)) {
+        if (ValueOf.isEmpty(valueStr)) {
             value.set(0);
         } else value.set(Integer.parseInt(valueStr));
     }

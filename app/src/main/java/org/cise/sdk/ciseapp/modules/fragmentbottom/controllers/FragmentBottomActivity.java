@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.cise.core.utilities.http.ApiRequest;
 import org.cise.core.utilities.http.HttpError;
-import org.cise.core.utilities.http.HttpResponse;
+import org.cise.core.utilities.http.HttpListener;
 import org.cise.sdk.ciseapp.R;
-import org.cise.sdk.ciseapp.modules.adapter.components.AdapterSampleData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +29,7 @@ public class FragmentBottomActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_show)
     public void onBtnShowClicked() {
-        ApiRequest.post("https://api.digitalrecordcard.com/index.php/api_v1/login", new String(""), new HttpResponse.Listener<String>() {
+        ApiRequest.post("https://api.digitalrecordcard.com/index.php/api_v1/login", new String(""), new HttpListener<String>() {
             @Override
             public void onSuccess(String response) {
                 Log.d("API-TEST", response);

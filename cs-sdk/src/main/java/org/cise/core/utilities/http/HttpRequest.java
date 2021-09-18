@@ -45,49 +45,49 @@ public class HttpRequest<T> {
 
     private String body;
 
-    private HttpResponse.Listener<T> listener;
+    private HttpListener<T> listener;
 
     // GET
-    public HttpRequest(String url, HttpResponse.Listener<T> listener) {
+    public HttpRequest(String url, HttpListener<T> listener) {
         initialize(url, MIN_TIMEOUT, null, body, listener);
     }
 
     // GET
-    public HttpRequest(String url, int timeout, HttpResponse.Listener<T> listener) {
+    public HttpRequest(String url, int timeout, HttpListener<T> listener) {
         initialize(url, timeout, null, body, listener);
     }
 
     // GET
-    public HttpRequest(String url, Map<String, String> header, HttpResponse.Listener<T> listener) {
+    public HttpRequest(String url, Map<String, String> header, HttpListener<T> listener) {
         initialize(url, MIN_TIMEOUT, header, body, listener);
     }
 
     // GET
-    public HttpRequest(String url, int timeout, Map<String, String> header, HttpResponse.Listener<T> listener) {
+    public HttpRequest(String url, int timeout, Map<String, String> header, HttpListener<T> listener) {
         initialize(url, timeout, header, body, listener);
     }
 
     // POST
-    protected HttpRequest(String url, String body, HttpResponse.Listener<T> listener) {
+    protected HttpRequest(String url, String body, HttpListener<T> listener) {
         initialize(url, MIN_TIMEOUT, null, body, listener);
     }
 
     // POST
-    protected HttpRequest(String url, int timeout, String body, HttpResponse.Listener<T> listener) {
+    protected HttpRequest(String url, int timeout, String body, HttpListener<T> listener) {
         initialize(url, timeout, null, body, listener);
     }
 
     // POST
-    protected HttpRequest(String url, Map<String, String> header, String body, HttpResponse.Listener<T> listener) {
+    protected HttpRequest(String url, Map<String, String> header, String body, HttpListener<T> listener) {
         initialize(url, MIN_TIMEOUT, header, body, listener);
     }
 
     // POST
-    protected HttpRequest(String url, int timeout, Map<String, String> header, String body, HttpResponse.Listener<T> listener) {
+    protected HttpRequest(String url, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
         initialize(url, timeout, header, body, listener);
     }
 
-    private void initialize(String url, int timeout, Map<String, String> header, String body, HttpResponse.Listener<T> listener) {
+    private void initialize(String url, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
         this.endpoint = url;
         this.timeout = timeout;
         this.header = header;
@@ -155,7 +155,6 @@ public class HttpRequest<T> {
             enableBody(conn);
             final int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                // read response
                 buildResponse(conn, response);
                 successHandler(getResponseType(), response);
             } else {
@@ -270,137 +269,4 @@ public class HttpRequest<T> {
         return null;
     }
 
-    /*
-    protected void requestBAK() {
-        Log.d(TAG, "\nurl : " + endpoint + "\nbody : \n" + json + "\n");
-        if (null == endpoint || "".equalsIgnoreCase(endpoint)) return;
-        StringBuffer response = new StringBuffer();
-        HttpURLConnection conn = null;
-        try {
-            URL url = new URL(this.endpoint);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setReadTimeout(Math.max(MIN_TIMEOUT, timeout));
-            conn.setConnectTimeout(Math.max(MIN_TIMEOUT, timeout));
-            if (null == json) {
-                conn.setRequestMethod("GET");
-                conn.setDoOutput(false); // true is force to post
-            } else {
-                conn.setRequestMethod("POST");
-                conn.setDoOutput(true);
-            }
-            conn.setRequestProperty("connection", "close");
-            if (null != json) {
-                OutputStream os = conn.getOutputStream();
-                os.write(json.getBytes());
-                os.flush();
-                os.close();
-            }
-            final int responseCode = conn.getResponseCode();
-            if (responseCode >= 200 && responseCode <= 299) {
-                InputStream inputStream = conn.getInputStream();
-                int size = conn.getContentLength();
-                BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-                int readBytes = 0;
-                Log.d(TAG, "progress size =" + (size));
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                    if (size != -1) {
-                        readBytes += inputLine.getBytes("ISO-8859-2").length + 2;
-                        Log.d(TAG, "progress =" + (size - readBytes));
-                    } else {
-                        Log.d(TAG, "content length not available");
-                    }
-                }
-                in.close();
-                final Type responseType = getResponseType();
-                try {
-                    if (null == responseType) {
-                        handlerSuccess((T) response.toString());
-                    } else {
-                        final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(response.toString(), responseType);
-                        handlerSuccess(jsonResponse);
-                    }
-                } catch (JsonSyntaxException e) {
-                    HttpError httpError = new HttpError(responseCode);
-                    httpError.error(endpoint + "\nCannot convert response \n" + response.toString() + "\n" + json);
-                    handlerError(httpError);
-                }
-            } else {
-                handlerError(new HttpError(responseCode));
-            }
-        } catch (final MalformedURLException ex) {
-            HttpError error = new HttpError(ex);
-            StringBuilder sb = new StringBuilder();
-            sb.append("end poin : ");
-            sb.append(endpoint);
-            sb.append("\n");
-            sb.append(ex.getMessage());
-            sb.append("\n");
-            sb.append(Math.max(MIN_TIMEOUT, timeout));
-            sb.append("\n");
-            Log.e(TAG, "HttpResponse : \n" + response.toString());
-            for (StackTraceElement e : ex.getStackTrace()) {
-                sb.append("\n");
-                sb.append(e);
-                Log.e(TAG, String.valueOf(e));
-            }
-            error.error(sb.toString());
-            handlerError(error);
-        } catch (final SocketTimeoutException ex) {
-            HttpError error = new HttpError(ex);
-            StringBuilder sb = new StringBuilder();
-            sb.append("end poin : ");
-            sb.append(endpoint);
-            sb.append("\n");
-            sb.append(ex.getMessage());
-            sb.append("\n");
-            sb.append(Math.max(MIN_TIMEOUT, timeout));
-            sb.append("\n");
-            Log.e(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
-            for (StackTraceElement e : ex.getStackTrace()) {
-                sb.append("\n");
-                sb.append(e);
-                Log.e(TAG, String.valueOf(e));
-            }
-            error.error(sb.toString());
-            handlerError(error);
-        } catch (final IOException ex) {
-            HttpError httpError = new HttpError(ex);
-            StringBuilder sb = new StringBuilder();
-            sb.append("end poin : ");
-            sb.append(endpoint);
-            sb.append("\n");
-            sb.append(ex.getMessage());
-            sb.append("\n");
-            Log.e(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
-            for (StackTraceElement e : ex.getStackTrace()) {
-                sb.append("\n");
-                sb.append(e);
-                Log.e(TAG, String.valueOf(e));
-            }
-            handlerError(httpError);
-        } catch (final Exception ex) {
-            HttpError httpError = new HttpError(ex);
-            StringBuilder sb = new StringBuilder();
-            sb.append("end poin : ");
-            sb.append(endpoint);
-            sb.append("\n");
-            sb.append(ex.getMessage());
-            sb.append("\n");
-            Log.e(TAG, "HttpResponse : \n" + String.valueOf(response.toString()));
-            for (StackTraceElement e : ex.getStackTrace()) {
-                sb.append("\n");
-                sb.append(e);
-                Log.e(TAG, String.valueOf(e));
-            }
-            handlerError(httpError);
-        } finally {
-            if (null != conn) {
-                conn.disconnect();
-            }
-        }
-    }
-    */
 }

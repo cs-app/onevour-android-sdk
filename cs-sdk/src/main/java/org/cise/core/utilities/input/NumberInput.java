@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -95,7 +95,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     }
 
     public void setTitle(String left, String right) {
-        if (ValueUtils.isEmpty(left, right)) return;
+        if (ValueOf.isEmpty(left, right)) return;
         alert.setTitle(left, right);
     }
 
@@ -103,7 +103,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     @Override
     public boolean onTouch(View v, MotionEvent motionEvent) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (ValueUtils.nonNull(imm)) {
+        if (ValueOf.nonNull(imm)) {
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
         if (v.getId() == editText.getId() && motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -136,9 +136,9 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
 
     @Override
     public void submit() {
-        if (ValueUtils.nonNull(listener)) listener.onSubmitValue();
+        if (ValueOf.nonNull(listener)) listener.onSubmitValue();
         editText.setText(adapter.getValueString());
-        if (ValueUtils.isNull(listener)) return;
+        if (ValueOf.isNull(listener)) return;
         if (isDecimal()) {
             listener.doubleValue(adapter.getValueDouble());
         } else listener.intValue(adapter.getValueInteger());

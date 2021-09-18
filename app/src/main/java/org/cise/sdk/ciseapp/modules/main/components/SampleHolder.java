@@ -3,7 +3,7 @@ package org.cise.sdk.ciseapp.modules.main.components;
 import android.view.View;
 import android.widget.TextView;
 
-import org.cise.core.utilities.commons.ValueUtils;
+import org.cise.core.utilities.commons.ValueOf;
 import org.cise.core.utilities.ui.adapter.recyclerview.HolderGeneric;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.main.models.Sample;
@@ -33,7 +33,7 @@ public class SampleHolder extends HolderGeneric<SampleMV> implements View.OnClic
     @Override
     public void onClick(View v) {
         Listener listener = getListener(Listener.class);
-        if (ValueUtils.isNull(listener)) return;
+        if (ValueOf.isNull(listener)) return;
         listener.onSelectedHolder(index, o);
     }
 
