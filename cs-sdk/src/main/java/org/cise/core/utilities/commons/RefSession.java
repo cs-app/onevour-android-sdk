@@ -87,6 +87,10 @@ public class RefSession {
         save(value.getClass().getSimpleName().toUpperCase(), value, false);
     }
 
+    public void saveString(String key, String value) {
+        save(key, value, true);
+    }
+
     public void saveInt(String key, Integer value) {
         save(key, value, true);
     }
