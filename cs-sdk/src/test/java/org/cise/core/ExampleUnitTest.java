@@ -31,19 +31,19 @@ public class ExampleUnitTest {
     @Test
     public void test_http() throws Exception {
         Log.d("API-TEST", "INFO START");
-        ApiRequestTest request = new ApiRequestTest(context, "https://api.digitalrecordcard.com/index.php/api_v1/login", new HttpListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                Log.d("API-TEST", response);
-            }
-
-            @Override
-            public void onError(Error httpError) {
-                Log.e("API-TEST", httpError.getMessage());
-            }
-        });
-        request.request();
-        Thread.sleep(15000);
-        assertEquals(4, 2 + 2);
+//        ApiRequestTest request = new ApiRequestTest(context, "https://api.digitalrecordcard.com/index.php/api_v1/login", new HttpListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                Log.d("API-TEST", response);
+//            }
+//
+//            @Override
+//            public void onError(Error httpError) {
+//                Log.e("API-TEST", httpError.getMessage());
+//            }
+//        });
+//        request.request();
+//        Thread.sleep(15000);
+//        assertEquals(4, 2 + 2);
     }
 }

@@ -10,44 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import org.cise.core.utilities.commons.ValueOf;
 
 public class FragmentNavigation {
-
-
-    /**
-     * replace fragment and add to Back Stack
-
-     public static void add(FragmentManager fm, int viewId, Fragment fragment, String tag, boolean isBack) {
-     FragmentTransaction ft = fm.beginTransaction();
-     ft.replace(viewId, fragment);
-     if (isBack) ft.addToBackStack(tag);
-     ft.commit();
-     }
-     * replace fragment and add to Back Stack
-
-     public static void add(Context context, int viewId, Fragment fragment, String tag) {
-     if (context instanceof AppCompatActivity) {
-     AppCompatActivity activity = (AppCompatActivity) context;
-     FragmentManager fm = activity.getSupportFragmentManager();
-     FragmentTransaction ft = fm.beginTransaction();
-     ft.replace(viewId, fragment);
-     ft.addToBackStack(tag);
-     ft.commit();
-     }
-     }
-     * show fragment
-
-     public static void showDialogFragment(Context context, AppCompatDialogFragment fragment, String tag) {
-     if (context instanceof AppCompatActivity) {
-     AppCompatActivity activity = (AppCompatActivity) context;
-     FragmentManager fm = activity.getSupportFragmentManager();
-     Fragment fg = fm.findFragmentByTag(tag);
-     if (fg != null) fm.beginTransaction().remove(fg).commit();
-     if (!(fragment.getDialog() != null && fragment.getDialog().isShowing())) {
-     fm.beginTransaction().add(fragment, tag).commitAllowingStateLoss();
-     }
-     }
-     }
-     */
-
+    
     /**
      * replace fragment, no back stack
      */

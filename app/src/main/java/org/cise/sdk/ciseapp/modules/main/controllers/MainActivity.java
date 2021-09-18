@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.cise.core.base.BaseActivity;
 import org.cise.core.utilities.commons.ContextHelper;
-import org.cise.core.utilities.commons.RefSession;
 import org.cise.core.utilities.commons.ValueOf;
-import org.cise.core.utilities.helper.UIHelper;
 import org.cise.sdk.ciseapp.R;
 import org.cise.sdk.ciseapp.modules.adapter.controllers.AdapterSampleActivity;
 import org.cise.sdk.ciseapp.modules.chat.ChatActivity;
@@ -31,14 +29,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements SampleHolder.Listener {
+public class MainActivity extends BaseActivity implements SampleHolder.Listener {
 
     private String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.rv_sample)
     RecyclerView rvSample;
-
-    RefSession refSession = new RefSession();
 
     private SampleAdapter adapter = new SampleAdapter();
 
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
         ContextHelper.init(getApplication());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        UIHelper.initRecyclerView(rvSample, adapter);
+        init(rvSample, adapter);
         adapter.setHolderListener(this);
         List<SampleMV> samples = new ArrayList<>();
         samples.add(new SampleMV("Adapter", AdapterSampleActivity.class));
@@ -60,15 +56,14 @@ public class MainActivity extends AppCompatActivity implements SampleHolder.List
         samples.add(new SampleMV("MVVM", MVVMActivity.class));
         samples.add(new SampleMV("Chat", ChatActivity.class));
         adapter.setValue(samples);
-        refSession.saveCollection("MENU", samples);
+        session.saveCollection("MENU", samples);
         init();
     }
 
     private void init() {
-        List<SampleMV> samples = refSession.findCollection("MENU", SampleMV.class);
+        List<SampleMV> samples = session.findCollection("MENU", SampleMV.class);
         if (ValueOf.isNull(samples)) return;
         Log.d(TAG, "list size from ref session " + samples.size());
-        // adapter.setValue(samples);
     }
 
     @Override
