@@ -76,7 +76,7 @@ public class ApiQueue {
                         });
                     } catch (JsonSyntaxException e) {
                         Error error = new Error(multipart.getResponseCode());
-                        error.error("Cannot convert response \n:".concat(responseResult));
+                        error.setMessage("Cannot convert response \n:".concat(responseResult));
                         listener.onError(error);
                     }
                 }

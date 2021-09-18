@@ -146,7 +146,7 @@ public class ApiRequestBuilder {
     private void error(int code, String message) {
         if (ValueOf.isNull(listener)) return;
         Error error = new Error(code);
-        error.error(message);
+        error.setMessage(message);
         listener.onError(error);
     }
 

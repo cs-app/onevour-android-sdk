@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.cise.core.utilities.commons.ContextHelper;
@@ -263,5 +265,21 @@ public class BaseFragment extends Fragment {
 
     protected ApiRequestBuilder api() {
         return new ApiRequestBuilder();
+    }
+
+    protected void shortToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void longToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    protected void shortSnack(View view, String message) {
+        Snackbar.make(view, message, 1200).show();
+    }
+
+    protected void longSnack(View view, String message) {
+        Snackbar.make(view, message, 2000).show();
     }
 }
