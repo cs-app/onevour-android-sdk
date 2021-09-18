@@ -36,4 +36,12 @@ public class Response<T> {
     public void setResult(T result) {
         this.result = result;
     }
+
+    public boolean success() {
+        return code >= 200 && code < 300;
+    }
+
+    public boolean error() {
+        return code >= 300;
+    }
 }

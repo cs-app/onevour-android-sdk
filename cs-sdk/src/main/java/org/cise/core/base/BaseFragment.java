@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.cise.core.utilities.commons.ContextHelper;
 import org.cise.core.utilities.commons.RefSession;
 import org.cise.core.utilities.commons.ValueOf;
+import org.cise.core.utilities.http.ApiRequestBuilder;
 import org.cise.core.utilities.ui.adapter.layout.AutoFitGridLayoutManager;
 import org.cise.core.utilities.ui.adapter.recyclerview.AdapterGeneric;
 import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
@@ -258,5 +259,9 @@ public class BaseFragment extends Fragment {
         StringBuilder sb = new StringBuilder();
         for (String s : strings) sb.append(s).append(" ");
         return sb.toString();
+    }
+
+    protected ApiRequestBuilder api() {
+        return new ApiRequestBuilder();
     }
 }

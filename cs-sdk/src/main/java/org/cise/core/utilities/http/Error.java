@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author user
+ * @author zuliadin
  */
 public class Error {
 
@@ -23,7 +23,7 @@ public class Error {
         message.append("HTTP ").append(code).append(" ").append(HttpStatusCode.getMessage(code));
     }
 
-    public void error(String errorMessage) {
+    public void setMessage(String errorMessage) {
         this.message.append(errorMessage);
     }
 

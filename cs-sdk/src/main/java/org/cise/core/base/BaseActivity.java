@@ -1,7 +1,10 @@
 package org.cise.core.base;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.text.Editable;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.activity.result.ActivityResult;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,6 +28,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.cise.core.utilities.commons.ContextHelper;
 import org.cise.core.utilities.commons.RefSession;
 import org.cise.core.utilities.commons.ValueOf;
+import org.cise.core.utilities.http.ApiRequestBuilder;
 import org.cise.core.utilities.ui.adapter.layout.AutoFitGridLayoutManager;
 import org.cise.core.utilities.ui.adapter.recyclerview.AdapterGeneric;
 import org.cise.core.utilities.ui.adapter.recyclerview.RecyclerViewScrollListener;
@@ -260,4 +265,7 @@ public class BaseActivity extends AppCompatActivity {
         return sb.toString();
     }
 
+    protected ApiRequestBuilder api(){
+        return new ApiRequestBuilder();
+    }
 }
