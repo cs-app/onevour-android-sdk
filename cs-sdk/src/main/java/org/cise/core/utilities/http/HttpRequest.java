@@ -95,12 +95,12 @@ public class HttpRequest<T> {
     }
 
     // POST
-    protected HttpRequest(String url,String method, Map<String, String> header, String body, HttpListener<T> listener) {
+    protected HttpRequest(String url, String method, Map<String, String> header, String body, HttpListener<T> listener) {
         initialize(url, method, MIN_TIMEOUT, header, body, listener);
     }
 
     // POST
-    protected HttpRequest(String url,String method, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
+    protected HttpRequest(String url, String method, int timeout, Map<String, String> header, String body, HttpListener<T> listener) {
         initialize(url, method, timeout, header, body, listener);
     }
 
@@ -268,7 +268,7 @@ public class HttpRequest<T> {
     private void errorHandler(int errorCode) {
         if (null == listener) return;
         new Handler(Looper.getMainLooper()).post(() -> listener.onError(new Error(errorCode)));
-        Log.e(TAG, "error hit api code  ".concat(String.valueOf(errorCode)).concat(method()));
+        Log.e(TAG, "error hit api ".concat(endpoint).concat(" | ").concat(String.valueOf(errorCode)).concat(" | ").concat(method()));
     }
 
     /**
