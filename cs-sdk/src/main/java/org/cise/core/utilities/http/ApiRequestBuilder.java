@@ -73,6 +73,22 @@ public class ApiRequestBuilder {
         return this;
     }
 
+    public ApiRequestBuilder put(String url, Object body) {
+        this.method = "PUT";
+        this.url = url;
+        this.header = null;
+        this.body = body;
+        return this;
+    }
+
+    public ApiRequestBuilder put(String url, Map<String, String> header, Object body) {
+        this.method = "PUT";
+        this.url = url;
+        this.header = header;
+        this.body = body;
+        return this;
+    }
+
     public ApiRequestBuilder delete(String url, Object body) {
         this.method = "DELETE";
         this.url = url;
@@ -156,6 +172,9 @@ public class ApiRequestBuilder {
         }
         if ("POST".equalsIgnoreCase(method)) {
             ApiRequest.post(url, header, body, listener);
+        }
+        if ("PUT".equalsIgnoreCase(method)) {
+            ApiRequest.put(url, header, body, listener);
         }
         if ("DELETE".equalsIgnoreCase(method)) {
             ApiRequest.delete(url, header, body, listener);

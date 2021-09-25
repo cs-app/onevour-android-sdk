@@ -51,6 +51,23 @@ public class ApiRequest {
         }
     }
 
+    public static <T, E> void put(String url, Map<String, String> header, T json, HttpListener<E> listener) {
+        if (json instanceof String) {
+            queue().add(new HttpRequest(url, "PUT", header, (String) json, listener));
+        } else {
+            String body = GsonHelper.newInstance().getGson().toJson(json);
+            queue().add(new HttpRequest(url, "PUT", header, body, listener));
+        }
+    }
+
+    public static <T, E> void put(String url, int timeout, T json, HttpListener<E> listener) {
+        if (json instanceof String) {
+            queue().add(new HttpRequest(url, "PUT", timeout, (String) json, listener));
+        } else {
+            queue().add(new HttpRequest(url, "PUT", timeout, GsonHelper.newInstance().getGson().toJson(json), listener));
+        }
+    }
+
     public static <T, E> void delete(String url, T json, HttpListener<E> listener) {
         if (json instanceof String) {
             queue().add(new HttpRequest(url, "DELETE", null, (String) json, listener));
