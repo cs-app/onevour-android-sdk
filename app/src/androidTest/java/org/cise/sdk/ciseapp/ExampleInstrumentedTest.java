@@ -3,6 +3,7 @@ package org.cise.sdk.ciseapp;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.cise.sdk.ciseapp.modules.chat.ChatMessage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -11,14 +12,11 @@ import org.junit.runner.RunWith;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-//@RunWith(AndroidJUnit4.class)
+// @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
 
     @Test
     public void useAppContext() {
-        // Context of the app under test.
-        //Context appContext = InstrumentationRegistry.getTargetContext();
 
-        //assertEquals("org.cise.sdk.ciseapp", appContext.getPackageName());
     }
 }
