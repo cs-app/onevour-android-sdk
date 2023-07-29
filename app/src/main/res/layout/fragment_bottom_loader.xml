@@ -5,7 +5,7 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.fragmentbottom.controllers.BottomLoaderFragment">
+    tools:context="com.onevour.sdk.impl.modules.fragmentbottom.controllers.BottomLoaderFragment">
 
     <!--    app:behavior_hideable="false"-->
     <!--    app:behavior_peekHeight="700dp"-->

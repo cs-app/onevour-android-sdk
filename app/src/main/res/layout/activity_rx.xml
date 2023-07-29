@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.rxjava.controllers.RXActivity">
+    tools:context="com.onevour.sdk.impl.modules.rxjava.controllers.RXActivity">
 
     <EditText
         android:id="@+id/editText"

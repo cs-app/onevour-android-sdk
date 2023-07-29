@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.api.CallApiActivity">
+    tools:context="com.onevour.sdk.impl.modules.api.CallApiActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

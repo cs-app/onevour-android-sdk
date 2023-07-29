@@ -1,11 +1,6 @@
 package org.cise.sdk.ciseapp;
 
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-
-import org.cise.sdk.ciseapp.modules.chat.ChatMessage;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Instrumented test, which will execute on an Android device.

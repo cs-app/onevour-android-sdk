@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.fragment.controllers.PageOneFragment">
+    tools:context="com.onevour.sdk.impl.modules.fragment.controllers.PageOneFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

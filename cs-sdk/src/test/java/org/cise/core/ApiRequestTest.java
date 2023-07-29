@@ -1,7 +1,7 @@
 package org.cise.core;
 
-import org.cise.core.utilities.http.HttpListener;
-import org.cise.core.utilities.http.HttpRequest;
+import com.onevour.core.utilities.http.HttpListener;
+import com.onevour.core.utilities.http.HttpRequest;
 
 public class ApiRequestTest extends HttpRequest {
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.fragmentbottomnavigation.controllers.FragmentBottomNavigationActivity">
+    tools:context="com.onevour.sdk.impl.modules.fragmentbottomnavigation.controllers.FragmentBottomNavigationActivity">
 
     <FrameLayout
         android:id="@+id/container"

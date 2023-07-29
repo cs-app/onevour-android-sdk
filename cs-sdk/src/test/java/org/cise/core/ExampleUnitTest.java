@@ -3,18 +3,15 @@ package org.cise.core;
 import android.content.Context;
 import android.util.Log;
 
-import org.cise.core.utilities.beans.BeanCopy;
-import org.cise.core.utilities.beans.SampleBean;
-import org.cise.core.utilities.http.ApiRequest;
-import org.cise.core.utilities.http.Error;
-import org.cise.core.utilities.http.HttpListener;
+import com.onevour.core.utilities.beans.BeanCopy;
+import com.onevour.core.utilities.beans.SampleBean;
+import com.onevour.core.utilities.http.ApiRequest;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;

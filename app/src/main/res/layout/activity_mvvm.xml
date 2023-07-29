@@ -9,13 +9,13 @@
 
         <variable
             name="LoginViewModel"
-            type="org.cise.sdk.ciseapp.modules.mvvm.viewmodels.LoginViewModel" />
+            type="com.onevour.sdk.impl.modules.mvvm.viewmodels.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".modules.mvvm.views.MVVMActivity">
+        tools:context="com.onevour.sdk.impl.modules.mvvm.views.MVVMActivity">
 
         <TextView
             android:id="@+id/lblTitle"

@@ -5,6 +5,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.fragment.controllers.FragmentActivity">
+    tools:context="com.onevour.sdk.impl.modules.fragment.controllers.FragmentActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
