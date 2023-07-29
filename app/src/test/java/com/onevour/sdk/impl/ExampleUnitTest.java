@@ -1,10 +1,9 @@
-package org.cise.sdk.ciseapp;
+package com.onevour.sdk.impl;
 
 import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 

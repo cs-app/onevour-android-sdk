@@ -1,4 +1,4 @@
-package org.cise.core;
+package com.onevour.core;
 
 import com.onevour.core.utilities.http.HttpListener;
 import com.onevour.core.utilities.http.HttpRequest;

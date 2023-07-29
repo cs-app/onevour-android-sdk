@@ -1,4 +1,4 @@
-package org.cise.core;
+package com.onevour.core;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;

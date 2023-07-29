@@ -1,4 +1,4 @@
-package org.cise.sdk.ciseapp;
+package com.onevour.sdk.impl;
 
 import org.junit.Test;
 
