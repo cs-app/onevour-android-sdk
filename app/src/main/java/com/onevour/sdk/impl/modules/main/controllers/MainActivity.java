@@ -23,15 +23,12 @@ import com.onevour.sdk.impl.modules.mvvm.views.MVVMActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-//import butterknife.BindView;
-//import butterknife.ButterKnife;
-
+/**
+ * update by Zuliadin at 2023-07-29
+ */
 public class MainActivity extends BaseActivity implements SampleAdapter.SampleHolder.Listener {
 
     private String TAG = MainActivity.class.getSimpleName();
-
-//    @BindView(R.id.rv_sample)
-//    RecyclerView rvSample;
 
     private SampleAdapter adapter = new SampleAdapter();
 
