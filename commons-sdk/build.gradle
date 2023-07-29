@@ -10,7 +10,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.onevour.core'
                 artifactId = 'sdk'
-                version = '1.0.0'
+                version = '0.0.1'
             }
         }
     }
@@ -40,8 +40,6 @@ android {
 }
 
 dependencies {
-//    fileTree(include: ['*.jar'], dir: 'libs')
-    // implementation 'androidx.appcompat:appcompat:1.7.0-alpha03'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.1'
