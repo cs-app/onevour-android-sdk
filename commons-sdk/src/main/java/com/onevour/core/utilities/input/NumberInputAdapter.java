@@ -17,7 +17,7 @@ public interface NumberInputAdapter {
 
     int getValueInteger();
 
-    void setMaxValue();
+    void setMaxValue() throws ParseException;
 
     boolean isAfterPoint();
 

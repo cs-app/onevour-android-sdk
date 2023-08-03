@@ -124,8 +124,12 @@ public class InputDouble implements NumberInputAdapter {
     }
 
     @Override
-    public void setMaxValue() {
+    public void setMaxValue() throws ParseException {
         value.set(BigDecimal.valueOf(max));
+        char[] format = value.get().toPlainString().toCharArray();
+        for (char c: format){
+            append(String.valueOf(c));
+        }
     }
 
     @Override

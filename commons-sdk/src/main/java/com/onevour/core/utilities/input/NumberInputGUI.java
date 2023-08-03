@@ -181,12 +181,7 @@ public class NumberInputGUI implements View.OnClickListener {
         titleContent.setVisibility(View.VISIBLE);
         titleLeft.setText(left);
         titleRight.setText(right);
-        titleRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.showMaxValue();
-            }
-        });
+        titleRight.setOnClickListener(v -> listener.showMaxValue());
         if (null == left) titleLeft.setVisibility(View.INVISIBLE);
         if (null == right) titleRight.setVisibility(View.INVISIBLE);
 

@@ -168,8 +168,13 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
 
     @Override
     public void showMaxValue() {
-        adapter.setMaxValue();
-        alert.setResult(adapter.getValueString(), isDecimal());
+        try {
+            adapter.setMaxValue();
+            alert.setResult(adapter.getValueString(), isDecimal());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void enableMaxValue() {
