@@ -47,29 +47,11 @@ public class ExampleUnitTest {
         source.setEducations(educationList);
 
         SampleBean target = new SampleBean();
-        BeanCopy.copyAllFields(target, source, "name", "date", "lastName");
+        BeanCopy.copyValue(source, target, "name", "date", "lastName");
         System.out.println("Result copy: " + target.getLastName() + " | " + target.getBod() + "|" + target.getEducation().getEducation() + "|" + target.getEducations().size());
         for (SampleBean.Education child : target.getEducations()) {
             System.out.println("education is " + child.getEducation());
         }
     }
 
-    @Test
-    public void test_http() throws Exception {
-        Log.d("API-TEST", "INFO START");
-//        ApiRequestTest request = new ApiRequestTest(context, "https://api.digitalrecordcard.com/index.php/api_v1/login", new HttpListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                Log.d("API-TEST", response);
-//            }
-//
-//            @Override
-//            public void onError(Error httpError) {
-//                Log.e("API-TEST", httpError.getMessage());
-//            }
-//        });
-//        request.request();
-//        Thread.sleep(15000);
-//        assertEquals(4, 2 + 2);
-    }
 }

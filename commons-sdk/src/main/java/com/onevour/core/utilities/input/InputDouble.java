@@ -17,7 +17,7 @@ public class InputDouble implements NumberInputAdapter {
 
     private static final String TAG = "NID-DBL";
 
-    private int decrease = 10;
+    private final int decrease = 10;
 
     private AtomicReference<BigDecimal> value = new AtomicReference<>();
 
@@ -50,6 +50,12 @@ public class InputDouble implements NumberInputAdapter {
         if (ValueOf.isEmpty(valueStr)) {
             value.set(BigDecimal.valueOf(0.00));
         } else value.set(BigDecimal.valueOf(numberFormat.parse(valueStr.trim()).doubleValue()));
+    }
+
+    public void append(String... valueChars) throws ParseException {
+        for (String o : valueChars) {
+            append(o);
+        }
     }
 
     @Override
@@ -85,8 +91,9 @@ public class InputDouble implements NumberInputAdapter {
         }
     }
 
+    // https://stackoverflow.com/questions/7539/use-of-java-math-mathcontext
     private void appendComma(String valueChar) {
-        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE, new MathContext(3));
+        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);//, new MathContext(10, RoundingMode.CEILING)
         String fractionalPartStr = fractionalPart.toString();
         if (fractionalPartStr.length() == 3) fractionalPartStr = fractionalPartStr.concat("0");
         char[] values = fractionalPartStr.toCharArray();
@@ -120,4 +127,18 @@ public class InputDouble implements NumberInputAdapter {
     public void setMaxValue() {
         value.set(BigDecimal.valueOf(max));
     }
+
+    public BigDecimal getValue() {
+        return value.get();
+    }
+
+    /**
+     * @noinspection UnpredictableBigDecimalConstructorCall
+     */
+    public void reset() {
+        this.value.set(BigDecimal.valueOf(0.00));
+        this.cursor = 0;
+        this.isAfterPoint = false;
+    }
+
 }
