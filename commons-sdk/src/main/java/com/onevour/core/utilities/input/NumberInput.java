@@ -79,8 +79,8 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     }
 
     public void updateMinMax(double min, double max) {
-        alert.updateMinMax((int) min, (int) max);
-        adapter.updateMinMax((int) min, (int) max);
+        alert.updateMinMax(min, max);
+        adapter.updateMinMax(min, max);
     }
 
     @SuppressLint("ClickableViewAccessibility")

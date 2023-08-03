@@ -191,6 +191,8 @@ public class NumberInputGUI implements View.OnClickListener {
     }
 
     public void updateMinMax(double min, double max) {
+        titleContent.setVisibility(View.VISIBLE);
+        titleRight.setVisibility(View.INVISIBLE);
         this.min = min;
         this.max = max;
         if (ValueOf.isNull(numberFormat)) {
