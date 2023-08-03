@@ -169,6 +169,14 @@ public class NumberInputGUI implements View.OnClickListener {
         alertBuilder.create().show();
     }
 
+    public void setTitle(String title) {
+        setTitle(title, null);
+    }
+
+    public void setTitleRight(String title) {
+        setTitle(null, title);
+    }
+
     public void setTitle(String left, String right) {
         titleContent.setVisibility(View.VISIBLE);
         titleLeft.setText(left);
@@ -192,7 +200,7 @@ public class NumberInputGUI implements View.OnClickListener {
 
     public void updateMinMax(double min, double max) {
         titleContent.setVisibility(View.VISIBLE);
-        titleRight.setVisibility(View.INVISIBLE);
+        titleRight.setVisibility(View.VISIBLE);
         this.min = min;
         this.max = max;
         if (ValueOf.isNull(numberFormat)) {
