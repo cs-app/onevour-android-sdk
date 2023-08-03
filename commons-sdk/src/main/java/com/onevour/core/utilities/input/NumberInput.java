@@ -14,6 +14,7 @@ import com.onevour.core.utilities.commons.ValueOf;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Objects;
 
 /**
  * Created by zuliadin on 08/10/2016.
@@ -21,7 +22,9 @@ import java.text.ParseException;
  */
 public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertListener {
 
-    private static final String TAG = "NID";
+    private static final String TAG = NumberInput.class.getSimpleName();
+
+    private final NumberInputGUI alert = new NumberInputGUI();
 
     private Context context;
 
@@ -30,8 +33,6 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     private NumberFormat numberFormat;
 
     private Listener listener;
-
-    private NumberInputGUI alert = new NumberInputGUI();
 
     private NumberInputAdapter adapter;
 
@@ -45,6 +46,18 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
 
     public NumberInput(final EditText editText, final NumberFormat numberFormat, double min, double max) {
         setup(editText, numberFormat, min, max);
+    }
+
+    public void setup(final Context context) {
+        setup(new EditText(context), null, 0, Integer.MAX_VALUE);
+    }
+
+    public void setup(final Context context, double max) {
+        setup(new EditText(context), null, 0, max);
+    }
+
+    public void setup(final Context context, double min, double max) {
+        setup(new EditText(context), null, min, max);
     }
 
     public void setup(final EditText editText) {
@@ -77,11 +90,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     }
 
     private boolean isDecimal() {
-        return null != numberFormat;
-    }
-
-    public void setScrollFlag(boolean scroll) {
-//        isScroll = scroll;
+        return Objects.nonNull(numberFormat);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -122,7 +131,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     public void inputValue(String valueChar) {
         try {
             adapter.append(valueChar);
-            alert.setResult(adapter.getValueString());
+            alert.setResult(adapter.getValueString(), adapter.isAfterPoint());
         } catch (ParseException e) {
             alert.error(e.getMessage());
         }
@@ -131,7 +140,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     @Override
     public void delete() {
         adapter.delete();
-        alert.setResult(adapter.getValueString());
+        alert.setResult(adapter.getValueString(), adapter.isAfterPoint());
     }
 
     @Override
@@ -139,9 +148,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
         if (ValueOf.nonNull(listener)) listener.onSubmitValue();
         editText.setText(adapter.getValueString());
         if (ValueOf.isNull(listener)) return;
-        if (isDecimal()) {
-            listener.doubleValue(adapter.getValueDouble());
-        } else listener.intValue(adapter.getValueInteger());
+        listener.onValue(isDecimal(), adapter.getValueInteger(), adapter.getValueDouble());
     }
 
     public void setListener(Listener listener) {
@@ -151,7 +158,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
     @Override
     public void showMaxValue() {
         adapter.setMaxValue();
-        alert.setResult(adapter.getValueString());
+        alert.setResult(adapter.getValueString(), isDecimal());
     }
 
     public void enableMaxValue() {
@@ -162,9 +169,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
 
         void onSubmitValue();
 
-        void doubleValue(double v);
-
-        void intValue(int i);
+        void onValue(boolean isDecimal, int intValue, double doubleValue);
 
     }
 }

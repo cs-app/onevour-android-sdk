@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
+//    id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
         applicationId "com.onevour.sdk.impl"
         multiDexEnabled true
@@ -28,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -38,8 +40,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
     implementation project(':commons-sdk')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:4.5.1'
+//    testImplementation 'junit:junit:4.13.2'
+//    testImplementation 'org.mockito:mockito-core:4.5.1'
+    testImplementation 'junit:junit'
+    testImplementation 'org.mockito:mockito-core'
     testImplementation group: 'org.powermock', name: 'powermock-mockito-release-full', version: '1.6.4', ext: 'pom'
     testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.7'
     testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.7'

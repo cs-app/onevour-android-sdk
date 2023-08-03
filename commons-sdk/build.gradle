@@ -3,6 +3,8 @@ plugins {
     id 'maven-publish'
 }
 
+// https://vtsen.hashnode.dev/how-to-publish-android-library-on-jitpackio-with-github
+/*
 afterEvaluate {
     publishing {
         publications {
@@ -15,10 +17,12 @@ afterEvaluate {
         }
     }
 }
+ */
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion '30.0.3'
+    namespace 'com.onevour.core'
+    compileSdk 33
+    // buildToolsVersion '30.0.3'
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 33
@@ -36,7 +40,12 @@ android {
         viewBinding true
         dataBinding true
     }
-    namespace 'com.onevour.core'
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
+
 }
 
 dependencies {

@@ -13,6 +13,8 @@ public class InputInteger implements NumberInputAdapter {
 
     private int decrease = 10;
 
+    private boolean isAfterPoint = false;
+
     private int min, max;
 
     public InputInteger(int min, int max) {
@@ -60,5 +62,10 @@ public class InputInteger implements NumberInputAdapter {
     @Override
     public void setMaxValue() {
         value.set(max);
+    }
+
+    @Override
+    public boolean isAfterPoint() {
+        return false;
     }
 }

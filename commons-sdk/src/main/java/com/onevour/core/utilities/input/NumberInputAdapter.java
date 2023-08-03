@@ -18,4 +18,6 @@ public interface NumberInputAdapter {
     int getValueInteger();
 
     void setMaxValue();
+
+    boolean isAfterPoint();
 }

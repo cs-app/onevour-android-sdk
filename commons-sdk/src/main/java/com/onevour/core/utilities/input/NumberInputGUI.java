@@ -2,9 +2,14 @@ package com.onevour.core.utilities.input;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +24,7 @@ import java.text.ParseException;
 
 public class NumberInputGUI implements View.OnClickListener {
 
-    private static final String TAG = "NID-UI";
+    private static final String TAG = NumberInputGUI.class.getSimpleName();
 
     private AlertListener listener;
 
@@ -61,7 +66,7 @@ public class NumberInputGUI implements View.OnClickListener {
         TextView num9 = view.findViewById(R.id.key_num_9);
         numPoint = view.findViewById(R.id.key_num_point);
         TextView numOption = view.findViewById(R.id.key_option);
-        ImageButton del = view.findViewById(R.id.key_del);
+        ImageView del = view.findViewById(R.id.key_del);
         num0.setOnClickListener(this);
         num1.setOnClickListener(this);
         num2.setOnClickListener(this);
@@ -139,7 +144,8 @@ public class NumberInputGUI implements View.OnClickListener {
         }
     }
 
-    public void setResult(String value) {
+    public void setResult(String value, boolean isAfterPoint) {
+        numPoint.setTextColor(isAfterPoint ? Color.RED : Color.BLACK);
         result.setText(value);
     }
 

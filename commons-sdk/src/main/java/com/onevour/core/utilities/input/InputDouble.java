@@ -128,6 +128,11 @@ public class InputDouble implements NumberInputAdapter {
         value.set(BigDecimal.valueOf(max));
     }
 
+    @Override
+    public boolean isAfterPoint() {
+        return isAfterPoint;
+    }
+
     public BigDecimal getValue() {
         return value.get();
     }
