@@ -133,6 +133,12 @@ public class InputDouble implements NumberInputAdapter {
         return isAfterPoint;
     }
 
+    @Override
+    public void updateMinMax(double min, double max) {
+        this.min = min;
+        this.max = max;
+    }
+
     public BigDecimal getValue() {
         return value.get();
     }

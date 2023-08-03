@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 
 import com.onevour.core.utilities.commons.ValueOf;
@@ -70,6 +71,16 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
 
     public void setup(final EditText editText, double min, double max) {
         setup(editText, null, min, max);
+    }
+
+    public void updateMinMax(int min, int max) {
+        alert.updateMinMax(min, max);
+        adapter.updateMinMax(min, max);
+    }
+
+    public void updateMinMax(double min, double max) {
+        alert.updateMinMax((int) min, (int) max);
+        adapter.updateMinMax((int) min, (int) max);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -148,7 +159,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
         if (ValueOf.nonNull(listener)) listener.onSubmitValue();
         editText.setText(adapter.getValueString());
         if (ValueOf.isNull(listener)) return;
-        listener.onValue(isDecimal(), adapter.getValueInteger(), adapter.getValueDouble());
+        listener.onValue(editText.getId(), isDecimal(), adapter.getValueInteger(), adapter.getValueDouble());
     }
 
     public void setListener(Listener listener) {
@@ -169,7 +180,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
 
         void onSubmitValue();
 
-        void onValue(boolean isDecimal, int intValue, double doubleValue);
+        void onValue(@IdRes int id, boolean isDecimal, int intValue, double doubleValue);
 
     }
 }

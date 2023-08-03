@@ -20,4 +20,6 @@ public interface NumberInputAdapter {
     void setMaxValue();
 
     boolean isAfterPoint();
+
+    void updateMinMax(double min, double max);
 }

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 
 import com.onevour.core.R;
+import com.onevour.core.utilities.commons.ValueOf;
+import com.onevour.core.utilities.format.NFormat;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -186,6 +188,16 @@ public class NumberInputGUI implements View.OnClickListener {
         if (null == numberFormat) {
             setTitle(null, String.valueOf(Double.valueOf(max).intValue()));
         } else setTitle(null, numberFormat.format(max));
+    }
+
+    public void updateMinMax(double min, double max) {
+        this.min = min;
+        this.max = max;
+        if (ValueOf.isNull(numberFormat)) {
+            titleRight.setText(String.valueOf((int) max));
+        } else {
+            titleRight.setText(numberFormat.format(max));
+        }
     }
 
     public interface AlertListener {

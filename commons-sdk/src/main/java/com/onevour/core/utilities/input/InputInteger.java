@@ -68,4 +68,10 @@ public class InputInteger implements NumberInputAdapter {
     public boolean isAfterPoint() {
         return false;
     }
+
+    @Override
+    public void updateMinMax(double min, double max) {
+        this.min = (int) min;
+        this.max = (int) max;
+    }
 }
