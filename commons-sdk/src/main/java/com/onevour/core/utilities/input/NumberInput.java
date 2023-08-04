@@ -83,6 +83,17 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         adapter.updateMinMax(min, max);
     }
 
+    @Override
+    public void submitToMaxValue() {
+        try {
+            adapter.setValueToMax();
+            adapter.validateInit();
+            alert.show(adapter.getValueString(), adapter.isAfterPoint());
+        } catch (ParseException e) {
+            alert.error(e.getMessage());
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     public void setup(@NonNull EditText editText, NumberFormat numberFormat, double min, double max) {
         this.context = editText.getRootView().getContext();
@@ -114,9 +125,9 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         editText.setOnTouchListener(this);
     }
 
-    public void setTitle(String left, String right) {
-        if (ValueOf.isEmpty(left, right)) return;
-        alert.setTitle(left, right);
+    public void setTitle(String left) {
+        if (ValueOf.isEmpty(left)) return;
+        alert.setTitle(left, null);
     }
 
     /*
@@ -127,7 +138,8 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     @Override
     public boolean onTouch(View v, MotionEvent motionEvent) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (ValueOf.nonNull(imm)) imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (ValueOf.nonNull(imm))
+            imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         if (!(v.getId() == editText.getId() && motionEvent.getAction() == MotionEvent.ACTION_UP)) {
             return false;
         }
@@ -141,6 +153,8 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         }
         return false;
     }
+
+
 
     @Override
     public void inputValue(String valueChar) {
@@ -172,18 +186,10 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
 
     @Override
     public void showMaxValue() {
-        try {
-            adapter.setMaxValue();
-            alert.setResult(adapter.getValueString(), isDecimal());
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void enableMaxValue() {
         alert.showMaxValue();
     }
+
+
 
     public interface Listener {
 

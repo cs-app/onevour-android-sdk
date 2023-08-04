@@ -55,6 +55,15 @@ public class InputDouble implements NumberInputAdapter {
     }
 
     @Override
+    public void setValueToMax() throws ParseException {
+        reset();
+        char[] format = BigDecimal.valueOf(max).toPlainString().toCharArray();
+        for (char c : format) {
+            append(String.valueOf(c));
+        }
+    }
+
+    @Override
     public void setValue(String valueStr) throws ParseException {
         reset();
         if (ValueOf.isEmpty(valueStr)) {
@@ -149,14 +158,7 @@ public class InputDouble implements NumberInputAdapter {
         return value.get().intValue();
     }
 
-    @Override
-    public void setMaxValue() throws ParseException {
-        value.set(BigDecimal.valueOf(max));
-        char[] format = value.get().toPlainString().toCharArray();
-        for (char c : format) {
-            append(String.valueOf(c));
-        }
-    }
+
 
     @Override
     public boolean isAfterPoint() {

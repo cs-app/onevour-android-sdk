@@ -65,7 +65,7 @@ public class InputInteger implements NumberInputAdapter {
     }
 
     @Override
-    public void setMaxValue() {
+    public void setValueToMax() {
         value.set(max);
     }
 

@@ -17,7 +17,7 @@ public class FormSimpleActivity extends AppCompatActivity {
 
     private final NumberInput decimal2 = new NumberInput();
 
-    ActivityFormSimpleBinding binding;
+    private ActivityFormSimpleBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +27,9 @@ public class FormSimpleActivity extends AppCompatActivity {
         binding.inputNumber.setText(String.valueOf(Integer.MAX_VALUE));
         binding.inputDecimal.setText(NFormat.currencyFormat(5603169.26));
         binding.inputDecimal2.setText(NFormat.currencyFormat(100000.0));
-//        binding.inputDecimal.setText(NFormat.currencyFormat(0.00));
-
         number.setup(binding.inputNumber, 0, Integer.MAX_VALUE);
         decimal.setup(binding.inputDecimal, NFormat.currency(), 0, 5603169.26);
+        decimal.showMaxValue();
         decimal2.setup(binding.inputDecimal2, NFormat.currency(), 0, Double.MAX_VALUE);
     }
 }

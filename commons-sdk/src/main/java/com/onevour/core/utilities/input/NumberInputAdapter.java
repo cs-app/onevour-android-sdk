@@ -1,6 +1,5 @@
 package com.onevour.core.utilities.input;
 
-import java.text.NumberFormat;
 import java.text.ParseException;
 
 public interface NumberInputAdapter {
@@ -11,6 +10,8 @@ public interface NumberInputAdapter {
 
     void setValue(String value) throws ParseException;
 
+    void setValueToMax() throws ParseException;
+
     void append(String valueChar) throws ParseException;
 
     void delete();
@@ -19,7 +20,7 @@ public interface NumberInputAdapter {
 
     int getValueInteger();
 
-    void setMaxValue() throws ParseException;
+
 
     boolean isAfterPoint();
 

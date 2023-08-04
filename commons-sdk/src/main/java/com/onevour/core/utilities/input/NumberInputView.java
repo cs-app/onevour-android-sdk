@@ -78,6 +78,10 @@ public class NumberInputView implements View.OnClickListener {
         numPoint.setOnClickListener(this);
         del.setOnClickListener(this);
         numOption.setVisibility(View.INVISIBLE);
+        titleRight.setOnClickListener(v -> {
+            if (Objects.isNull(listener)) return;
+            listener.submitToMaxValue();
+        });
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(view.getContext());
         alertBuilder.setView(view);
         alertBuilder.setPositiveButton("OK", (dialog, which) -> {
@@ -99,7 +103,7 @@ public class NumberInputView implements View.OnClickListener {
 
     /**
      * show dialog
-     * */
+     */
     public void show(String value, boolean afterPoint) {
         if (null == dialog) return;
         dialog.show();
@@ -157,7 +161,7 @@ public class NumberInputView implements View.OnClickListener {
         alertBuilder.setTitle("Opps, something wrong!");
         StringBuilder sb = new StringBuilder();
         sb.append(message);
-        if (null != numberFormat) {
+        if (Objects.nonNull(numberFormat)) {
             DecimalFormatSymbols d = ((DecimalFormat) numberFormat).getDecimalFormatSymbols();
             sb.append("\ndecimal : ").append(d.getDecimalSeparator());
             sb.append("\ngroup : ").append(d.getGroupingSeparator());
@@ -180,15 +184,16 @@ public class NumberInputView implements View.OnClickListener {
 
     public void setTitle(String left, String right) {
         titleContent.setVisibility(View.VISIBLE);
+        titleLeft.setVisibility(View.VISIBLE);
+        titleRight.setVisibility(View.VISIBLE);
         titleLeft.setText(left);
         titleRight.setText(right);
-        titleRight.setOnClickListener(v -> listener.showMaxValue());
-        if (Objects.isNull(left)) titleLeft.setVisibility(View.INVISIBLE);
-        if (Objects.isNull(right)) titleRight.setVisibility(View.INVISIBLE);
-
     }
 
     public void showMaxValue() {
+        titleContent.setVisibility(View.VISIBLE);
+        titleLeft.setVisibility(View.VISIBLE);
+        titleRight.setVisibility(View.VISIBLE);
         if (Objects.isNull(numberFormat)) {
             setTitle(null, String.valueOf(Double.valueOf(max).intValue()));
         } else setTitle(null, numberFormat.format(max));
@@ -196,6 +201,7 @@ public class NumberInputView implements View.OnClickListener {
 
     public void updateMinMax(double min, double max) {
         titleContent.setVisibility(View.VISIBLE);
+        titleLeft.setVisibility(View.VISIBLE);
         titleRight.setVisibility(View.VISIBLE);
         this.min = min;
         this.max = max;
@@ -212,9 +218,13 @@ public class NumberInputView implements View.OnClickListener {
 
         void showMaxValue();
 
+        void submitToMaxValue();
+
         void delete() throws ParseException;
 
         void submit();
+
+
     }
 
 }
