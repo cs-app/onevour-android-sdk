@@ -118,11 +118,12 @@ public class InputDouble implements NumberInputAdapter {
         if (fractionalPartStr.length() == 3) fractionalPartStr = fractionalPartStr.concat("0");
         char[] values = fractionalPartStr.toCharArray();
         values[cursor + 2] = valueChar.charAt(0);
+        BigDecimal newDecimal = new BigDecimal(new String(values));
+        BigDecimal decimalValue = value.get().subtract(fractionalPart).add(newDecimal);
+        if (decimalValue.compareTo(BigDecimal.valueOf(max)) > 0) {
+            return;
+        }
         if (cursor == 0) cursor++;
-        BigDecimal decimal = new BigDecimal(new String(values));
-        Log.d(TAG, "decimal value is " + decimal.toPlainString() + " | " + decimal.compareTo(BigDecimal.valueOf(0.00)));
-        BigDecimal decimalValue = value.get().subtract(fractionalPart).add(decimal);
-        if (decimalValue.compareTo(BigDecimal.valueOf(max)) > 0) return;
         value.set(decimalValue);
     }
 
