@@ -5,17 +5,17 @@ import android.util.Log;
 import com.onevour.core.utilities.commons.ValueOf;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class InputDouble implements NumberInputAdapter {
 
-    private static final String TAG = "NID-DBL";
+    private static final String TAG = InputDouble.class.getSimpleName();
 
     private final int decrease = 10;
 
@@ -49,7 +49,13 @@ public class InputDouble implements NumberInputAdapter {
     public void setValue(String valueStr) throws ParseException {
         if (ValueOf.isEmpty(valueStr)) {
             value.set(BigDecimal.valueOf(0.00));
-        } else value.set(BigDecimal.valueOf(numberFormat.parse(valueStr.trim()).doubleValue()));
+            return;
+        }
+        BigDecimal decimal = BigDecimal.valueOf(Objects.requireNonNull(numberFormat.parse(valueStr.trim())).doubleValue());
+        char[] chars = decimal.toPlainString().toCharArray();
+        for (char c : chars) {
+            append(String.valueOf(c));
+        }
     }
 
     public void append(String... valueChars) throws ParseException {
@@ -62,12 +68,13 @@ public class InputDouble implements NumberInputAdapter {
     public void append(String valueChar) throws ParseException {
         Log.d(TAG, "input ".concat(valueChar));
         if (valueChar.equalsIgnoreCase(decimalSeparator)) {
+            if (isAfterPoint) return;
             isAfterPoint = true;
             cursor = 0;
             return;
         }
         if (isAfterPoint) {
-            appendComma(valueChar);
+            appendAfterDecimal(valueChar);
         } else {
             BigDecimal decimal = value.get().multiply(BigDecimal.valueOf(decrease)).add(new BigDecimal(valueChar));
             if (decimal.compareTo(BigDecimal.valueOf(max)) > 0) return;
@@ -80,21 +87,22 @@ public class InputDouble implements NumberInputAdapter {
         BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
         if (fractionalPart.compareTo(BigDecimal.valueOf(0.00)) > 0) {
             deleteComma(fractionalPart);
-        } else {
-            BigDecimal decimal = value.get().divide(BigDecimal.valueOf(decrease), 2, RoundingMode.CEILING);
-            BigDecimal diff = value.get().remainder(BigDecimal.valueOf(decrease));
-            if (diff.compareTo(BigDecimal.valueOf(0.00)) > 0) {
-                decimal = value.get().subtract(diff).divide(BigDecimal.valueOf(decrease), 2, RoundingMode.CEILING);
-            }
-            if (decimal.compareTo(BigDecimal.valueOf(max)) > 0) return;
-            value.set(decimal);
+            return;
         }
+        isAfterPoint = false;
+        BigDecimal decimal = value.get().divide(BigDecimal.valueOf(decrease), 2, RoundingMode.CEILING);
+        BigDecimal diff = value.get().remainder(BigDecimal.valueOf(decrease));
+        if (diff.compareTo(BigDecimal.valueOf(0.00)) > 0) {
+            decimal = value.get().subtract(diff).divide(BigDecimal.valueOf(decrease), 2, RoundingMode.CEILING);
+        }
+        if (decimal.compareTo(BigDecimal.valueOf(max)) > 0) return;
+        value.set(decimal);
     }
 
     // https://stackoverflow.com/questions/7539/use-of-java-math-mathcontext
-    private void appendComma(String valueChar) {
+    private void appendAfterDecimal(String valueChar) {
         BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);//, new MathContext(10, RoundingMode.CEILING)
-        String fractionalPartStr = fractionalPart.toString();
+        String fractionalPartStr = fractionalPart.toPlainString();
         if (fractionalPartStr.length() == 3) fractionalPartStr = fractionalPartStr.concat("0");
         char[] values = fractionalPartStr.toCharArray();
         values[cursor + 2] = valueChar.charAt(0);
@@ -105,10 +113,10 @@ public class InputDouble implements NumberInputAdapter {
     }
 
     private void deleteComma(BigDecimal fractionalPart) {
-        char[] values = fractionalPart.toString().toCharArray();
+        char[] values = fractionalPart.toPlainString().toCharArray();
         values[cursor + 2] = '0';
         isAfterPoint = !(cursor == 0);
-        if (cursor == 1) cursor--;
+        if (cursor > 0) cursor--;
         BigDecimal decimal = value.get().subtract(fractionalPart).add(new BigDecimal(new String(values)));
         value.set(decimal);
     }
@@ -127,7 +135,7 @@ public class InputDouble implements NumberInputAdapter {
     public void setMaxValue() throws ParseException {
         value.set(BigDecimal.valueOf(max));
         char[] format = value.get().toPlainString().toCharArray();
-        for (char c: format){
+        for (char c : format) {
             append(String.valueOf(c));
         }
     }

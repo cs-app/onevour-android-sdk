@@ -3,12 +3,8 @@ package com.onevour.core.utilities.input;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,12 +12,12 @@ import android.widget.TextView;
 
 import com.onevour.core.R;
 import com.onevour.core.utilities.commons.ValueOf;
-import com.onevour.core.utilities.format.NFormat;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Objects;
 
 
 public class NumberInputGUI implements View.OnClickListener {
@@ -50,7 +46,7 @@ public class NumberInputGUI implements View.OnClickListener {
         this.numberFormat = numberFormat;
         this.min = min;
         this.max = max;
-        View view = LayoutInflater.from(context).inflate(R.layout.input_number_dialog, null, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_number, null, false);
         titleContent = view.findViewById(R.id.title_content);
         titleContent.setVisibility(View.GONE);
         titleLeft = view.findViewById(R.id.title_left);
@@ -85,29 +81,27 @@ public class NumberInputGUI implements View.OnClickListener {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(view.getContext());
         alertBuilder.setView(view);
         alertBuilder.setPositiveButton("OK", (dialog, which) -> {
-            if (listener == null) return;
+            if (Objects.isNull(listener)) return;
             listener.submit();
         });
         alertBuilder.setNegativeButton("CANCEL", (dialog, which) -> {
             // do nothing
         });
         dialog = alertBuilder.create();
-        if (null != numberFormat) {
-            DecimalFormatSymbols d = ((DecimalFormat) numberFormat).getDecimalFormatSymbols();
-            decimalSeparator = String.valueOf(d.getDecimalSeparator());
-            numPoint.setText(decimalSeparator);
-        } else numPoint.setVisibility(View.INVISIBLE);
+        if (Objects.isNull(numberFormat)) {
+            numPoint.setVisibility(View.INVISIBLE);
+            return;
+        }
+        DecimalFormatSymbols d = ((DecimalFormat) numberFormat).getDecimalFormatSymbols();
+        decimalSeparator = String.valueOf(d.getDecimalSeparator());
+        numPoint.setText(decimalSeparator);
     }
 
-    public void show() {
-        if (null == dialog) return;
-        dialog.show();
-    }
-
-    public void show(String value) {
+    public void show(String value, boolean afterPoint) {
         if (null == dialog) return;
         dialog.show();
         result.setText(value);
+        updateBackground(afterPoint);
     }
 
     @Override
@@ -139,7 +133,6 @@ public class NumberInputGUI implements View.OnClickListener {
                 listener.inputValue(decimalSeparator);
             } else if (i == R.id.key_del) {
                 listener.delete();
-
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -147,8 +140,13 @@ public class NumberInputGUI implements View.OnClickListener {
     }
 
     public void setResult(String value, boolean isAfterPoint) {
-        numPoint.setTextColor(isAfterPoint ? Color.RED : Color.BLACK);
+        updateBackground(isAfterPoint);
         result.setText(value);
+    }
+
+    public void updateBackground(boolean isAfterPoint) {
+        numPoint.setTextColor(isAfterPoint ? Color.RED : Color.BLACK);
+        numPoint.setBackgroundResource(isAfterPoint ? R.drawable.input_number_btn_dialog_active : R.drawable.input_number_btn_dialog);
     }
 
     public void error(String message) {
@@ -182,13 +180,13 @@ public class NumberInputGUI implements View.OnClickListener {
         titleLeft.setText(left);
         titleRight.setText(right);
         titleRight.setOnClickListener(v -> listener.showMaxValue());
-        if (null == left) titleLeft.setVisibility(View.INVISIBLE);
-        if (null == right) titleRight.setVisibility(View.INVISIBLE);
+        if (Objects.isNull(left)) titleLeft.setVisibility(View.INVISIBLE);
+        if (Objects.isNull(right)) titleRight.setVisibility(View.INVISIBLE);
 
     }
 
     public void showMaxValue() {
-        if (null == numberFormat) {
+        if (Objects.isNull(numberFormat)) {
             setTitle(null, String.valueOf(Double.valueOf(max).intValue()));
         } else setTitle(null, numberFormat.format(max));
     }

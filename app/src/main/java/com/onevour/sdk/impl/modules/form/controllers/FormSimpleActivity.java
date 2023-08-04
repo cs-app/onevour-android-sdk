@@ -23,13 +23,12 @@ public class FormSimpleActivity extends AppCompatActivity {
         binding = ActivityFormSimpleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.inputNumber.setText(String.valueOf(Integer.MAX_VALUE));
-        binding.inputDecimal.setText(NFormat.currencyFormat(0.00));
+        binding.inputDecimal.setText(NFormat.currencyFormat(5603169.26));
 
         number.setup(binding.inputNumber, 0, Integer.MAX_VALUE);
-        number.enableMaxValue();
-
-//        decimal.setup(binding.inputDecimal, NFormat.currency(), 0, 5603169.26);
-        decimal.setup(binding.inputDecimal, NFormat.currency(), 0, 10000000.1);
-        decimal.enableMaxValue();
+        // number.enableMaxValue(); 5603169.26
+        decimal.setup(binding.inputDecimal, NFormat.currency(), 0, Double.MAX_VALUE);
+        // decimal.setup(binding.inputDecimal, NFormat.currency(), 0, 10000000.1);
+        // decimal.enableMaxValue();
     }
 }

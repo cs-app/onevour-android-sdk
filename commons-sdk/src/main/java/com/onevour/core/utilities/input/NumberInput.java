@@ -130,7 +130,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
             Log.d(TAG, "Action touch event : ".concat(String.valueOf(motionEvent.getAction())));
             try {
                 adapter.setValue(editText.getText().toString());
-                alert.show(adapter.getValueString());
+                alert.show(adapter.getValueString(), adapter.isAfterPoint());
             } catch (ParseException e) {
                 alert.error(e.getMessage());
             }
