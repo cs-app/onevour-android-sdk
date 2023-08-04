@@ -50,27 +50,57 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     }
 
     public void setup(final Context context) {
-        setup(new EditText(context), null, 0, Integer.MAX_VALUE);
+        setup(new EditText(context), null, null, 0, Integer.MAX_VALUE);
     }
 
     public void setup(final Context context, double max) {
-        setup(new EditText(context), null, 0, max);
+        setup(new EditText(context), null, null, 0, max);
     }
 
     public void setup(final Context context, double min, double max) {
-        setup(new EditText(context), null, min, max);
+        setup(new EditText(context), null, null, min, max);
+    }
+
+    public void setup(final Context context, NumberFormat numberFormat, double min, double max) {
+        setup(new EditText(context), null, null, min, max);
+    }
+
+    public void setup(final Context context, Listener listener, NumberFormat numberFormat, double min, double max) {
+        setup(new EditText(context), listener, numberFormat, min, max);
     }
 
     public void setup(final EditText editText) {
-        setup(editText, null, 0, Integer.MAX_VALUE);
+        setup(editText, null, null, 0, Integer.MAX_VALUE);
     }
 
     public void setup(final EditText editText, double max) {
-        setup(editText, null, 0, max);
+        setup(editText, null, null, 0, max);
     }
 
     public void setup(final EditText editText, double min, double max) {
-        setup(editText, null, min, max);
+        setup(editText, null, null, min, max);
+    }
+
+    public void setup(@NonNull EditText editText, NumberFormat numberFormat, double min, double max) {
+        setup(editText, null, numberFormat, min, max);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void setup(@NonNull EditText editText, Listener listener, NumberFormat numberFormat, double min, double max) {
+        this.context = editText.getRootView().getContext();
+        this.listener = listener;
+        editText.setTextIsSelectable(true);
+        editText.setCursorVisible(false);
+        editText.setFocusable(false);
+        editText.setOnTouchListener(this);
+        this.editText = editText;
+        this.numberFormat = numberFormat;
+        alert.init(context, numberFormat, min, max, this);
+        if (isDecimal()) {
+            adapter = new InputDouble(numberFormat, min, max);
+        } else {
+            adapter = new InputInteger((int) min, (int) max);
+        }
     }
 
     public void updateMinMax(int min, int max) {
@@ -91,23 +121,6 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
             alert.show(adapter.getValueString(), adapter.isAfterPoint());
         } catch (ParseException e) {
             alert.error(e.getMessage());
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    public void setup(@NonNull EditText editText, NumberFormat numberFormat, double min, double max) {
-        this.context = editText.getRootView().getContext();
-        editText.setTextIsSelectable(true);
-        editText.setCursorVisible(false);
-        editText.setFocusable(false);
-        editText.setOnTouchListener(this);
-        this.editText = editText;
-        this.numberFormat = numberFormat;
-        alert.init(context, numberFormat, min, max, this);
-        if (isDecimal()) {
-            adapter = new InputDouble(numberFormat, min, max);
-        } else {
-            adapter = new InputInteger((int) min, (int) max);
         }
     }
 
@@ -155,7 +168,6 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     }
 
 
-
     @Override
     public void inputValue(String valueChar) {
         try {
@@ -188,7 +200,6 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     public void showMaxValue() {
         alert.showMaxValue();
     }
-
 
 
     public interface Listener {
