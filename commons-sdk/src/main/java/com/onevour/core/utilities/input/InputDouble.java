@@ -52,7 +52,12 @@ public class InputDouble implements NumberInputAdapter {
             return;
         }
         BigDecimal decimal = BigDecimal.valueOf(Objects.requireNonNull(numberFormat.parse(valueStr.trim())).doubleValue());
+        if (decimal.compareTo(BigDecimal.valueOf(0.00)) == 0) {
+            value.set(BigDecimal.valueOf(0.00));
+            return;
+        }
         char[] chars = decimal.toPlainString().toCharArray();
+        reset();
         for (char c : chars) {
             append(String.valueOf(c));
         }
