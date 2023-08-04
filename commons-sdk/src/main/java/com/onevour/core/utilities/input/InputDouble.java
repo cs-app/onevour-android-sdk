@@ -41,12 +41,22 @@ public class InputDouble implements NumberInputAdapter {
     }
 
     @Override
+    public void validateInit() {
+        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
+        isAfterPoint = fractionalPart.compareTo(BigDecimal.valueOf(0.00)) > 0;
+        if (!isAfterPoint) this.cursor = 0;
+        String fractionalPartStr = fractionalPart.toPlainString();
+        Log.d(TAG, "fraction validate is " + fractionalPartStr + " decimal" + isAfterPoint);
+    }
+
+    @Override
     public String getValueString() {
         return numberFormat.format(value.get());
     }
 
     @Override
     public void setValue(String valueStr) throws ParseException {
+        reset();
         if (ValueOf.isEmpty(valueStr)) {
             value.set(BigDecimal.valueOf(0.00));
             return;
@@ -57,7 +67,6 @@ public class InputDouble implements NumberInputAdapter {
             return;
         }
         char[] chars = decimal.toPlainString().toCharArray();
-        reset();
         for (char c : chars) {
             append(String.valueOf(c));
         }
@@ -89,12 +98,11 @@ public class InputDouble implements NumberInputAdapter {
 
     @Override
     public void delete() {
-        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
-        if (fractionalPart.compareTo(BigDecimal.valueOf(0.00)) > 0) {
-            deleteComma(fractionalPart);
+        if (isAfterPoint) {
+            BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
+            deleteDecimal(fractionalPart);
             return;
         }
-        isAfterPoint = false;
         BigDecimal decimal = value.get().divide(BigDecimal.valueOf(decrease), 2, RoundingMode.CEILING);
         BigDecimal diff = value.get().remainder(BigDecimal.valueOf(decrease));
         if (diff.compareTo(BigDecimal.valueOf(0.00)) > 0) {
@@ -104,26 +112,30 @@ public class InputDouble implements NumberInputAdapter {
         value.set(decimal);
     }
 
-    // https://stackoverflow.com/questions/7539/use-of-java-math-mathcontext
     private void appendAfterDecimal(String valueChar) {
-        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);//, new MathContext(10, RoundingMode.CEILING)
+        BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
         String fractionalPartStr = fractionalPart.toPlainString();
         if (fractionalPartStr.length() == 3) fractionalPartStr = fractionalPartStr.concat("0");
         char[] values = fractionalPartStr.toCharArray();
         values[cursor + 2] = valueChar.charAt(0);
         if (cursor == 0) cursor++;
-        BigDecimal decimal = value.get().subtract(fractionalPart).add(new BigDecimal(new String(values)));
-        if (decimal.compareTo(BigDecimal.valueOf(max)) > 0) return;
-        value.set(decimal);
+        BigDecimal decimal = new BigDecimal(new String(values));
+        Log.d(TAG, "decimal value is " + decimal.toPlainString() + " | " + decimal.compareTo(BigDecimal.valueOf(0.00)));
+        BigDecimal decimalValue = value.get().subtract(fractionalPart).add(decimal);
+        if (decimalValue.compareTo(BigDecimal.valueOf(max)) > 0) return;
+        value.set(decimalValue);
     }
 
-    private void deleteComma(BigDecimal fractionalPart) {
+    private void deleteDecimal(BigDecimal fractionalPart) {
         char[] values = fractionalPart.toPlainString().toCharArray();
         values[cursor + 2] = '0';
-        isAfterPoint = !(cursor == 0);
-        if (cursor > 0) cursor--;
+        Log.d(TAG, "cursor pos " + cursor);
+        if (cursor >= 0) cursor--;
+
         BigDecimal decimal = value.get().subtract(fractionalPart).add(new BigDecimal(new String(values)));
         value.set(decimal);
+        isAfterPoint = -1 < cursor;
+        Log.d(TAG, "cursor pos final " + cursor + " after " + isAfterPoint);
     }
 
     @Override

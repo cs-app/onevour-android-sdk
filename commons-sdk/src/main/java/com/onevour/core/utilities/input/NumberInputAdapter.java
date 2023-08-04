@@ -5,6 +5,8 @@ import java.text.ParseException;
 
 public interface NumberInputAdapter {
 
+    void validateInit();
+
     String getValueString();
 
     void setValue(String value) throws ParseException;
@@ -22,4 +24,6 @@ public interface NumberInputAdapter {
     boolean isAfterPoint();
 
     void updateMinMax(double min, double max);
+
+
 }

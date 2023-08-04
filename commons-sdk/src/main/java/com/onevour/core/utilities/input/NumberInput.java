@@ -21,11 +21,11 @@ import java.util.Objects;
  * Created by zuliadin on 08/10/2016.
  * Updated by zuliadin on 30/01/2021.
  */
-public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertListener {
+public class NumberInput implements View.OnTouchListener, NumberInputView.AlertListener {
 
     private static final String TAG = NumberInput.class.getSimpleName();
 
-    private final NumberInputGUI alert = new NumberInputGUI();
+    private final NumberInputView alert = new NumberInputView();
 
     private Context context;
 
@@ -119,21 +119,25 @@ public class NumberInput implements View.OnTouchListener, NumberInputGUI.AlertLi
         alert.setTitle(left, right);
     }
 
+    /*
+     * show UI on touch
+     *
+     * */
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent motionEvent) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (ValueOf.nonNull(imm)) {
-            imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (ValueOf.nonNull(imm)) imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (!(v.getId() == editText.getId() && motionEvent.getAction() == MotionEvent.ACTION_UP)) {
+            return false;
         }
-        if (v.getId() == editText.getId() && motionEvent.getAction() == MotionEvent.ACTION_UP) {
-            Log.d(TAG, "Action touch event : ".concat(String.valueOf(motionEvent.getAction())));
-            try {
-                adapter.setValue(editText.getText().toString());
-                alert.show(adapter.getValueString(), adapter.isAfterPoint());
-            } catch (ParseException e) {
-                alert.error(e.getMessage());
-            }
+        Log.d(TAG, "Action touch event : ".concat(String.valueOf(motionEvent.getAction())));
+        try {
+            adapter.setValue(editText.getText().toString());
+            adapter.validateInit();
+            alert.show(adapter.getValueString(), adapter.isAfterPoint());
+        } catch (ParseException e) {
+            alert.error(e.getMessage());
         }
         return false;
     }

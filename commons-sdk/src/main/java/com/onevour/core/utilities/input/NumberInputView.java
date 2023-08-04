@@ -20,9 +20,9 @@ import java.text.ParseException;
 import java.util.Objects;
 
 
-public class NumberInputGUI implements View.OnClickListener {
+public class NumberInputView implements View.OnClickListener {
 
-    private static final String TAG = NumberInputGUI.class.getSimpleName();
+    private static final String TAG = NumberInputView.class.getSimpleName();
 
     private AlertListener listener;
 
@@ -97,6 +97,9 @@ public class NumberInputGUI implements View.OnClickListener {
         numPoint.setText(decimalSeparator);
     }
 
+    /**
+     * show dialog
+     * */
     public void show(String value, boolean afterPoint) {
         if (null == dialog) return;
         dialog.show();

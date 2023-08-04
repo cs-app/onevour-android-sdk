@@ -23,6 +23,11 @@ public class InputInteger implements NumberInputAdapter {
     }
 
     @Override
+    public void validateInit() {
+        // ignore
+    }
+
+    @Override
     public String getValueString() {
         return String.valueOf(value);
     }
