@@ -4,12 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.room.Room;
+
 import com.onevour.core.base.BaseActivity;
 import com.onevour.core.utilities.commons.ContextHelper;
 import com.onevour.core.utilities.commons.ValueOf;
+import com.onevour.sdk.impl.applications.configuration.AppDatabase;
 import com.onevour.sdk.impl.databinding.ActivityMainBinding;
 import com.onevour.sdk.impl.modules.adapter.controllers.AdapterSampleActivity;
 import com.onevour.sdk.impl.modules.chat.ChatActivity;
+import com.onevour.sdk.impl.modules.form.controllers.DeepLinkActivity;
+import com.onevour.sdk.impl.modules.form.controllers.FormDatabaseActivity;
 import com.onevour.sdk.impl.modules.form.controllers.FormSimpleActivity;
 import com.onevour.sdk.impl.modules.formscroll.controllers.FormScrollActivity;
 import com.onevour.sdk.impl.modules.fragment.controllers.FragmentActivity;
@@ -40,21 +45,27 @@ public class MainActivity extends BaseActivity implements SampleAdapter.SampleHo
         ContextHelper.init(getApplication());
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        ButterKnife.bind(this);
         init(binding.rvSample, adapter);
         adapter.setHolderListener(this);
         List<SampleMV> samples = new ArrayList<>();
-        samples.add(new SampleMV("Adapter", AdapterSampleActivity.class));
-        samples.add(new SampleMV("Fragment BackStack", FragmentActivity.class));
-        samples.add(new SampleMV("Fragment Bottom", FragmentBottomActivity.class));
-        samples.add(new SampleMV("Fragment Bottom Navigation", FragmentBottomNavigationActivity.class));
-        samples.add(new SampleMV("Form Simple", FormSimpleActivity.class));
-        samples.add(new SampleMV("Form Scroll", FormScrollActivity.class));
-        samples.add(new SampleMV("MVVM", MVVMActivity.class));
-        samples.add(new SampleMV("Chat", ChatActivity.class));
+//        samples.add(new SampleMV("Adapter", AdapterSampleActivity.class));
+//        samples.add(new SampleMV("Fragment BackStack", FragmentActivity.class));
+//        samples.add(new SampleMV("Fragment Bottom", FragmentBottomActivity.class));
+//        samples.add(new SampleMV("Fragment Bottom Navigation", FragmentBottomNavigationActivity.class));
+//        samples.add(new SampleMV("Form Simple", FormSimpleActivity.class));
+//        samples.add(new SampleMV("Form Scroll", FormScrollActivity.class));
+        samples.add(new SampleMV("Form Deep Link", DeepLinkActivity.class));
+//        samples.add(new SampleMV("Form Database", FormDatabaseActivity.class));
+//        samples.add(new SampleMV("MVVM", MVVMActivity.class));
+//        samples.add(new SampleMV("Chat", ChatActivity.class));
         adapter.setValue(samples);
         session.saveCollection("MENU", samples);
         init();
+        initDatabase();
+    }
+
+    private void initDatabase() {
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "onevour-sdk").build();
     }
 
     private void init() {

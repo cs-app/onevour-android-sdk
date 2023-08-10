@@ -8,6 +8,10 @@ public class SampleMV extends AdapterModel<Sample> {
         super(model);
     }
 
+    public SampleMV(String sample) {
+        super(new Sample(sample, null));
+    }
+
     public SampleMV(String sample, Class clazz) {
         super(new Sample(sample, clazz));
     }

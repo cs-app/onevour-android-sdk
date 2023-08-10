@@ -9,17 +9,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.onevour.sdk.impl.modules.chat.ChatActivity"
-            android:exported="true" />
-        <activity android:name="com.onevour.sdk.impl.modules.mvvm.views.MVVMActivity" />
-        <activity android:name="com.onevour.sdk.impl.modules.formscroll.controllers.FormScrollActivity" />
-        <activity android:name="com.onevour.sdk.impl.modules.form.controllers.FormSimpleActivity" />
-        <activity android:name="com.onevour.sdk.impl.modules.fragmentbottomnavigation.controllers.FragmentBottomNavigationActivity" />
-        <activity android:name="com.onevour.sdk.impl.modules.fragmentbottom.controllers.FragmentBottomActivity" />
-        <activity android:name="com.onevour.sdk.impl.modules.fragment.controllers.FragmentActivity" />
-        <activity android:name="com.onevour.sdk.impl.modules.adapter.controllers.AdapterSampleActivity" />
+            android:name=".modules.form.controllers.FormDatabaseActivity"
+            android:exported="false" />
         <activity
-            android:name="com.onevour.sdk.impl.modules.main.controllers.MainActivity"
+            android:name=".modules.form.controllers.DeepLinkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".modules.chat.ChatActivity"
+            android:exported="true" />
+        <activity android:name=".modules.mvvm.views.MVVMActivity" />
+        <activity android:name=".modules.formscroll.controllers.FormScrollActivity" />
+        <activity android:name=".modules.form.controllers.FormSimpleActivity" />
+        <activity android:name=".modules.fragmentbottomnavigation.controllers.FragmentBottomNavigationActivity" />
+        <activity android:name=".modules.fragmentbottom.controllers.FragmentBottomActivity" />
+        <activity android:name=".modules.fragment.controllers.FragmentActivity" />
+        <activity android:name=".modules.adapter.controllers.AdapterSampleActivity" />
+        <activity
+            android:name=".modules.main.controllers.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
