@@ -1,9 +1,5 @@
 package com.onevour.core.utilities.beans;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.onevour.core.utilities.commons.ValueOf;
 
 import java.lang.reflect.Constructor;
@@ -19,7 +15,6 @@ import java.util.Set;
 @SuppressWarnings({"CollectionAddAllCanBeReplacedWithConstructor", "unchecked", "rawtypes"})
 public class BeanCopy {
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static <T> T value(Object source, Class<T> target, String... ignore) {
         if (ValueOf.isNull(source)) throw new NullPointerException();
         try {
@@ -43,7 +38,7 @@ public class BeanCopy {
         return result;
     }
 
-    public static <T> void copyValue(Object source, T target, String... ignore) {
+    public static <S, T> void copyValue(S source, T target, String... ignore) {
         Set<String> ignoreSet = new HashSet<>();
         ignoreSet.addAll(Arrays.asList(ignore));
         Class<?> clazzTarget = target.getClass();
@@ -54,6 +49,7 @@ public class BeanCopy {
             if (ignoreSet.contains(field.getName())) continue;
             for (Field fieldTarget : fieldTargets) {
                 if (!field.getName().equalsIgnoreCase(fieldTarget.getName())) continue;
+                if (!field.getType().equals(fieldTarget.getType())) continue;
                 try {
                     field.setAccessible(true);
                     fieldTarget.setAccessible(true);
@@ -64,22 +60,6 @@ public class BeanCopy {
                 }
             }
 
-        }
-    }
-
-    public static <T> void copy(T source, T target, String... ignore) {
-        Set<String> ignoreSet = new HashSet<>();
-        ignoreSet.addAll(Arrays.asList(ignore));
-        Class<T> clazz = (Class<T>) source.getClass();
-        List<Field> fields = getAllModelFields(clazz);
-        for (Field field : fields) {
-            if (ignoreSet.contains(field.getName())) continue;
-            try {
-                field.setAccessible(true);
-                field.set(target, field.get(source));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
         }
     }
 
