@@ -251,4 +251,5 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         void onLoadRetry(int index, E o);
 
     }
+
 }

@@ -20,15 +20,16 @@ import java.util.Optional;
 
 public abstract class HolderGenericBasic<S extends ViewBinding, E> extends RecyclerView.ViewHolder {
 
-    protected Context context;
+    protected final List<Listener> listeners = new ArrayList<>();
 
-    protected List<Listener> listeners = new ArrayList<>();
-
-    protected Map<Class, Listener> cachedListener = new HashMap<>();
+    /** @noinspection rawtypes*/
+    protected final Map<Class, Listener> cachedListener = new HashMap<>();
 
     protected E value;
 
     protected S binding;
+
+    protected Context context;
 
     public HolderGenericBasic(S binding) {
         super(binding.getRoot());

@@ -27,10 +27,10 @@ import java.util.Objects;
  * Created by user on 20/11/2017.
  * Arguments T is entities<br>
  * Arguments E is ViewHolder<br>
+ * @noinspection rawtypes, rawtypes
  */
 
-@SuppressWarnings("rawtypes")
-public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerView.Adapter<E> {
+public class AdapterGenericBasic<H extends HolderGenericBasic, T> extends RecyclerView.Adapter<H> {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -38,11 +38,9 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
 
     private final List<HolderGenericBasic.Listener> holderListener = new ArrayList<>();
 
-    //private ViewBinding binding;
-
     private Context context;
 
-    protected List values = new ArrayList();
+    protected List<T> values = new ArrayList<>();
 
     public AdapterGenericBasic() {
 
@@ -58,7 +56,9 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
         context = recyclerView.getContext();
     }
 
-    /** @noinspection unchecked*/
+    /**
+     * @noinspection unchecked
+     */
     @SuppressLint("NotifyDataSetChanged")
     public void setValues(List values) {
         if (Objects.nonNull(this.values) || !this.values.isEmpty()) {
@@ -68,10 +68,12 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
         this.notifyDataSetChanged();
     }
 
-    /** @noinspection TryWithIdenticalCatches*/
+    /**
+     * @noinspection TryWithIdenticalCatches
+     */
     @NonNull
     @Override
-    public E onCreateViewHolder(ViewGroup parent, int viewType) {
+    public H onCreateViewHolder(ViewGroup parent, int viewType) {
         try {
             Context context = parent.getContext();
             Type typeOfHolder = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -97,13 +99,13 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
     }
 
     @SuppressWarnings({"unchecked", "SuspiciousMethodCalls"})
-    private E holderGenerator(Type type, ViewBinding convertView) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    private H holderGenerator(Type type, ViewBinding convertView) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         if (null == cached.get(type.hashCode())) {
-            Constructor constructor = ((Class<E>) type).getConstructor(convertView.getClass());
+            Constructor constructor = ((Class<H>) type).getConstructor(convertView.getClass());
             cached.put("VH" + type.hashCode(), constructor);
-            return (E) constructor.newInstance(convertView);
+            return (H) constructor.newInstance(convertView);
         } else {
-            return (E) cached.get("VH" + type.hashCode()).newInstance(convertView);
+            return (H) cached.get("VH" + type.hashCode()).newInstance(convertView);
         }
     }
 
@@ -126,7 +128,7 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
     /**
      * @noinspection unchecked
      */
-    public void addMore(Object o) {
+    public void addMore(T o) {
         if (ValueOf.isNull(o)) {
             Log.w(TAG, "cannot insert null value!");
             return;
@@ -139,9 +141,21 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
     /**
      * @noinspection unchecked
      */
-    public void updateItem(int index, Object value) {
+    public void updateItem(int index, T value) {
         values.set(index, value);
         notifyItemChanged(index);
+    }
+
+    public T getItem(int totalItemCount) {
+        int size = values.size();
+        if (totalItemCount < size) {
+            return values.get(totalItemCount);
+        }
+        return null;
+    }
+
+    public List<T> getList() {
+        return values;
     }
 
 }
