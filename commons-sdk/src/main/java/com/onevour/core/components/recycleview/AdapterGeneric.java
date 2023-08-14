@@ -246,6 +246,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         return isLoader;
     }
 
+    @Deprecated
     public interface AdapterListener<E> {
 
         void onLoadRetry(int index, E o);

@@ -34,7 +34,7 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
         super.onCreate(savedInstanceState);
         binding = ActivityMasterSampleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        UIHelper.initRecyclerView(binding.rvSampleData, adapter, this, this, true);
+        UIHelper.initRecyclerView(binding.rvSampleData, adapter, this, true);
         init();
     }
 

@@ -16,48 +16,63 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.onevour.core.components.recycleview.AdapterGenericBasic;
+import com.onevour.core.components.recycleview.HolderGeneric;
+import com.onevour.core.components.recycleview.HolderGenericBasic;
 import com.onevour.core.utilities.ui.adapter.layout.AutoFitGridLayoutManager;
 import com.onevour.core.components.recycleview.AdapterGeneric;
 import com.onevour.core.components.recycleview.RecyclerViewScrollListener;
 
+import java.util.Objects;
+
 /**
  * Created by Zuliadin on 24/11/2017.
+ *
+ * @noinspection rawtypes
  */
 
 public class UIHelper {
 
-    private static final String TAG = "UIHelper";
+    private static final String TAG = UIHelper.class.getSimpleName();
 
     private static final int sizePage = 20;
 
     public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
-        initRecyclerView(recyclerView, adapter, null, null, sizePage, false);
+        initRecyclerView(recyclerView, adapter, null, null, null, sizePage, false);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, AdapterGeneric.AdapterListener adapterListener) {
-        initRecyclerView(recyclerView, adapter, adapterListener, null, sizePage, false);
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, HolderGeneric.Listener holderListener) {
+        initRecyclerView(recyclerView, adapter, holderListener, null, null, sizePage, false);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, AdapterGeneric.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, boolean isLoadFirst) {
-        initRecyclerView(recyclerView, adapter, adapterListener, scrollListener, sizePage, isLoadFirst);
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, HolderGenericBasic.Listener holderListener) {
+        initRecyclerView(recyclerView, adapter, null, holderListener, null, sizePage, false);
     }
 
-    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, AdapterGeneric.AdapterListener adapterListener, RecyclerViewScrollListener.PaginationListener scrollListener, int sizePage, boolean isLoadFirst) {
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, RecyclerViewScrollListener.PaginationListener scrollListener, boolean isLoadFirst) {
+        initRecyclerView(recyclerView, adapter, null, null, scrollListener, sizePage, isLoadFirst);
+    }
+
+    public static void initRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, HolderGeneric.Listener holderListener, HolderGenericBasic.Listener holderBasicListener, RecyclerViewScrollListener.PaginationListener scrollListener, int sizePage, boolean isLoadFirst) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         if (adapter instanceof AdapterGeneric) {
             AdapterGeneric genericAdapter = ((AdapterGeneric) adapter);
             if (isLoadFirst) genericAdapter.showLoader();
-            if (null != adapterListener) {
-                //genericAdapter.setAdapterListener(adapterListener);
+            if (Objects.nonNull(holderBasicListener)) {
+                genericAdapter.setHolderListener(holderListener);
             }
             if (null != scrollListener) {
                 recyclerView.addOnScrollListener(new RecyclerViewScrollListener(genericAdapter, layoutManager, sizePage, scrollListener));
             }
-
+        }
+        if (adapter instanceof AdapterGenericBasic) {
+            AdapterGenericBasic adapterGenericBasic = (AdapterGenericBasic) adapter;
+            if (Objects.nonNull(holderBasicListener)) {
+                adapterGenericBasic.setHolderListener(holderBasicListener);
+            }
         }
     }
 
