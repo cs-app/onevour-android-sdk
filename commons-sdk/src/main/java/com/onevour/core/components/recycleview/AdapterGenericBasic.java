@@ -1,12 +1,16 @@
 package com.onevour.core.components.recycleview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
+
+import com.onevour.core.utilities.commons.ValueOf;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +33,8 @@ import java.util.Objects;
 public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerView.Adapter<E> {
 
     private final String TAG = getClass().getSimpleName();
-    private Map<String, Constructor> cached = new HashMap<>();
+
+    private final Map<String, Constructor> cached = new HashMap<>();
 
     private final List<HolderGenericBasic.Listener> holderListener = new ArrayList<>();
 
@@ -53,14 +58,17 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
         context = recyclerView.getContext();
     }
 
+    /** @noinspection unchecked*/
+    @SuppressLint("NotifyDataSetChanged")
     public void setValues(List values) {
-        if (Objects.nonNull(this.values) || !this.values.isEmpty()){
+        if (Objects.nonNull(this.values) || !this.values.isEmpty()) {
             this.values.clear();
         }
         this.values.addAll(values);
         this.notifyDataSetChanged();
     }
 
+    /** @noinspection TryWithIdenticalCatches*/
     @NonNull
     @Override
     public E onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -113,6 +121,27 @@ public class AdapterGenericBasic<E extends HolderGenericBasic> extends RecyclerV
     @Override
     public int getItemCount() {
         return values.size();
+    }
+
+    /**
+     * @noinspection unchecked
+     */
+    public void addMore(Object o) {
+        if (ValueOf.isNull(o)) {
+            Log.w(TAG, "cannot insert null value!");
+            return;
+        }
+        int size = this.values.size();
+        this.values.add(o);
+        notifyItemRangeInserted(size, size + 1);
+    }
+
+    /**
+     * @noinspection unchecked
+     */
+    public void updateItem(int index, Object value) {
+        values.set(index, value);
+        notifyItemChanged(index);
     }
 
 }

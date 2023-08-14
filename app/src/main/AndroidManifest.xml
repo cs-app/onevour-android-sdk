@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".modules.preference.controllers.PreferenceActivity"
+            android:exported="false" />
+        <activity
             android:name=".modules.form.controllers.FormDatabaseActivity"
             android:exported="false" />
         <activity

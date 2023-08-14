@@ -35,13 +35,13 @@ public class RefSession {
     }
 
     public <T> T find(String key, Class<T> cls) {
-        String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key, null);
+        String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key.toUpperCase(), null);
         if (null == valueString) return null;
         return GsonHelper.newInstance().getGson().fromJson(valueString, cls);
     }
 
     public <T> List<T> findCollection(String key, Class<T> cls) {
-        String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key, null);
+        String valueString = getSharedPreferences(EDITOR_DEFAULT).getString(key.toUpperCase(), null);
         if (null == valueString) return null;
         String value = findString(key);
         if (ValueOf.isEmpty(value)) return null;
@@ -50,23 +50,27 @@ public class RefSession {
 
 
     public int findInt(String key) {
-        return getSharedPreferences(EDITOR_DEFAULT).getInt(key, 0);
+        return getSharedPreferences(EDITOR_DEFAULT).getInt(key.toUpperCase(), 0);
+    }
+
+    public float findFloat(String key) {
+        return getSharedPreferences(EDITOR_DEFAULT).getFloat(key.toUpperCase(), 0f);
     }
 
     public long findLong(String key) {
-        return getSharedPreferences(EDITOR_DEFAULT).getLong(key, 0);
+        return getSharedPreferences(EDITOR_DEFAULT).getLong(key.toUpperCase(), 0L);
     }
 
     public double findDouble(String key) {
-        return Double.parseDouble(getSharedPreferences(EDITOR_DEFAULT).getString(key, "0.0"));
+        return Double.parseDouble(getSharedPreferences(EDITOR_DEFAULT).getString(key.toUpperCase(), "0.0"));
     }
 
     public boolean findBoolean(String key) {
-        return getSharedPreferences(EDITOR_DEFAULT).getBoolean(key, false);
+        return getSharedPreferences(EDITOR_DEFAULT).getBoolean(key.toUpperCase(), false);
     }
 
     public String findString(String key) {
-        return getSharedPreferences(EDITOR_DEFAULT).getString(key, null);
+        return getSharedPreferences(EDITOR_DEFAULT).getString(key.toUpperCase(), null);
     }
 
 
@@ -96,6 +100,10 @@ public class RefSession {
     }
 
     public void saveLong(String key, Long value) {
+        save(key, value, true);
+    }
+
+    public void saveFloat(String key, Float value) {
         save(key, value, true);
     }
 
@@ -165,13 +173,12 @@ public class RefSession {
                 throw new NullPointerException("cannot remove empty key");
             }
             sb.append(key).append("|");
-            editor.remove(key);
+            editor.remove(key.toUpperCase());
             Log.d(TAG, "remove ".concat(key));
         }
         if (!editor.commit()) {
             throw new IllegalStateException("cannot commit remove keys ".concat(sb.toString()));
         }
     }
-
 
 }
