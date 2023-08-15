@@ -186,10 +186,10 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
 
     @Override
     public void submit() {
-        if (ValueOf.nonNull(listener)) listener.onSubmitValue();
         editText.setText(adapter.getValueString());
         if (ValueOf.isNull(listener)) return;
         listener.onValue(editText.getId(), isDecimal(), adapter.getValueInteger(), adapter.getValueDouble());
+        listener.onSubmitValue();
     }
 
     public void setListener(Listener listener) {

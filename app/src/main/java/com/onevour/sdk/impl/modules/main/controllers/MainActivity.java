@@ -13,6 +13,7 @@ import com.onevour.sdk.impl.applications.configuration.AppDatabase;
 import com.onevour.sdk.impl.databinding.ActivityMainBinding;
 import com.onevour.sdk.impl.modules.adapter.controllers.AdapterSampleActivity;
 import com.onevour.sdk.impl.modules.chat.ChatActivity;
+import com.onevour.sdk.impl.modules.dinjection.controllers.DInjectionActivity;
 import com.onevour.sdk.impl.modules.form.controllers.DeepLinkActivity;
 import com.onevour.sdk.impl.modules.form.controllers.FormDatabaseActivity;
 import com.onevour.sdk.impl.modules.form.controllers.FormSimpleActivity;
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity implements SampleAdapter.SampleHo
         samples.add(new SampleMV("Form Database", FormDatabaseActivity.class));
         samples.add(new SampleMV("MVVM", MVVMActivity.class));
         samples.add(new SampleMV("Preference", PreferenceActivity.class));
+        samples.add(new SampleMV("Injection", DInjectionActivity.class));
         samples.add(new SampleMV("Chat", ChatActivity.class));
         adapter.setValue(samples);
         session.saveCollection("MENU", samples);
