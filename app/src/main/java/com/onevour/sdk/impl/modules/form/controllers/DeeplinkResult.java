@@ -82,6 +82,18 @@ public class DeeplinkResult {
     @SerializedName("provinsi")
     String provinsi;
 
+    @Expose
+    @SerializedName("expired_date")
+    String expiredDate;
+
+    @Expose
+    @SerializedName("printed_at")
+    String printedAt;
+
+    @Expose
+    @SerializedName("fp")
+    String fp;
+
     public String getFace() {
         return face;
     }
@@ -232,5 +244,29 @@ public class DeeplinkResult {
 
     public void setProvinsi(String provinsi) {
         this.provinsi = provinsi;
+    }
+
+    public String getExpiredDate() {
+        return expiredDate;
+    }
+
+    public void setExpiredDate(String expiredDate) {
+        this.expiredDate = expiredDate;
+    }
+
+    public String getPrintedAt() {
+        return printedAt;
+    }
+
+    public void setPrintedAt(String printedAt) {
+        this.printedAt = printedAt;
+    }
+
+    public String getFp() {
+        return fp;
+    }
+
+    public void setFp(String fp) {
+        this.fp = fp;
     }
 }

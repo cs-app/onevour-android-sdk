@@ -2,6 +2,7 @@ package com.onevour.core.utilities.input;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -138,6 +139,12 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         editText.setOnTouchListener(this);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    public void show() {
+        editText.setOnTouchListener(this);
+        editText.dispatchTouchEvent(triggerTouch());
+    }
+
     public void setTitle(String left) {
         if (ValueOf.isEmpty(left)) return;
         alert.setTitle(left, null);
@@ -199,6 +206,23 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     @Override
     public void showMaxValue() {
         alert.showMaxValue();
+    }
+
+    private MotionEvent triggerTouch() {
+        // Obtain MotionEvent object
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis() + 100;
+        float x = 0.0f;
+        float y = 0.0f;
+        int metaState = 0;
+        return MotionEvent.obtain(
+                downTime,
+                eventTime,
+                MotionEvent.ACTION_UP,
+                x,
+                y,
+                metaState
+        );
     }
 
 

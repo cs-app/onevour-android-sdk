@@ -54,8 +54,9 @@ public class DeepLinkActivity extends AppCompatActivity {
                     .create();
             deeplinkResult.setFace(null);
             deeplinkResult.setSignature(null);
+            deeplinkResult.setFp(null);
             binding.result.setText(gson.toJson(deeplinkResult));
-            Toast.makeText(this, "Callback from intent " + ektp, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Callback from intent success", Toast.LENGTH_LONG).show();
             return;
         }
         Toast.makeText(this, "Callback from intent " + result.getResultCode(), Toast.LENGTH_LONG).show();

@@ -220,8 +220,6 @@ public class HttpRequest<T> {
     }
 
     private String method() {
-//        if (null == body) return "GET";
-//        return "POST";
         return method;
     }
 
@@ -240,7 +238,7 @@ public class HttpRequest<T> {
                     TLSSocketFactory sc = new TLSSocketFactory();
                     conn.setSSLSocketFactory(sc);
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
+                    Log.e(TAG, "" + e.getMessage());
                 }
             }
         }
