@@ -224,7 +224,6 @@ public class NumberInputView implements View.OnClickListener {
 
         void submit();
 
-
     }
 
 }

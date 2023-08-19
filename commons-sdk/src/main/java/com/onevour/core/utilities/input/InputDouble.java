@@ -29,7 +29,9 @@ public class InputDouble implements NumberInputAdapter {
 
     private String decimalSeparator = ".";
 
-    private double min = 0.00, max = Double.MAX_VALUE;
+    private double min = 0.00;
+
+    private double max = Double.MAX_VALUE;
 
     public InputDouble(NumberFormat numberFormat, double min, double max) {
         value.set(BigDecimal.valueOf(0.00));
@@ -45,8 +47,8 @@ public class InputDouble implements NumberInputAdapter {
         BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
         isAfterPoint = fractionalPart.compareTo(BigDecimal.valueOf(0.00)) > 0;
         if (!isAfterPoint) this.cursor = 0;
-        String fractionalPartStr = fractionalPart.toPlainString();
-        Log.d(TAG, "fraction validate is " + fractionalPartStr + " decimal" + isAfterPoint);
+//        String fractionalPartStr = fractionalPart.toPlainString();
+//        Log.d(TAG, "fraction validate is " + fractionalPartStr + " decimal" + isAfterPoint);
     }
 
     @Override
@@ -77,7 +79,10 @@ public class InputDouble implements NumberInputAdapter {
         }
         char[] chars = decimal.toPlainString().toCharArray();
         for (char c : chars) {
-            append(String.valueOf(c));
+            String value = String.valueOf(c);
+            if (value.equalsIgnoreCase(".")) { // check native separator decimal
+                append(decimalSeparator);
+            } else append(value);
         }
     }
 
@@ -141,7 +146,6 @@ public class InputDouble implements NumberInputAdapter {
         values[cursor + 2] = '0';
         Log.d(TAG, "cursor pos " + cursor);
         if (cursor >= 0) cursor--;
-
         BigDecimal decimal = value.get().subtract(fractionalPart).add(new BigDecimal(new String(values)));
         value.set(decimal);
         isAfterPoint = -1 < cursor;
@@ -157,8 +161,6 @@ public class InputDouble implements NumberInputAdapter {
     public int getValueInteger() {
         return value.get().intValue();
     }
-
-
 
     @Override
     public boolean isAfterPoint() {

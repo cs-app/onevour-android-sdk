@@ -31,6 +31,8 @@ public class ApiQueue {
 
     private static ApiQueue apiQueue;
 
+    private final Handler handler = new Handler(Looper.getMainLooper());
+
     private ExecutorService executor = Executors.newFixedThreadPool(MAX_POOL);
 
     private ApiQueue() {
@@ -54,7 +56,7 @@ public class ApiQueue {
         executor.execute(() -> {
             if (null == listener) return;
             StringBuffer responseString = new StringBuffer("");
-            Handler handler = new Handler(Looper.getMainLooper());
+
             try {
                 multipart.request();
                 List<String> response = multipart.finish();
@@ -64,16 +66,12 @@ public class ApiQueue {
                 final Type responseType = getResponseType(listener);
                 Log.d(TAG, responseString.toString());
                 if (null == responseType) {
-                    handler.post(() -> {
-                        listener.onSuccess((T) responseString.toString());
-                    });
+                    handler.post(() -> listener.onSuccess((T) responseString.toString()));
                 } else {
                     String responseResult = response.toString();
                     try {
                         final T jsonResponse = GsonHelper.newInstance().getGson().fromJson(responseResult, responseType);
-                        handler.post(() -> {
-                            listener.onSuccess(jsonResponse);
-                        });
+                        handler.post(() -> listener.onSuccess(jsonResponse));
                     } catch (JsonSyntaxException e) {
                         Error error = new Error(multipart.getResponseCode());
                         error.setMessage("Cannot convert response \n:".concat(responseResult));

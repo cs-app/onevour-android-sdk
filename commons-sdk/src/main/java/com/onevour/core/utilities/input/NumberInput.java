@@ -2,6 +2,8 @@ package com.onevour.core.utilities.input;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,14 +19,21 @@ import com.onevour.core.utilities.commons.ValueOf;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by zuliadin on 08/10/2016.
  * Updated by zuliadin on 30/01/2021.
  */
+@SuppressLint("ClickableViewAccessibility")
 public class NumberInput implements View.OnTouchListener, NumberInputView.AlertListener {
 
     private static final String TAG = NumberInput.class.getSimpleName();
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final NumberInputView alert = new NumberInputView();
 
@@ -86,16 +95,16 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         setup(editText, null, numberFormat, min, max);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+
     public void setup(@NonNull EditText editText, Listener listener, NumberFormat numberFormat, double min, double max) {
         this.context = editText.getRootView().getContext();
         this.listener = listener;
-        editText.setTextIsSelectable(true);
-        editText.setCursorVisible(false);
-        editText.setFocusable(false);
-        editText.setOnTouchListener(this);
-        this.editText = editText;
         this.numberFormat = numberFormat;
+        this.editText = editText;
+        this.editText.setTextIsSelectable(true);
+        this.editText.setCursorVisible(false);
+        this.editText.setFocusable(false);
+        this.editText.setOnTouchListener(this);
         alert.init(context, numberFormat, min, max, this);
         if (isDecimal()) {
             adapter = new InputDouble(numberFormat, min, max);
@@ -129,17 +138,15 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         return Objects.nonNull(numberFormat);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+
     public void disableTouch() {
         editText.setOnTouchListener(null);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     public void enableTouch() {
         editText.setOnTouchListener(this);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     public void show() {
         editText.setOnTouchListener(this);
         editText.dispatchTouchEvent(triggerTouch());
@@ -154,22 +161,23 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
      * show UI on touch
      *
      * */
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent motionEvent) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (ValueOf.nonNull(imm))
+        if (ValueOf.nonNull(imm)) {
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        if (!(v.getId() == editText.getId() && motionEvent.getAction() == MotionEvent.ACTION_UP)) {
-            return false;
         }
-        Log.d(TAG, "Action touch event : ".concat(String.valueOf(motionEvent.getAction())));
-        try {
-            adapter.setValue(editText.getText().toString());
-            adapter.validateInit();
-            alert.show(adapter.getValueString(), adapter.isAfterPoint());
-        } catch (ParseException e) {
-            alert.error(e.getMessage());
+        if (v.getId() == editText.getId() && motionEvent.getAction() == MotionEvent.ACTION_UP) {
+            Log.d(TAG, "Action touch event : ".concat(String.valueOf(motionEvent.getAction())));
+            executor.execute(() -> {
+                try {
+                    adapter.setValue(editText.getText().toString());
+                    adapter.validateInit();
+                    handler.post(() -> alert.show(adapter.getValueString(), adapter.isAfterPoint()));
+                } catch (ParseException e) {
+                    handler.post(() -> alert.error(e.getMessage()));
+                }
+            });
         }
         return false;
     }
@@ -177,18 +185,23 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
 
     @Override
     public void inputValue(String valueChar) {
-        try {
-            adapter.append(valueChar);
-            alert.setResult(adapter.getValueString(), adapter.isAfterPoint());
-        } catch (ParseException e) {
-            alert.error(e.getMessage());
-        }
+        executor.execute(() -> {
+            try {
+                adapter.append(valueChar);
+                handler.post(() -> alert.setResult(adapter.getValueString(), adapter.isAfterPoint()));
+            } catch (ParseException e) {
+                handler.post(() -> alert.error(e.getMessage()));
+            }
+        });
+
     }
 
     @Override
     public void delete() {
-        adapter.delete();
-        alert.setResult(adapter.getValueString(), adapter.isAfterPoint());
+        executor.execute(() -> {
+            adapter.delete();
+            handler.post(() -> alert.setResult(adapter.getValueString(), adapter.isAfterPoint()));
+        });
     }
 
     @Override
@@ -233,4 +246,5 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         void onValue(@IdRes int id, boolean isDecimal, int intValue, double doubleValue);
 
     }
+
 }
