@@ -47,8 +47,7 @@ public class InputDouble implements NumberInputAdapter {
         BigDecimal fractionalPart = value.get().remainder(BigDecimal.ONE);
         isAfterPoint = fractionalPart.compareTo(BigDecimal.valueOf(0.00)) > 0;
         if (!isAfterPoint) this.cursor = 0;
-//        String fractionalPartStr = fractionalPart.toPlainString();
-//        Log.d(TAG, "fraction validate is " + fractionalPartStr + " decimal" + isAfterPoint);
+//        Log.d(TAG, "fraction validate is " + fractionalPart.toPlainString() + " decimal" + isAfterPoint);
     }
 
     @Override
@@ -57,11 +56,34 @@ public class InputDouble implements NumberInputAdapter {
     }
 
     @Override
+    public void setValue(Double doubleValue) {
+        try {
+            reset();
+            char[] format = BigDecimal.valueOf(doubleValue <= max ? doubleValue : max).toPlainString().toCharArray();
+            for (char c : format) {
+                String value = String.valueOf(c);
+                if (value.equalsIgnoreCase(".")) { // check native separator decimal
+                    append(decimalSeparator);
+                } else {
+                    append(value);
+                }
+            }
+        } catch (ParseException e) {
+
+        }
+    }
+
+    @Override
     public void setValueToMax() throws ParseException {
         reset();
         char[] format = BigDecimal.valueOf(max).toPlainString().toCharArray();
         for (char c : format) {
-            append(String.valueOf(c));
+            String value = String.valueOf(c);
+            if (value.equalsIgnoreCase(".")) { // check native separator decimal
+                append(decimalSeparator);
+            } else {
+                append(value);
+            }
         }
     }
 

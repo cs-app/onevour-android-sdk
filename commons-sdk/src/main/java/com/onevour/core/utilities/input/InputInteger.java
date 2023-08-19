@@ -33,6 +33,11 @@ public class InputInteger implements NumberInputAdapter {
     }
 
     @Override
+    public void setValue(Double doubleValue) {
+        value.set(doubleValue.intValue());
+    }
+
+    @Override
     public void setValue(String valueStr) {
         if (ValueOf.isEmpty(valueStr)) {
             value.set(0);

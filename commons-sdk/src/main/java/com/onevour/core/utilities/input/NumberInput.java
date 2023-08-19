@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
  * Updated by zuliadin on 30/01/2021.
  */
 @SuppressLint("ClickableViewAccessibility")
-public class NumberInput implements View.OnTouchListener, NumberInputView.AlertListener {
+public class NumberInput implements View.OnTouchListener {
 
     private static final String TAG = NumberInput.class.getSimpleName();
 
@@ -36,6 +36,53 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final NumberInputView alert = new NumberInputView();
+
+    private final NumberInputView.AlertListener viewListener = new NumberInputView.AlertListener() {
+
+        @Override
+        public void inputValue(char value) throws ParseException {
+            executor.execute(() -> {
+                try {
+                    adapter.append(String.valueOf(value));
+                    handler.post(() -> alert.setResult(adapter.getValueString(), adapter.isAfterPoint()));
+                } catch (ParseException e) {
+                    handler.post(() -> alert.error(e.getMessage()));
+                }
+            });
+        }
+
+        @Override
+        public void showMaxValue() {
+            alert.showMaxValue();
+        }
+
+        @Override
+        public void submitToMaxValue() {
+            try {
+                adapter.setValueToMax();
+                adapter.validateInit();
+                alert.show(adapter.getValueString(), adapter.isAfterPoint());
+            } catch (ParseException e) {
+                alert.error(e.getMessage());
+            }
+        }
+
+        @Override
+        public void delete() throws ParseException {
+            executor.execute(() -> {
+                adapter.delete();
+                handler.post(() -> alert.setResult(adapter.getValueString(), adapter.isAfterPoint()));
+            });
+        }
+
+        @Override
+        public void submit() {
+            editText.setText(adapter.getValueString());
+            if (ValueOf.isNull(listener)) return;
+            listener.onValue(editText.getId(), isDecimal(), adapter.getValueInteger(), adapter.getValueDouble());
+            listener.onSubmitValue();
+        }
+    };
 
     private Context context;
 
@@ -72,7 +119,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     }
 
     public void setup(final Context context, NumberFormat numberFormat, double min, double max) {
-        setup(new EditText(context), null, null, min, max);
+        setup(new EditText(context), null, numberFormat, min, max);
     }
 
     public void setup(final Context context, Listener listener, NumberFormat numberFormat, double min, double max) {
@@ -105,7 +152,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
         this.editText.setCursorVisible(false);
         this.editText.setFocusable(false);
         this.editText.setOnTouchListener(this);
-        alert.init(context, numberFormat, min, max, this);
+        alert.init(context, numberFormat, min, max, viewListener);
         if (isDecimal()) {
             adapter = new InputDouble(numberFormat, min, max);
         } else {
@@ -114,24 +161,23 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     }
 
     public void updateMinMax(int min, int max) {
+        updateMinMax(min, max, false);
+    }
+
+    public void updateMinMax(int min, int max, boolean showMax) {
         alert.updateMinMax(min, max);
         adapter.updateMinMax(min, max);
+        if (showMax) showMaxValue();
     }
 
     public void updateMinMax(double min, double max) {
-        alert.updateMinMax(min, max);
-        adapter.updateMinMax(min, max);
+        updateMinMax(min, max, false);
     }
 
-    @Override
-    public void submitToMaxValue() {
-        try {
-            adapter.setValueToMax();
-            adapter.validateInit();
-            alert.show(adapter.getValueString(), adapter.isAfterPoint());
-        } catch (ParseException e) {
-            alert.error(e.getMessage());
-        }
+    public void updateMinMax(double min, double max, boolean showMax) {
+        alert.updateMinMax(min, max);
+        adapter.updateMinMax(min, max);
+        if (showMax) showMaxValue();
     }
 
     private boolean isDecimal() {
@@ -154,7 +200,7 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
 
     public void setTitle(String left) {
         if (ValueOf.isEmpty(left)) return;
-        alert.setTitle(left, null);
+        alert.setTitle(left);
     }
 
     /*
@@ -171,7 +217,8 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
             Log.d(TAG, "Action touch event : ".concat(String.valueOf(motionEvent.getAction())));
             executor.execute(() -> {
                 try {
-                    adapter.setValue(editText.getText().toString());
+                    String valueStr = editText.getText().toString();
+                    adapter.setValue(valueStr);
                     adapter.validateInit();
                     handler.post(() -> alert.show(adapter.getValueString(), adapter.isAfterPoint()));
                 } catch (ParseException e) {
@@ -183,40 +230,25 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
     }
 
 
-    @Override
-    public void inputValue(String valueChar) {
-        executor.execute(() -> {
-            try {
-                adapter.append(valueChar);
-                handler.post(() -> alert.setResult(adapter.getValueString(), adapter.isAfterPoint()));
-            } catch (ParseException e) {
-                handler.post(() -> alert.error(e.getMessage()));
-            }
-        });
-
+    public void inputValue(int intValue) {
+        inputValue(Double.valueOf(intValue));
     }
 
-    @Override
-    public void delete() {
-        executor.execute(() -> {
-            adapter.delete();
-            handler.post(() -> alert.setResult(adapter.getValueString(), adapter.isAfterPoint()));
-        });
+    public void inputValue(Double doubleValue) {
+        if (Objects.isNull(doubleValue)) doubleValue = 0.0;
+        if (Objects.isNull(numberFormat)) {
+            editText.setText(String.valueOf(doubleValue.intValue()));
+        } else {
+            editText.setText(numberFormat.format(doubleValue));
+        }
     }
 
-    @Override
-    public void submit() {
-        editText.setText(adapter.getValueString());
-        if (ValueOf.isNull(listener)) return;
-        listener.onValue(editText.getId(), isDecimal(), adapter.getValueInteger(), adapter.getValueDouble());
-        listener.onSubmitValue();
-    }
 
     public void setListener(Listener listener) {
         this.listener = listener;
     }
 
-    @Override
+
     public void showMaxValue() {
         alert.showMaxValue();
     }
@@ -236,6 +268,10 @@ public class NumberInput implements View.OnTouchListener, NumberInputView.AlertL
                 y,
                 metaState
         );
+    }
+
+    public String getValueString() {
+        return adapter.getValueString();
     }
 
 

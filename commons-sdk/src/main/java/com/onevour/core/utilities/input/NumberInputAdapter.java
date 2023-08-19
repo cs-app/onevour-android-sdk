@@ -8,6 +8,8 @@ public interface NumberInputAdapter {
 
     String getValueString();
 
+    void setValue(Double doubleValue);
+
     void setValue(String value) throws ParseException;
 
     void setValueToMax() throws ParseException;
@@ -25,6 +27,7 @@ public interface NumberInputAdapter {
     boolean isAfterPoint();
 
     void updateMinMax(double min, double max);
+
 
 
 }

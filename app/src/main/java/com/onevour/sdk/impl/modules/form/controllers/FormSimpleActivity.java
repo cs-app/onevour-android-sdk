@@ -1,7 +1,9 @@
 package com.onevour.sdk.impl.modules.form.controllers;
 
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onevour.core.utilities.format.NFormat;
@@ -17,6 +19,8 @@ public class FormSimpleActivity extends AppCompatActivity {
 
     private final NumberInput decimal2 = new NumberInput();
 
+    private final NumberInput numPadText = new NumberInput();
+
     private ActivityFormSimpleBinding binding;
 
     @Override
@@ -31,5 +35,26 @@ public class FormSimpleActivity extends AppCompatActivity {
         decimal.setup(binding.inputDecimal, NFormat.currency(), 0, 5603169.26);
         decimal.showMaxValue();
         decimal2.setup(binding.inputDecimal2, NFormat.currency(), 0, Double.MAX_VALUE);
+        numPadText.setup(this, NFormat.currency(), 0, Double.MAX_VALUE);
+        binding.inputFromText.setOnClickListener(this::updateValue);
+    }
+
+    private void updateValue(View view) {
+        numPadText.setTitle("Maximum payment");
+        numPadText.updateMinMax(0, 30000, true);
+        numPadText.inputValue(2000.98);
+        numPadText.setListener(new NumberInput.Listener() {
+            @Override
+            public void onSubmitValue() {
+
+            }
+
+            @Override
+            public void onValue(@IdRes int id, boolean isDecimal, int intValue, double doubleValue) {
+                binding.inputFromText.setText(numPadText.getValueString());
+            }
+
+        });
+        numPadText.show();
     }
 }

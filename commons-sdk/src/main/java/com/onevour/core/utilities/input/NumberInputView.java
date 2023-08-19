@@ -28,7 +28,7 @@ public class NumberInputView implements View.OnClickListener {
 
     private AlertDialog dialog;
 
-    private String decimalSeparator = ".";
+    private char decimalSeparator = '.';
 
     private LinearLayout titleContent;
 
@@ -97,8 +97,8 @@ public class NumberInputView implements View.OnClickListener {
             return;
         }
         DecimalFormatSymbols d = ((DecimalFormat) numberFormat).getDecimalFormatSymbols();
-        decimalSeparator = String.valueOf(d.getDecimalSeparator());
-        numPoint.setText(decimalSeparator);
+        decimalSeparator = d.getDecimalSeparator();
+        numPoint.setText(String.valueOf(decimalSeparator));
     }
 
     /**
@@ -117,25 +117,25 @@ public class NumberInputView implements View.OnClickListener {
         try {
             int i = v.getId();
             if (i == R.id.key_num_0) {
-                listener.inputValue("0");
+                listener.inputValue('0');
             } else if (i == R.id.key_num_1) {
-                listener.inputValue("1");
+                listener.inputValue('1');
             } else if (i == R.id.key_num_2) {
-                listener.inputValue("2");
+                listener.inputValue('2');
             } else if (i == R.id.key_num_3) {
-                listener.inputValue("3");
+                listener.inputValue('3');
             } else if (i == R.id.key_num_4) {
-                listener.inputValue("4");
+                listener.inputValue('4');
             } else if (i == R.id.key_num_5) {
-                listener.inputValue("5");
+                listener.inputValue('5');
             } else if (i == R.id.key_num_6) {
-                listener.inputValue("6");
+                listener.inputValue('6');
             } else if (i == R.id.key_num_7) {
-                listener.inputValue("7");
+                listener.inputValue('7');
             } else if (i == R.id.key_num_8) {
-                listener.inputValue("8");
+                listener.inputValue('8');
             } else if (i == R.id.key_num_9) {
-                listener.inputValue("9");
+                listener.inputValue('9');
             } else if (i == R.id.key_num_point) {
                 listener.inputValue(decimalSeparator);
             } else if (i == R.id.key_del) {
@@ -175,28 +175,26 @@ public class NumberInputView implements View.OnClickListener {
     }
 
     public void setTitle(String title) {
-        setTitle(title, null);
+        titleContent.setVisibility(View.VISIBLE);
+        titleLeft.setVisibility(View.VISIBLE);
+        titleLeft.setText(title);
     }
 
     public void setTitleRight(String title) {
-        setTitle(null, title);
+        titleContent.setVisibility(View.VISIBLE);
+        titleRight.setVisibility(View.VISIBLE);
+        titleRight.setText(title);
     }
 
-    public void setTitle(String left, String right) {
-        titleContent.setVisibility(View.VISIBLE);
-        titleLeft.setVisibility(View.VISIBLE);
-        titleRight.setVisibility(View.VISIBLE);
-        titleLeft.setText(left);
-        titleRight.setText(right);
-    }
+
 
     public void showMaxValue() {
         titleContent.setVisibility(View.VISIBLE);
         titleLeft.setVisibility(View.VISIBLE);
         titleRight.setVisibility(View.VISIBLE);
         if (Objects.isNull(numberFormat)) {
-            setTitle(null, String.valueOf(Double.valueOf(max).intValue()));
-        } else setTitle(null, numberFormat.format(max));
+            setTitleRight(String.valueOf(Double.valueOf(max).intValue()));
+        } else setTitleRight(numberFormat.format(max));
     }
 
     public void updateMinMax(double min, double max) {
@@ -214,7 +212,7 @@ public class NumberInputView implements View.OnClickListener {
 
     public interface AlertListener {
 
-        void inputValue(String value) throws ParseException;
+        void inputValue(char value) throws ParseException;
 
         void showMaxValue();
 
