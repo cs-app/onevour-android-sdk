@@ -7,6 +7,7 @@ import com.onevour.core.utilities.commons.ValueOf;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,19 +61,25 @@ public class BeanCopy {
         sb.append(clazzSource.getSimpleName());
         sb.append("To");
         sb.append(clazzTarget.getSimpleName());
+        // class copy key name
         String name = sb.toString();
+        // temp cached
         Set<String> sets = cached.get(name);
         if (Objects.isNull(sets)) {
             sets = new HashSet<>();
             List<Field> fieldSources = getAllModelFields(clazzSource);
             List<Field> fieldTargets = getAllModelFields(clazzTarget);
             for (Field field : fieldSources) {
-                // ignore field
+                // ignore field whitelist and transient
                 if (ignoreSet.contains(field.getName())) continue;
+                if (Modifier.isTransient(field.getModifiers())) continue;
                 // ignore name and type if not match
                 for (Field fieldTarget : fieldTargets) {
+                    // ignore field whitelist and transient
+                    if (ignoreSet.contains(fieldTarget.getName())) continue;
                     if (!field.getName().equalsIgnoreCase(fieldTarget.getName())) continue;
                     if (!field.getType().equals(fieldTarget.getType())) continue;
+                    if (Modifier.isTransient(fieldTarget.getModifiers())) continue;
                     try {
                         field.setAccessible(true);
                         fieldTarget.setAccessible(true);
