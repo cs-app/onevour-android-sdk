@@ -17,23 +17,10 @@ afterEvaluate {
         }
     }
 }
-/*
-publishing {
-   publications {
-       mavenJava(MavenPublication) {
-           groupId = 'com.onevour.core'
-           artifactId = 'sdk'
-           version = '0.0.3'
-       }
-   }
-}
-
-*/
 
 android {
     namespace 'com.onevour.core'
     compileSdk 33
-    // buildToolsVersion '30.0.3'
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 33

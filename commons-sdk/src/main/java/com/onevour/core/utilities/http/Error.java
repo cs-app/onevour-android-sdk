@@ -25,7 +25,7 @@ public class Error {
 
     public Error(int code) {
         this.code = code;
-        messageCode.append("HTTP ").append(code).append(" ").append(HttpStatusCode.getMessage(code)).append(" ");
+        messageCode.append("HTTP code ").append(code).append(" ").append(HttpStatusCode.getMessage(code)).append(" ");
     }
 
     public void setMessage(String errorMessage) {
@@ -70,7 +70,7 @@ public class Error {
         if (finalMessage.contains("http://") || finalMessage.contains("https://")) {
             return "Cannot connect to host";
         }
-        return withHttpStatus ? message.toString() : messageCode.toString() + " " + message.toString();
+        return withHttpStatus ? messageCode.toString() + " " + message.toString() : message.toString();
     }
 
     public enum HttpStatusCode {

@@ -15,6 +15,7 @@ import com.onevour.sdk.impl.modules.adapter.controllers.AdapterSampleActivity;
 import com.onevour.sdk.impl.modules.chat.ChatActivity;
 import com.onevour.sdk.impl.modules.dinjection.controllers.DInjectionActivity;
 import com.onevour.sdk.impl.modules.form.controllers.DeepLinkActivity;
+import com.onevour.sdk.impl.modules.form.controllers.FormCopyActivity;
 import com.onevour.sdk.impl.modules.form.controllers.FormDatabaseActivity;
 import com.onevour.sdk.impl.modules.form.controllers.FormSimpleActivity;
 import com.onevour.sdk.impl.modules.formscroll.controllers.FormScrollActivity;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity implements SampleAdapter.SampleHo
         samples.add(new SampleMV("Fragment Bottom", FragmentBottomActivity.class));
         samples.add(new SampleMV("Fragment Bottom Navigation", FragmentBottomNavigationActivity.class));
         samples.add(new SampleMV("Form Simple", FormSimpleActivity.class));
+        samples.add(new SampleMV("Form Copy", FormCopyActivity.class));
         samples.add(new SampleMV("Form Scroll", FormScrollActivity.class));
         samples.add(new SampleMV("Form Deep Link", DeepLinkActivity.class));
         samples.add(new SampleMV("Form Database", FormDatabaseActivity.class));

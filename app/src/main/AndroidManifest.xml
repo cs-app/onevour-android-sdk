@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".modules.form.controllers.FormCopyActivity"
+            android:exported="false" />
+        <activity
             android:name=".modules.dinjection.controllers.DInjectionActivity"
             android:exported="false" />
         <activity
