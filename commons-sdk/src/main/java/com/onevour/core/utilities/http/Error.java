@@ -17,10 +17,15 @@ public class Error {
 
     private final StringBuilder message = new StringBuilder();
 
+    private final StringBuilder messageCode = new StringBuilder();
+
+    private int code = 0;
+
     private Exception exception;
 
     public Error(int code) {
-        message.append("HTTP ").append(code).append(" ").append(HttpStatusCode.getMessage(code));
+        this.code = code;
+        messageCode.append("HTTP ").append(code).append(" ").append(HttpStatusCode.getMessage(code)).append(" ");
     }
 
     public void setMessage(String errorMessage) {
@@ -57,11 +62,15 @@ public class Error {
     }
 
     public String getMessage() {
+        return getMessage(false);
+    }
+
+    public String getMessage(boolean withHttpStatus) {
         String finalMessage = message.toString();
-        if(finalMessage.contains("http://")||finalMessage.contains("https://")) {
+        if (finalMessage.contains("http://") || finalMessage.contains("https://")) {
             return "Cannot connect to host";
         }
-        return message.toString();
+        return withHttpStatus ? message.toString() : messageCode.toString() + " " + message.toString();
     }
 
     public enum HttpStatusCode {
