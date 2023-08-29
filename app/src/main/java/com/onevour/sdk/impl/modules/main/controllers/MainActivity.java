@@ -12,6 +12,7 @@ import com.onevour.core.utilities.commons.ValueOf;
 import com.onevour.sdk.impl.applications.configuration.AppDatabase;
 import com.onevour.sdk.impl.databinding.ActivityMainBinding;
 import com.onevour.sdk.impl.modules.adapter.controllers.AdapterSampleActivity;
+import com.onevour.sdk.impl.modules.bluetooth.BluetoothActivity;
 import com.onevour.sdk.impl.modules.chat.ChatActivity;
 import com.onevour.sdk.impl.modules.dinjection.controllers.DInjectionActivity;
 import com.onevour.sdk.impl.modules.form.controllers.DeepLinkActivity;
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity implements SampleAdapter.SampleHo
         samples.add(new SampleMV("MVVM", MVVMActivity.class));
         samples.add(new SampleMV("Preference", PreferenceActivity.class));
         samples.add(new SampleMV("Injection", DInjectionActivity.class));
+        samples.add(new SampleMV("Bluetooth", BluetoothActivity.class));
         samples.add(new SampleMV("Chat", ChatActivity.class));
         adapter.setValue(samples);
         session.saveCollection("MENU", samples);
