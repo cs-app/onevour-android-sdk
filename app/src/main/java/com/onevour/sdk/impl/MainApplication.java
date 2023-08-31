@@ -26,6 +26,9 @@ public class MainApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         printerManager.setContext(this);
+        printerManager.proceedDiscovery();
+        printerManager.startServer();
+
     }
 
     // @Override protected void attachBaseContext(Context context) {}

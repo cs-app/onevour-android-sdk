@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.onevour.core.utilities.helper.UIHelper;
 import com.onevour.core.components.recycleview.AdapterGeneric;
@@ -20,8 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class AdapterSampleActivity extends AppCompatActivity implements AdapterGeneric.AdapterListener<SampleData>, RecyclerViewScrollListener.PaginationListener<SampleData> {
+public class AdapterSampleActivity extends AppCompatActivity implements AdapterGeneric.AdapterListener<SampleData>, RecyclerViewScrollListener.PaginationListener<SampleData>, AdapterSampleData.HolderSampleData.Listener {
 
     private String TAG = "MA-APP-AD";
 
@@ -35,13 +35,18 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
         binding = ActivityMasterSampleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         UIHelper.initRecyclerView(binding.rvSampleData, adapter, this, true);
+        adapter.setHolderListener(this);
         init();
     }
 
     private void init() {
         List<SampleDataMV> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            list.add(new SampleDataMV(new SampleData("next : ".concat(String.valueOf(i)))));
+            if (i % 2 == 0) {
+                list.add(new SampleDataMV(1, new SampleData("next : ".concat(String.valueOf(i)))));
+            } else {
+                list.add(new SampleDataMV(2, new SampleData("next : ".concat(String.valueOf(i)))));
+            }
         }
         adapter.addMore(list);
     }
@@ -72,5 +77,10 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
         requestNextPage(false);
         Log.d(TAG, "load more from last value: ".concat(sampleData.getName()));
 
+    }
+
+    @Override
+    public void onSelectedText(String value) {
+        Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
     }
 }

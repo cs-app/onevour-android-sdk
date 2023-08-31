@@ -1,4 +1,4 @@
-package com.onevour.sdk.impl.modules.bluetooth.services;
+package com.onevour.sdk.impl.modules.bluetooth.services.v1;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -15,7 +15,6 @@ public class PrinterService extends IntentService {
     private static final String TAG = PrinterService.class.getSimpleName();
 
     private PrinterManager pm;
-
 
     public PrinterService() {
         super(TAG);
@@ -34,9 +33,9 @@ public class PrinterService extends IntentService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
         pm = PrinterManager.newInstance();
+        Log.d(TAG, "onStartCommand");
         return START_STICKY;
     }
 

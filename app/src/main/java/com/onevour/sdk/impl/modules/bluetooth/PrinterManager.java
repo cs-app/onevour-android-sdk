@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,9 +33,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PrinterManager {
 
-    RefSession refSession = new RefSession();
-
     private final static String TAG = PrinterManager.class.getSimpleName();
+
+    private final UUID uuid = UUID.fromString("00000000-0000-1000-8000-00805f9b34fb");
+
+    private final RefSession refSession = new RefSession();
 
     private Context context;
 
@@ -67,6 +71,7 @@ public class PrinterManager {
 
     private Listener listener;
 
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
@@ -84,9 +89,12 @@ public class PrinterManager {
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
                 isConnected.set(false);
                 clearSocketAndStream();
+                showToast("acl disconnected request");
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 isConnected.set(false);
                 clearSocketAndStream();
+                startServer();
+                showToast("acl disconnected");
             }
         }
 
@@ -112,6 +120,8 @@ public class PrinterManager {
     }
 
 
+    ServerStartThread serverStart;
+
     /**
      * init bluetooth connection
      * 1. clear properties bt and stream
@@ -126,9 +136,11 @@ public class PrinterManager {
 
         if (!isConnected.get()) reconnect();
         if (null == bluetoothAdapter) return;
+        if (Objects.nonNull(serverStart)) serverStart.cancel();
+        serverStart = new ServerStartThread(bluetoothAdapter);
+        serverStart.start();
         Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
         if (devices.isEmpty()) return;
-
         String configPrinter = refSession.findString("device_bt_address");
         isFound.set(false);
         for (BluetoothDevice device : devices) {
@@ -165,14 +177,11 @@ public class PrinterManager {
             Log.e(TAG, "Bluetooth not supported!!");
             return;
         }
-//        ServerStartThread serverStart = new ServerStartThread(bluetoothAdapter);
-//        serverStart.start();
+
         if (bluetoothAdapter.isDiscovering()) {
             bluetoothAdapter.cancelDiscovery();
         }
     }
-
-    UUID uuid = UUID.fromString("00000000-0000-1000-8000-00805f9b34fb");
 
     @SuppressLint("MissingPermission")
     private void establishConnection() {
@@ -182,8 +191,6 @@ public class PrinterManager {
                     if (nonNull(socket) && socket.isConnected()) {
                         socket.close();
                     }
-                    // UUID uuid = device.getUuids()[0].getUuid();
-
                     if (connection(device, uuid)) {
                         outputStream = socket.getOutputStream();
                         inputStream = socket.getInputStream();
@@ -232,9 +239,7 @@ public class PrinterManager {
             }
             outputStream = null;
             inputStream = null;
-            //writer = null;
             socket = null;
-            //FirebaseCrashlytics.getInstance().recordException(e);
             return false;
         }
     }
@@ -273,14 +278,13 @@ public class PrinterManager {
     private boolean nowAllowPermit() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "not permit bluetooth");
-            message("Bluetooth not permit");
+
             return true;
         }
         // android >= 12
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "not permit bluetooth scan");
-                message("Bluetooth scan not permit");
                 return true;
             }
         }
@@ -316,12 +320,29 @@ public class PrinterManager {
         }
     }
 
+    public boolean isConnected() {
+        return Objects.nonNull(outputStream);
+    }
+
+    public void sendMessage(String message) {
+        if (Objects.isNull(outputStream)) {
+            Log.d(TAG, "socket not defined");
+            return;
+        }
+        try {
+            outputStream.write(message.getBytes());
+        } catch (IOException e) {
+            clearSocketAndStream();
+            Log.d(TAG, "socket error " + e.getMessage(), e);
+        }
+    }
+
     /**
      * listen data for stream
      */
     private void beginListenForData() {
         try {
-            final byte delimiter = 10;
+            final byte delimiter = 10; // ascii code new line
             stopWorker.set(false);
             readBufferPosition = 0;
             readBuffer = new byte[1024];
@@ -329,22 +350,15 @@ public class PrinterManager {
                 while (!Thread.currentThread().isInterrupted() && !stopWorker.get()) {
                     if (nonNull(inputStream)) {
                         try {
-                            int bytesAvailable = inputStream.available();
-                            if (bytesAvailable > 0) {
-                                byte[] packetBytes = new byte[bytesAvailable];
-                                inputStream.read(packetBytes);
-                                for (int i = 0; i < bytesAvailable; i++) {
-                                    byte b = packetBytes[i];
-                                    if (b == delimiter) {
-                                        byte[] encodedBytes = new byte[readBufferPosition];
-                                        System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
-                                        final String data = new String(encodedBytes, "US-ASCII");
-                                        readBufferPosition = 0;
-                                    } else {
-                                        readBuffer[readBufferPosition++] = b;
-                                    }
-                                }
+                            InputStream inputStreamTmp = socket.getInputStream();
+                            while (inputStream.available() == 0) {
+                                inputStreamTmp = socket.getInputStream();
                             }
+                            int available = inputStreamTmp.available();
+                            byte[] bytes = new byte[available];
+                            inputStreamTmp.read(bytes, 0, available);
+                            String string = new String(bytes);
+                            showToast(string);
                         } catch (NullPointerException ex) {
                             Log.e(TAG, "start listen data null pointer, " + ex.getMessage());
                             stopWorker.set(true);
@@ -361,12 +375,12 @@ public class PrinterManager {
         }
     }
 
-    private boolean nonNull(Object o) {
-        return null != o;
+    private void showToast(String data) {
+        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "receive " + data, Toast.LENGTH_SHORT).show());
     }
 
-    private void message(String value) {
-        Toast.makeText(context, value, Toast.LENGTH_LONG).show();
+    private boolean nonNull(Object o) {
+        return null != o;
     }
 
 
@@ -378,57 +392,82 @@ public class PrinterManager {
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
 
 
+    public void startServer() {
+        if (Objects.isNull(bluetoothAdapter)) {
+            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        }
+        if (Objects.nonNull(serverStart)) serverStart.cancel();
+        serverStart = new ServerStartThread(bluetoothAdapter);
+        serverStart.start();
+    }
+
+    ConnectThread connectThread;
+
+    @SuppressLint("MissingPermission")
+    public void connectToServer() {
+        if (Objects.isNull(bluetoothAdapter)) {
+            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        }
+        Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
+        if (devices.isEmpty()) return;
+        String configPrinter = refSession.findString("device_bt_address");
+        isFound.set(false);
+        for (BluetoothDevice device : devices) {
+            if (null == device.getAddress()) continue;
+            Log.d(TAG, "device name " + device.getName());
+            if (device.getAddress().equals(configPrinter)) {
+                connectThread = new ConnectThread(device);
+                connectThread.start();
+                device = device;
+//                isFound.set(true);
+//                Log.d(TAG, "device found with config : " + device.getAddress());
+                break;
+            } else {
+                this.device = null;
+                isFound.set(false);
+            }
+        }
+
+    }
+
+
     @SuppressLint("MissingPermission")
     private class ServerStartThread extends Thread {
+
         private final BluetoothServerSocket mmServerSocket;
 
         public ServerStartThread(BluetoothAdapter bluetoothAdapter) {
             BluetoothServerSocket tmp = null;
             try {
-                tmp = bluetoothAdapter.listenUsingRfcommWithServiceRecord("ONVBTCHAT", uuid);
+                tmp = bluetoothAdapter.listenUsingRfcommWithServiceRecord("OnevourBtChat", uuid);
+
             } catch (IOException e) {
                 Log.d(TAG, "service start error", e);
             }
             this.mmServerSocket = tmp;
         }
 
-
         public void run() {
-            setName("AcceptThread");
             BluetoothSocket socket = null;
-            // Listen to the server socket if we're not connected
-            while (mState != STATE_CONNECTED) {
+            // Keep listening until exception occurs or a socket is returned
+            while (true) {
                 try {
-                    // This is a blocking call and will only return on a
-                    // successful connection or an exception
                     socket = mmServerSocket.accept();
                 } catch (IOException e) {
-                    Log.e(TAG, "Socket Type: accept() failed", e);
                     break;
                 }
                 // If a connection was accepted
                 if (socket != null) {
-                    synchronized (PrinterManager.this) {
-                        switch (mState) {
-                            case STATE_LISTEN:
-                            case STATE_CONNECTING:
-                                // Situation normal. Start the connected thread.
-                                // connected(socket, socket.getRemoteDevice(), mSocketType);
-                                break;
-                            case STATE_NONE:
-                            case STATE_CONNECTED:
-                                // Either not ready or already connected. Terminate new socket.
-                                try {
-                                    socket.close();
-                                } catch (IOException e) {
-                                    Log.e(TAG, "Could not close unwanted socket", e);
-                                }
-                                break;
-                        }
+                    // Do work to manage the connection (in a separate thread)
+                    manageConnectedSocket(socket);
+                    try {
+                        mmServerSocket.close();
+                    } catch (IOException e) {
+
                     }
+                    break;
                 }
             }
-            // if (D) Log.i(TAG, "END mAcceptThread, socket Type: " + mSocketType);
         }
 
         public void cancel() {
@@ -439,6 +478,78 @@ public class PrinterManager {
                 // Log.e(TAG, "Socket Type" + mSocketType + "close() of server failed", e);
             }
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private class ConnectThread extends Thread {
+
+        private final BluetoothSocket mmSocket;
+
+        private final BluetoothDevice mmDevice;
+
+
+        public ConnectThread(BluetoothDevice device) {
+            // Use a temporary object that is later assigned to mmSocket,
+            // because mmSocket is final
+            BluetoothSocket tmp = null;
+            mmDevice = device;
+
+            // Get a BluetoothSocket to connect with the given BluetoothDevice
+            try {
+                // MY_UUID is the app's UUID string, also used by the server code
+                tmp = device.createRfcommSocketToServiceRecord(uuid);
+            } catch (IOException e) {
+            }
+            mmSocket = tmp;
+        }
+
+        public void run() {
+            // Cancel discovery because it will slow down the connection
+            bluetoothAdapter.cancelDiscovery();
+
+            try {
+                // Connect the device through the socket. This will block
+                // until it succeeds or throws an exception
+                mmSocket.connect();
+            } catch (IOException connectException) {
+                // Unable to connect; close the socket and get out
+                try {
+                    mmSocket.close();
+                } catch (IOException closeException) {
+                }
+                return;
+            }
+
+            // Do work to manage the connection (in a separate thread)
+            manageConnectedSocket(mmSocket);
+        }
+
+        /**
+         * Will cancel an in-progress connection, and close the socket
+         */
+        public void cancel() {
+            try {
+                mmSocket.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    Handler handler = new Handler(Looper.getMainLooper());
+
+    private void manageConnectedSocket(BluetoothSocket socket) {
+        try {
+            handler.post(() -> Toast.makeText(context, "socket connected", Toast.LENGTH_SHORT).show());
+
+            this.socket = socket;
+            outputStream = socket.getOutputStream();
+            inputStream = socket.getInputStream();
+            beginListenForData();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public interface Listener {

@@ -31,6 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".modules.bluetooth.BluetoothActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".modules.form.controllers.FormCopyActivity"
@@ -68,7 +69,7 @@
         </activity>
 
         <service
-            android:name=".modules.bluetooth.services.PrinterService"
+            android:name=".modules.bluetooth.services.v1.PrinterService"
             android:exported="true"
             android:stopWithTask="true"
             tools:node="merge" />

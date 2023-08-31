@@ -161,6 +161,8 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity implements Ada
 
     }
 
+    UUID uuidSender = UUID.fromString("00000000-0000-1000-8000-00805f9b34fb");
+
     @Override
     public void onSelectedBluetoothDevice(BluetoothDevice device) {
         toast("selected device " + device.getName() + " | " + device.getAddress());
@@ -187,8 +189,8 @@ public class BluetoothDiscoveryActivity extends AppCompatActivity implements Ada
                 if (Objects.nonNull(socket) && socket.isConnected()) {
                     socket.close();
                 }
-                UUID uuid = device.getUuids()[0].getUuid();
-                UUID uuidSender = UUID.fromString("00000000-0000-1000-8000-00805f9b34fb");
+                //UUID uuid = device.getUuids()[0].getUuid();
+
                 socket = device.createRfcommSocketToServiceRecord(uuidSender);
                 //socket = device.createRfcommSocketToServiceRecord(MY_UUID);
 

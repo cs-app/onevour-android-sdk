@@ -121,4 +121,9 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements A
     public void loadMoreItems(SampleMV sampleMV) {
         requestNextPage(false);
     }
+
+    @Override
+    public void onSelectedText(String value) {
+
+    }
 }
