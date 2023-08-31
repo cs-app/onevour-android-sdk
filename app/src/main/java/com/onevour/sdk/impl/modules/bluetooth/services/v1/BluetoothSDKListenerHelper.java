@@ -9,6 +9,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.bluetooth.BluetoothDevice;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BluetoothSDKListenerHelper {
@@ -16,17 +18,20 @@ public class BluetoothSDKListenerHelper {
     private static BluetoothSDKBroadcastReceiver mBluetoothSDKBroadcastReceiver;
 
     public static class BluetoothSDKBroadcastReceiver extends BroadcastReceiver {
-        private BluetoothSDKListener mGlobalListener;
+
+        private List<BluetoothSDKListener> mGlobalListeners = new ArrayList<>();
 
         public void setBluetoothSDKListener(BluetoothSDKListener listener) {
-            mGlobalListener = listener;
+            mGlobalListeners.add(listener);
+//            mGlobalListener = listener;
         }
 
         public boolean removeBluetoothSDKListener(BluetoothSDKListener listener) {
-            if (mGlobalListener == listener) {
-                mGlobalListener = null;
-            }
-            return mGlobalListener == null;
+            return mGlobalListeners.remove(listener);
+//            if (mGlobalListener == listener) {
+//                mGlobalListener = null;
+//            }
+//            return mGlobalListener == null;
         }
 
         @Override
@@ -36,28 +41,36 @@ public class BluetoothSDKListenerHelper {
 
             switch (intent.getAction()) {
                 case BluetoothUtils.ACTION_DEVICE_FOUND:
-                    mGlobalListener.onDeviceDiscovered(device);
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onDeviceDiscovered(device);
                     break;
                 case BluetoothUtils.ACTION_DISCOVERY_STARTED:
-                    mGlobalListener.onDiscoveryStarted();
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onDiscoveryStarted();
                     break;
                 case BluetoothUtils.ACTION_DISCOVERY_STOPPED:
-                    mGlobalListener.onDiscoveryStopped();
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onDiscoveryStopped();
                     break;
                 case BluetoothUtils.ACTION_DEVICE_CONNECTED:
-                    mGlobalListener.onDeviceConnected(device);
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onDeviceConnected(device);
                     break;
                 case BluetoothUtils.ACTION_MESSAGE_RECEIVED:
-                    mGlobalListener.onMessageReceived(device, message);
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onMessageReceived(device, message);
                     break;
                 case BluetoothUtils.ACTION_MESSAGE_SENT:
-                    mGlobalListener.onMessageSent(device);
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onMessageSent(device);
                     break;
                 case BluetoothUtils.ACTION_CONNECTION_ERROR:
-                    mGlobalListener.onError(message);
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onError(message);
                     break;
                 case BluetoothUtils.ACTION_DEVICE_DISCONNECTED:
-                    mGlobalListener.onDeviceDisconnected();
+                    for (BluetoothSDKListener mGlobalListener : mGlobalListeners)
+                        mGlobalListener.onDeviceDisconnected();
                     break;
             }
         }

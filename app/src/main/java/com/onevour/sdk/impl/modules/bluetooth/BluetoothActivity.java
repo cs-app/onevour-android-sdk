@@ -2,6 +2,8 @@ package com.onevour.sdk.impl.modules.bluetooth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,17 +19,19 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.onevour.core.utilities.commons.RefSession;
 import com.onevour.core.utilities.commons.ValueOf;
+import com.onevour.core.utilities.helper.UIHelper;
 import com.onevour.sdk.impl.databinding.ActivityBluetoothBinding;
+import com.onevour.sdk.impl.modules.bluetooth.components.AdapterMessage;
 import com.onevour.sdk.impl.modules.bluetooth.services.v1.BluetoothSDKListener;
 import com.onevour.sdk.impl.modules.bluetooth.services.v1.BluetoothSDKListenerHelper;
 import com.onevour.sdk.impl.modules.bluetooth.services.v1.BluetoothSDKService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 // https://stackoverflow.com/questions/65636725/bluetooth-le-send-string-data-between-android-devices-via-application
@@ -40,6 +44,7 @@ import java.util.UUID;
 // https://www.programcreek.com/java-api-examples/?code=zeevy%2Fgrblcontroller%2Fgrblcontroller-master%2Fapp%2Fsrc%2Fmain%2Fjava%2Fin%2Fco%2Fgorest%2Fgrblcontroller%2Fservice%2FGrblBluetoothSerialService.java
 // https://github.com/zeevy/grblcontroller
 // https://www.c-sharpcorner.com/UploadFile/0e8478/connecting-devices-as-client-and-server-architecture-in-andr/
+// https://github.com/android/connectivity-samples/tree/master/BluetoothChat
 
 public class BluetoothActivity extends AppCompatActivity {
 
@@ -49,18 +54,18 @@ public class BluetoothActivity extends AppCompatActivity {
 
     private ActivityBluetoothBinding binding;
 
-    //
-    private BluetoothSDKService mService;
-
-    private PrinterManager pm = PrinterManager.newInstance();
+    private BluetoothSDKService bluetoothSDKService;
 
     private final UUID uuid = UUID.fromString("00000000-0000-1000-8000-00805f9b34fb");
+
+    private final AdapterMessage messages = new AdapterMessage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBluetoothBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        UIHelper.initRecyclerView(binding.rvMessage, messages);
         isGrantPermission(this);
         infoDevice();
         binding.stop.setOnClickListener(v -> {
@@ -69,46 +74,42 @@ public class BluetoothActivity extends AppCompatActivity {
         });
 
         binding.start.setOnClickListener(v -> {
-            // pm.startServer();
+            bluetoothSDKService.connectToServer();
         });
 
 
         binding.send.setOnClickListener(v -> {
-            // PrinterManager pm = PrinterManager.newInstance();
-            // pm.setContext(this);
-            // pm.initBluetoothConnection();
-            // startService(new Intent(this, BluetoothSDKService.class));
-            if (pm.isConnected()) {
-                String message = binding.message.getText().toString();
-                pm.sendMessage(message);
-                binding.message.setText(null);
-            } else {
-                Toast.makeText(this, "tryconnect to server", Toast.LENGTH_SHORT).show();
-                pm.connectToServer();
-            }
+            String message = binding.message.getText().toString();
+            bluetoothSDKService.write(message);
+            binding.message.setText(null);
+            scrollToBottom(binding.rvMessage);
         });
-        binding.server.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("MissingPermission")
-            @Override
-            public void onClick(View v) {
-
-//                BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//                try {
-//                    bluetoothAdapter.listenUsingRfcommWithServiceRecord("ONVBTCHAT", uuid);
-//                    binding.server.setText("Server Start");
-//                } catch (IOException e) {
-//                    binding.server.setText("Server Error");
-//                    throw new RuntimeException(e);
-//                }
-
-            }
-        });
-        binding.server.setVisibility(View.GONE);
         //
 
-        // bindBluetoothService();
+        bindBluetoothService();
         // Register Listener
-        // BluetoothSDKListenerHelper.registerBluetoothSDKListener(getApplicationContext(), mBluetoothListener);
+        // binding.connectionStatus.setText(bluetoothSDKService.getConnectionStatus());
+        BluetoothSDKListenerHelper.registerBluetoothSDKListener(getApplicationContext(), mBluetoothListener);
+    }
+
+    private void scrollToBottom(RecyclerView recyclerView) {
+        // scroll to last item to get the view of last item
+        final LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        final RecyclerView.Adapter adapter = recyclerView.getAdapter();
+        final int lastItemPosition = adapter.getItemCount() - 1;
+
+        layoutManager.scrollToPositionWithOffset(lastItemPosition, 0);
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                // then scroll to specific offset
+                View target = layoutManager.findViewByPosition(lastItemPosition);
+                if (target != null) {
+                    int offset = recyclerView.getMeasuredHeight() - target.getMeasuredHeight();
+                    layoutManager.scrollToPositionWithOffset(lastItemPosition, offset);
+                }
+            }
+        });
     }
 
     @Override
@@ -131,7 +132,7 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // BluetoothSDKListenerHelper.unregisterBluetoothSDKListener(getApplicationContext(), mBluetoothListener);
+        BluetoothSDKListenerHelper.unregisterBluetoothSDKListener(getApplicationContext(), mBluetoothListener);
     }
 
     /**
@@ -151,7 +152,9 @@ public class BluetoothActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             BluetoothSDKService.LocalBinder binder = (BluetoothSDKService.LocalBinder) service;
-            mService = binder.getService();
+            bluetoothSDKService = binder.getService();
+            binding.connectionStatus.setText(bluetoothSDKService.getConnectionStatus());
+            binding.start.setEnabled(0 == bluetoothSDKService.getConnectionStatusCode());
             Log.d(TAG, "onServiceConnected");
         }
 
@@ -159,58 +162,86 @@ public class BluetoothActivity extends AppCompatActivity {
         public void onServiceDisconnected(ComponentName componentName) {
             // Implement your logic here
             Log.d(TAG, "onServiceDisconnected(ComponentName componentName)");
-            mService = null;
+            bluetoothSDKService = null;
         }
     };
 
 
+    @SuppressLint("MissingPermission")
     private BluetoothSDKListener mBluetoothListener = new BluetoothSDKListener() {
 
         @Override
         public void onDiscoveryStarted() {
             // Implement your logic here
             Log.d(TAG, "onDiscoveryStarted");
+            messages.addMore("discover start");
+            scrollToBottom(binding.rvMessage);
         }
 
         @Override
         public void onDiscoveryStopped() {
             // Implement your logic here
             Log.d(TAG, "onDiscoveryStopped");
+            messages.addMore("discover stop");
+            scrollToBottom(binding.rvMessage);
         }
 
         @Override
         public void onDeviceDiscovered(BluetoothDevice device) {
             // Implement your logic here
             Log.d(TAG, "onDeviceDiscovered(BluetoothDevice device)");
+            messages.addMore(device.getName() + " discover");
+            scrollToBottom(binding.rvMessage);
         }
 
         @Override
         public void onDeviceConnected(BluetoothDevice device) {
             // Do stuff when connected
             Log.d(TAG, "onDeviceConnected(BluetoothDevice device)");
+            if (Objects.isNull(device)) {
+                messages.addMore("connected as server");
+            } else {
+                messages.addMore("connected as client");
+            }
+            scrollToBottom(binding.rvMessage);
+            binding.connectionStatus.setText(bluetoothSDKService.getConnectionStatus());
+            binding.start.setEnabled(0 == bluetoothSDKService.getConnectionStatusCode());
         }
+
 
         @Override
         public void onMessageReceived(BluetoothDevice device, String message) {
             // Implement your logic here
             Log.d(TAG, "onMessageReceived(BluetoothDevice device, String message)");
+            Log.d(TAG, "receive message on listener " + message);
+            messages.addMore(device.getName() + "\n" + message);
+            scrollToBottom(binding.rvMessage);
         }
 
         @Override
         public void onMessageSent(BluetoothDevice device) {
             // Implement your logic here
             Log.d(TAG, "onMessageSent(BluetoothDevice device)");
+            messages.addMore("message sent");
+            scrollToBottom(binding.rvMessage);
         }
 
         @Override
         public void onError(String message) {
             // Implement your logic here
-            Log.d(TAG, "onError(String message)");
+            Log.d(TAG, "ui " + message);
+            messages.addMore("error " + message);
+            binding.connectionStatus.setText(bluetoothSDKService.getConnectionStatus());
+            binding.start.setEnabled(0 == bluetoothSDKService.getConnectionStatusCode());
+            scrollToBottom(binding.rvMessage);
         }
 
         @Override
         public void onDeviceDisconnected() {
             Log.d(TAG, "onDeviceDisconnected()");
+            messages.addMore("device disconnected");
+            binding.start.setEnabled(0 == bluetoothSDKService.getConnectionStatusCode());
+            scrollToBottom(binding.rvMessage);
         }
 
     };
@@ -272,7 +303,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(activity, new String[]{permission}, 100);
             }
         }
-
     }
 
 }

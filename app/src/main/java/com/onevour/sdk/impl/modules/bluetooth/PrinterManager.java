@@ -548,8 +548,6 @@ public class PrinterManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     public interface Listener {
