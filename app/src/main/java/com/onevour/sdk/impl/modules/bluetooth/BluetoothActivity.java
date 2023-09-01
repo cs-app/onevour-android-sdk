@@ -20,14 +20,18 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.onevour.core.utilities.commons.RefSession;
 import com.onevour.core.utilities.commons.ValueOf;
 import com.onevour.core.utilities.helper.UIHelper;
+import com.onevour.core.utilities.json.gson.GsonHelper;
 import com.onevour.sdk.impl.databinding.ActivityBluetoothBinding;
 import com.onevour.sdk.impl.modules.bluetooth.components.AdapterMessage;
 import com.onevour.sdk.impl.modules.bluetooth.services.v1.BluetoothSDKListener;
 import com.onevour.sdk.impl.modules.bluetooth.services.v1.BluetoothSDKListenerHelper;
 import com.onevour.sdk.impl.modules.bluetooth.services.v1.BluetoothSDKService;
+import com.onevour.sdk.impl.modules.form.controllers.DeeplinkResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +73,7 @@ public class BluetoothActivity extends AppCompatActivity {
         isGrantPermission(this);
         infoDevice();
         binding.stop.setOnClickListener(v -> {
+            startActivity(new Intent(this, BluetoothDiscoveryActivity.class));
             // stopService(new Intent(this, BluetoothSDKService.class));
             //pm.connectToServer();
         });
@@ -208,13 +213,41 @@ public class BluetoothActivity extends AppCompatActivity {
             binding.start.setEnabled(0 == bluetoothSDKService.getConnectionStatusCode());
         }
 
+        StringBuilder sb = new StringBuilder();
+        boolean isJson = false;
+
 
         @Override
         public void onMessageReceived(BluetoothDevice device, String message) {
             // Implement your logic here
             Log.d(TAG, "onMessageReceived(BluetoothDevice device, String message)");
             Log.d(TAG, "receive message on listener " + message);
-            messages.addMore(device.getName() + "\n" + message);
+            String messageTrim = message.trim();
+            if (messageTrim.startsWith("{")) {
+                isJson = true;
+                sb.setLength(0);
+                sb.append(messageTrim);
+            } else if (messageTrim.endsWith("}")) {
+                sb.append(messageTrim);
+                DeeplinkResult deeplinkResult = GsonHelper.gson.fromJson(sb.toString(), DeeplinkResult.class);
+                Gson gson = new GsonBuilder()
+                        .serializeNulls()
+                        .setPrettyPrinting()
+                        .create();
+                deeplinkResult.setFace(null);
+                deeplinkResult.setSignature(null);
+                deeplinkResult.setFp(null);
+                messages.addMore(gson.toJson(deeplinkResult));
+                isJson = false;
+            } else {
+                if (isJson) {
+                    sb.append(messageTrim);
+                } else {
+                    messages.addMore(device.getName() + "\n" + message);
+                }
+
+            }
+
             scrollToBottom(binding.rvMessage);
         }
 
