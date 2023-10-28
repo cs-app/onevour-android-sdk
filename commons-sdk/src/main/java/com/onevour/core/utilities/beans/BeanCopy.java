@@ -2,6 +2,7 @@ package com.onevour.core.utilities.beans;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.onevour.core.utilities.commons.ValueOf;
 
 import java.lang.reflect.Constructor;
@@ -25,6 +26,13 @@ public class BeanCopy {
     private static final String TAG = BeanCopy.class.getSimpleName();
 
     private static final Map<String, Set<String>> cached = new HashMap<>();
+
+    public static <S, T> T valueGson(S source, Class<T> target) {
+        if (ValueOf.isNull(source)) throw new NullPointerException();
+        Gson gson = new Gson();
+        String json = gson.toJson(source);
+        return gson.fromJson(json, target);
+    }
 
     public static <S, T> T value(S source, Class<T> target, String... ignore) {
         if (ValueOf.isNull(source)) throw new NullPointerException();
