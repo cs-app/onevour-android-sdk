@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
@@ -33,23 +35,35 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     private final Map<String, HolderGeneric> cached = new HashMap<>();
 
+    private boolean isLoader = false;
+
     private ArrayList<E> adapterList = new ArrayList<>();
 
     private final int VIEW_CONTENT = 1;
 
     private final int VIEW_LOADER = 0;
 
-    private boolean isLoader;
-
     private final Map<Integer, Class> holders = new HashMap<>();
-
-    private final Map<Integer, Integer> layoutHolders = new HashMap<>();
 
     private final Map<Integer, Class> layoutHolderBindings = new HashMap<>();
 
     private final Map<Integer, Integer> typeHolders = new HashMap<>();
 
     private final List<HolderGeneric.Listener> holderListener = new ArrayList<>();
+
+    private DiffUtil.ItemCallback<E> diffCallback = new DiffUtil.ItemCallback<E>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull E oldItem, @NonNull E newItem) {
+            return false;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull E oldItem, @NonNull E newItem) {
+            return false;
+        }
+    };
+
+    private AsyncListDiffer<E> asyncListDiffer = new AsyncListDiffer<>(this, diffCallback);
 
     protected AdapterGeneric() {
         registerHolder();
@@ -67,6 +81,10 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
      */
     protected <VH extends HolderGeneric> void registerBindView(Class<VH> holder) {
         registerBindView(1, holder);
+    }
+
+    protected void registerAsyncListDiffer(AsyncListDiffer<E> asyncListDiffer) {
+        this.asyncListDiffer = asyncListDiffer;
     }
 
     protected <VH extends HolderGeneric> void registerBindView(int type, Class<VH> holder) {
@@ -161,17 +179,19 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         if (isLoader) {
             if (size > 0 && ValueOf.nonNull(this.adapterList.get(size - 1))) {
                 this.adapterList.add(null);
-                notifyItemInserted(size);
+                //notifyItemInserted(size);
             } else if (size == 0) {
                 this.adapterList.add(null);
-                notifyItemInserted(size);
+                //notifyItemInserted(size);
             }
+
         } else {
             if (size > 0 && this.adapterList.get(size - 1) == null) {
                 this.adapterList.remove(size - 1);
-                notifyItemRemoved(this.adapterList.size());
+                // notifyItemRemoved(this.adapterList.size());
             }
         }
+        this.asyncListDiffer.submitList(adapterList);
     }
 
     public void addMore(E o) {
@@ -179,9 +199,12 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
             Log.w(TAG, "cannot insert null value!");
             return;
         }
-        int size = this.adapterList.size();
+//         int size = this.adapterList.size();
+//         this.adapterList.add(o);
+//         notifyItemRangeInserted(size, size + 1);
+        //
         this.adapterList.add(o);
-        notifyItemRangeInserted(size, size + 1);
+        this.asyncListDiffer.submitList(adapterList);
     }
 
     public void addMore(final List<E> adapterList) {
@@ -190,10 +213,12 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     public void addMore(final List<E> adapterList, boolean isRemoveLoader) {
         if (isRemoveLoader) removeLoader();
-        int start = this.adapterList.size();
+//        int start = this.adapterList.size();
+//        this.adapterList.addAll(adapterList);
+//        int newSize = adapterList.size();
+//        notifyItemRangeInserted(start, newSize);
         this.adapterList.addAll(adapterList);
-        int newSize = adapterList.size();
-        notifyItemRangeInserted(start, newSize);
+        this.asyncListDiffer.submitList(adapterList);
     }
 
     public List<E> getAdapterList() {
@@ -209,20 +234,27 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
      */
     public void setValue(List<E> values, boolean isRemoveLoader) {
         if (isRemoveLoader) removeLoader();
+//        this.adapterList.clear();
+//        this.adapterList.addAll(values);
+//        notifyDataSetChanged();
         this.adapterList.clear();
         this.adapterList.addAll(values);
-        notifyDataSetChanged();
+        this.asyncListDiffer.submitList(adapterList);
     }
 
     public void updateItem(int index, E value) {
-        adapterList.set(index, value);
-        notifyItemChanged(index);
+//        adapterList.set(index, value);
+//        notifyItemChanged(index);
+        this.adapterList.set(index, value);
+        this.asyncListDiffer.submitList(adapterList);
     }
 
     public void clear() {
         if (this.adapterList != null) {
+//            this.adapterList.clear();
+//            notifyDataSetChanged();
             this.adapterList.clear();
-            notifyDataSetChanged();
+            this.asyncListDiffer.submitList(adapterList);
         }
     }
 
