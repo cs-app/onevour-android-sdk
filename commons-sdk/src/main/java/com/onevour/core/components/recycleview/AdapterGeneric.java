@@ -86,6 +86,10 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
     protected void registerAsyncListDiffer(AsyncListDiffer<E> asyncListDiffer) {
         this.asyncListDiffer = asyncListDiffer;
     }
+    protected void registerAsyncListDiffer(DiffUtil.ItemCallback<E> diffCallback) {
+        this.diffCallback = diffCallback;
+        this.asyncListDiffer = new AsyncListDiffer<>(this, diffCallback);
+    }
 
     protected <VH extends HolderGeneric> void registerBindView(int type, Class<VH> holder) {
         if (type <= 0) {
@@ -148,8 +152,8 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull HolderGeneric holder, int position) {
-        E o = adapterList.get(position);
-        int size = adapterList.size();
+        E o = getItem(position);
+        int size = getItemCount();
         // add listener
         for (HolderGeneric.Listener listener : holderListener) {
             holder.setListener(listener);
@@ -158,15 +162,15 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         holder.onBindViewHolder(o);
         holder.onBindViewHolder(o, position);
         holder.onBindViewHolder(o, position, size);
-        holder.onBindViewHolder(adapterList, position);
-        holder.onBindViewHolder(adapterList, position, size);
+        holder.onBindViewHolder(asyncListDiffer.getCurrentList(), position);
+        holder.onBindViewHolder(asyncListDiffer.getCurrentList(), position, size);
         holder.onBindViewHolder(o, position, 0 == position && !isLoader, position == getItemCount() - 1 && !isLoader);
         Log.d(TAG, "bind position ".concat(String.valueOf(position)));
     }
 
     @Override
     public int getItemCount() {
-        return adapterList.size();
+        return asyncListDiffer.getCurrentList().size();
     }
 
     public void setHolderListener(HolderGeneric.Listener holderListener) {
@@ -258,12 +262,13 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         }
     }
 
-    public E getItem(int totalItemCount) {
-        int size = adapterList.size();
-        if (totalItemCount < size) {
-            return adapterList.get(totalItemCount);
-        }
-        return null;
+    public E getItem(int index) {
+//        int size = adapterList.size();
+//        if (index < size) {
+//            return adapterList.get(index);
+//        }
+//        return null;
+        return asyncListDiffer.getCurrentList().get(index);
     }
 
     public void showLoader() {
