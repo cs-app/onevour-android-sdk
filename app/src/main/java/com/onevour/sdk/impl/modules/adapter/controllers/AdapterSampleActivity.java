@@ -1,9 +1,6 @@
 package com.onevour.sdk.impl.modules.adapter.controllers;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.AsyncListDiffer;
-import androidx.recyclerview.widget.DiffUtil;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -88,11 +85,15 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
     public void updateAge(int index, int age) {
         Toast.makeText(this, index + " age: " + age, Toast.LENGTH_SHORT).show();
         List<SampleDataMV> values = adapter.getAdapterList();
-        SampleDataMV o = new SampleDataMV(1);
-        // SampleData sampleData = new SampleData(index, "next " + index);
-        SampleData sampleData = BeanCopy.value(values.get(index).getModel(), SampleData.class);
-        sampleData.setAge(age);
-        o.setModel(sampleData);
+        // bean copy
+//        SampleDataMV o = new SampleDataMV(1);
+//        SampleData sampleData = BeanCopy.value(values.get(index).getModel(), SampleData.class);
+//        sampleData.setAge(age);
+//        o.setModel(sampleData);
+//        values.set(index, o);
+        // bean copy with gson
+        SampleDataMV o = BeanCopy.gson(values.get(index), SampleDataMV.class);
+        o.getModel().setAge(age);
         values.set(index, o);
         adapter.setValue(values, false);
     }

@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +26,7 @@ public class BeanCopy {
 
     private static final Map<String, Set<String>> cached = new HashMap<>();
 
-    public static <S, T> T valueGson(S source, Class<T> target) {
+    public static <S, T> T gson(S source, Class<T> target) {
         if (ValueOf.isNull(source)) throw new NullPointerException();
         Gson gson = new Gson();
         String json = gson.toJson(source);
