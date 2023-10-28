@@ -1,13 +1,18 @@
 package com.onevour.core.components.recycleview;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.AsyncDifferConfig;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
@@ -22,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 /***
  * multiple holder<br/>
@@ -37,7 +43,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     private boolean isLoader = false;
 
-    private ArrayList<E> adapterList = new ArrayList<>();
+//    private ArrayList<E> adapterList = new ArrayList<>();
 
     private final int VIEW_CONTENT = 1;
 
@@ -51,7 +57,8 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     private final List<HolderGeneric.Listener> holderListener = new ArrayList<>();
 
-    private DiffUtil.ItemCallback<E> diffCallback = new DiffUtil.ItemCallback<E>() {
+
+    private AsyncListDiffer<E> asyncListDiffer = new AsyncListDiffer<E>(this, new DiffUtil.ItemCallback<E>() {
         @Override
         public boolean areItemsTheSame(@NonNull E oldItem, @NonNull E newItem) {
             return false;
@@ -61,16 +68,14 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
         public boolean areContentsTheSame(@NonNull E oldItem, @NonNull E newItem) {
             return false;
         }
-    };
+    });
 
-    private AsyncListDiffer<E> asyncListDiffer = new AsyncListDiffer<>(this, diffCallback);
 
     protected AdapterGeneric() {
         registerHolder();
     }
 
     public AdapterGeneric(ArrayList adapterList) {
-        this.adapterList = adapterList;
         registerHolder();
     }
 
@@ -86,8 +91,8 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
     protected void registerAsyncListDiffer(AsyncListDiffer<E> asyncListDiffer) {
         this.asyncListDiffer = asyncListDiffer;
     }
+
     protected void registerAsyncListDiffer(DiffUtil.ItemCallback<E> diffCallback) {
-        this.diffCallback = diffCallback;
         this.asyncListDiffer = new AsyncListDiffer<>(this, diffCallback);
     }
 
@@ -109,7 +114,8 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
     @Override
     public int getItemViewType(int position) {
         Log.d(TAG, "item view type: ".concat(String.valueOf(position)));
-        AdapterModel value = adapterList.get(position);
+//        AdapterModel value = adapterList.get(position);
+        AdapterModel value = asyncListDiffer.getCurrentList().get(position);
         if (ValueOf.nonNull(value)) {
             return value.getType();
         }
@@ -170,7 +176,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     @Override
     public int getItemCount() {
-        return asyncListDiffer.getCurrentList().size();
+        return this.asyncListDiffer.getCurrentList().size();
     }
 
     public void setHolderListener(HolderGeneric.Listener holderListener) {
@@ -179,23 +185,25 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 
     private void setLoader(boolean loader) {
         isLoader = loader;
-        int size = this.adapterList.size();
+        /*
+        int size = this.asyncListDiffer.getCurrentList().size();
         if (isLoader) {
-            if (size > 0 && ValueOf.nonNull(this.adapterList.get(size - 1))) {
-                this.adapterList.add(null);
+            if (size > 0 && ValueOf.nonNull(this.asyncListDiffer.getCurrentList().get(size - 1))) {
+                this.asyncListDiffer.getCurrentList().add(null);
                 //notifyItemInserted(size);
             } else if (size == 0) {
-                this.adapterList.add(null);
+                this.asyncListDiffer.getCurrentList().add(null);
                 //notifyItemInserted(size);
             }
 
         } else {
-            if (size > 0 && this.adapterList.get(size - 1) == null) {
-                this.adapterList.remove(size - 1);
+            if (size > 0 && this.asyncListDiffer.getCurrentList().get(size - 1) == null) {
+                this.asyncListDiffer.getCurrentList().remove(size - 1);
                 // notifyItemRemoved(this.adapterList.size());
             }
         }
-        this.asyncListDiffer.submitList(adapterList);
+        //this.asyncListDiffer.submitList(adapterList);
+         */
     }
 
     public void addMore(E o) {
@@ -207,8 +215,10 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 //         this.adapterList.add(o);
 //         notifyItemRangeInserted(size, size + 1);
         //
-        this.adapterList.add(o);
-        this.asyncListDiffer.submitList(adapterList);
+//        this.adapterList.add(o);
+        ArrayList<E> values = new ArrayList<>(this.asyncListDiffer.getCurrentList());
+        values.add(o);
+        this.asyncListDiffer.submitList(values);
     }
 
     public void addMore(final List<E> adapterList) {
@@ -221,12 +231,14 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 //        this.adapterList.addAll(adapterList);
 //        int newSize = adapterList.size();
 //        notifyItemRangeInserted(start, newSize);
-        this.adapterList.addAll(adapterList);
-        this.asyncListDiffer.submitList(adapterList);
+//        this.adapterList.addAll(adapterList);
+        ArrayList<E> values = new ArrayList<>(this.asyncListDiffer.getCurrentList());
+        values.addAll(adapterList);
+        this.asyncListDiffer.submitList(values);
     }
 
     public List<E> getAdapterList() {
-        return adapterList;
+        return new ArrayList<>(this.asyncListDiffer.getCurrentList());
     }
 
     public void setValue(List<E> values) {
@@ -241,25 +253,35 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 //        this.adapterList.clear();
 //        this.adapterList.addAll(values);
 //        notifyDataSetChanged();
-        this.adapterList.clear();
-        this.adapterList.addAll(values);
-        this.asyncListDiffer.submitList(adapterList);
+//        this.adapterList.clear();
+//        this.adapterList.addAll(values);
+//        asyncListDiffer.addListListener(new AsyncListDiffer.ListListener<E>() {
+//            @Override
+//            public void onCurrentListChanged(@NonNull List<E> previousList, @NonNull List<E> currentList) {
+//
+//            }
+//        });
+        // asyncListDiffer.submitList(adapterList);
+        // notifyDataSetChanged();
+//        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        ArrayList<E> newValues = new ArrayList<>(values);
+        asyncListDiffer.submitList(newValues);
     }
 
     public void updateItem(int index, E value) {
 //        adapterList.set(index, value);
 //        notifyItemChanged(index);
-        this.adapterList.set(index, value);
-        this.asyncListDiffer.submitList(adapterList);
+//        this.adapterList.set(index, value);
+        //this.asyncListDiffer.submitList(adapterList);
     }
 
     public void clear() {
-        if (this.adapterList != null) {
+//        if (this.adapterList != null) {
 //            this.adapterList.clear();
 //            notifyDataSetChanged();
-            this.adapterList.clear();
-            this.asyncListDiffer.submitList(adapterList);
-        }
+//            this.adapterList.clear();
+            //this.asyncListDiffer.submitList(adapterList);
+//        }
     }
 
     public E getItem(int index) {
@@ -268,7 +290,7 @@ public abstract class AdapterGeneric<E extends AdapterModel> extends RecyclerVie
 //            return adapterList.get(index);
 //        }
 //        return null;
-        return asyncListDiffer.getCurrentList().get(index);
+        return new ArrayList<>(this.asyncListDiffer.getCurrentList()).get(index);
     }
 
     public void showLoader() {

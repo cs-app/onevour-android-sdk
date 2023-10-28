@@ -123,7 +123,7 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements A
     }
 
     @Override
-    public void onSelectedText(String value) {
+    public void updateAge(int index, int age) {
 
     }
 }

@@ -1,6 +1,9 @@
 package com.onevour.sdk.impl.modules.adapter.controllers;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +11,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.onevour.core.utilities.beans.BeanCopy;
 import com.onevour.core.utilities.helper.UIHelper;
 import com.onevour.core.components.recycleview.AdapterGeneric;
 import com.onevour.core.components.recycleview.RecyclerViewScrollListener;
@@ -42,11 +46,11 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
     private void init() {
         List<SampleDataMV> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            if (i % 2 == 0) {
-                list.add(new SampleDataMV(1, new SampleData("next : ".concat(String.valueOf(i)))));
-            } else {
-                list.add(new SampleDataMV(2, new SampleData("next : ".concat(String.valueOf(i)))));
-            }
+            list.add(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+//            if (i % 2 == 0) {
+//            } else {
+//                list.add(new SampleDataMV(2, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+//            }
         }
         adapter.addMore(list);
     }
@@ -59,10 +63,11 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
                 list.add(new SampleDataMV(new SampleData("next : ".concat(String.valueOf(i)))));
             }
             if (resultSuccess) {
-                adapter.addMore(list);
+                adapter.setValue(list);
             } else {
 //                adapter.er("Error, tap for reload");
             }
+
         }, 2000);
     }
 
@@ -80,7 +85,17 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
     }
 
     @Override
-    public void onSelectedText(String value) {
-        Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
+    public void updateAge(int index, int age) {
+        Toast.makeText(this, index + " age: " + age, Toast.LENGTH_SHORT).show();
+        List<SampleDataMV> values = adapter.getAdapterList();
+        SampleDataMV o = new SampleDataMV(1);
+        // SampleData sampleData = new SampleData(index, "next " + index);
+        SampleData sampleData = BeanCopy.value(values.get(index).getModel(), SampleData.class);
+        sampleData.setAge(age);
+        o.setModel(sampleData);
+        values.set(index, o);
+        adapter.setValue(values, false);
     }
+
+
 }
