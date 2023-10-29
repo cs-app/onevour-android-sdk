@@ -6,12 +6,10 @@ package com.onevour.sdk.impl.modules.adapter.components;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.onevour.core.components.recycleview.AdapterGeneric;
 import com.onevour.core.components.recycleview.HolderGeneric;
-import com.onevour.sdk.impl.SampleData;
 import com.onevour.sdk.impl.databinding.AdapterSampleDataBinding;
 import com.onevour.sdk.impl.databinding.AdapterSampleDataColorBinding;
 import com.onevour.sdk.impl.modules.adapter.model.SampleDataMV;
@@ -28,18 +26,15 @@ public class AdapterSampleData extends AdapterGeneric<SampleDataMV> {
             @Override
             public boolean areItemsTheSame(@NonNull SampleDataMV oldItem, @NonNull SampleDataMV newItem) {
                 return oldItem.getModel().getId() == newItem.getModel().getId();
+//                return false;
             }
 
             @Override
             public boolean areContentsTheSame(@NonNull SampleDataMV oldItem, @NonNull SampleDataMV newItem) {
                 return oldItem.getModel().getAge() == newItem.getModel().getAge();
+//                return false;
             }
 
-            @Nullable
-            @Override
-            public Object getChangePayload(@NonNull SampleDataMV oldItem, @NonNull SampleDataMV newItem) {
-                return super.getChangePayload(oldItem, newItem);
-            }
         });
     }
 
@@ -61,13 +56,12 @@ public class AdapterSampleData extends AdapterGeneric<SampleDataMV> {
         public void onClick(View v) {
             Listener listener = getListener(Listener.class);
             if (Objects.isNull(listener)) return;
-            int age = value.getModel().getAge();
-            listener.updateAge(getCurrentPosition(), age + 1);
+            listener.updateAge(getCurrentPosition(), value);
         }
 
         public interface Listener extends HolderGeneric.Listener {
 
-            void updateAge(int index, int age);
+            void updateAge(int index, SampleDataMV sampleDataMV);
 
         }
 

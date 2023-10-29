@@ -20,6 +20,7 @@ import com.onevour.core.components.recycleview.RecyclerViewScrollListener;
 import com.onevour.sdk.impl.SampleData;
 import com.onevour.sdk.impl.databinding.FragmentBottomLoaderBinding;
 import com.onevour.sdk.impl.modules.adapter.components.AdapterSampleData;
+import com.onevour.sdk.impl.modules.adapter.model.SampleDataMV;
 import com.onevour.sdk.impl.modules.main.models.SampleMV;
 
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class BottomLoaderFragment extends BottomSheetDialogFragment implements A
     }
 
     @Override
-    public void updateAge(int index, int age) {
+    public void updateAge(int index, SampleDataMV sampleDataMV) {
 
     }
 }

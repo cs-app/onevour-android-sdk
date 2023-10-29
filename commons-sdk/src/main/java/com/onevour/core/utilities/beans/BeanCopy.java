@@ -9,6 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,6 +28,12 @@ public class BeanCopy {
     private static final Map<String, Set<String>> cached = new HashMap<>();
 
     public static <S, T> T gson(S source, Class<T> target) {
+        if (ValueOf.isNull(source)) throw new NullPointerException();
+        Gson gson = new Gson();
+        String json = gson.toJson(source);
+        return gson.fromJson(json, target);
+    }
+    public static <S, T> T gson(S source, Type target) {
         if (ValueOf.isNull(source)) throw new NullPointerException();
         Gson gson = new Gson();
         String json = gson.toJson(source);

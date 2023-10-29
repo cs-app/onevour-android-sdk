@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
 
 import com.onevour.core.utilities.beans.BeanCopy;
 import com.onevour.core.utilities.helper.UIHelper;
@@ -37,19 +37,45 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
         setContentView(binding.getRoot());
         UIHelper.initRecyclerView(binding.rvSampleData, adapter, this, true);
         adapter.setHolderListener(this);
-        init();
+//        init();
+        binding.add.setOnClickListener(this::addNewSampleData);
+    }
+
+    private void addNewSampleData(View view) {
+        int size = adapter.getAdapterList().size();
+        SampleDataMV sampleDataMV = new SampleDataMV(1, new SampleData(size, "next : ".concat(String.valueOf(size))));
+        adapter.addMore(sampleDataMV);
+//        init();
     }
 
     private void init() {
-        List<SampleDataMV> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
-//            if (i % 2 == 0) {
-//            } else {
-//                list.add(new SampleDataMV(2, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+//        binding.rvSampleData.postDelayed(() -> {
+//            for (int i = 0; i < 100; i++) {
+//                adapter.addMore(new SampleDataMV(2, new SampleData(i, "next : ".concat(String.valueOf(i)))));
 //            }
-        }
-        adapter.addMore(list);
+//        }, 500);
+        binding.rvSampleData.postDelayed(() -> {
+            int i = 0;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+            i++;
+            adapter.addMore(new SampleDataMV(1, new SampleData(i, "next : ".concat(String.valueOf(i)))));
+        }, 500);
     }
 
     private void requestNextPage(boolean resultSuccess) {
@@ -82,21 +108,11 @@ public class AdapterSampleActivity extends AppCompatActivity implements AdapterG
     }
 
     @Override
-    public void updateAge(int index, int age) {
-        Toast.makeText(this, index + " age: " + age, Toast.LENGTH_SHORT).show();
-        List<SampleDataMV> values = adapter.getAdapterList();
-        // bean copy
-//        SampleDataMV o = new SampleDataMV(1);
-//        SampleData sampleData = BeanCopy.value(values.get(index).getModel(), SampleData.class);
-//        sampleData.setAge(age);
-//        o.setModel(sampleData);
-//        values.set(index, o);
-        // bean copy with gson
-        SampleDataMV o = BeanCopy.gson(values.get(index), SampleDataMV.class);
-        o.getModel().setAge(age);
-        values.set(index, o);
-        adapter.setValue(values, false);
+    public void updateAge(int index, SampleDataMV o) {
+        // SampleDataMV o = BeanCopy.gson(sampleDataMV, SampleDataMV.class);
+        int currentAge = o.getModel().getAge();
+        o.getModel().setAge(currentAge + 1);
+        adapter.updateItem(index, o);
     }
-
 
 }

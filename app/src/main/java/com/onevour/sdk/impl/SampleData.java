@@ -19,6 +19,12 @@ public class SampleData {
         this.name = name;
     }
 
+    public SampleData(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
     public SampleData(String s) {
         this.name = s;
     }
